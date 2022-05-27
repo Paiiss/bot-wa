@@ -11,7 +11,8 @@
         "paths": {
             "@utils*": ["src/utils", "src/utils*"],
             "@constants*": ["src/constants", "src/constants*"],
-            "@handlers*": ["src/handlers", "src/handlers*"]
+            "@handlers*": ["src/handlers", "src/handlers*"],
+            "@schema*": ["src/schema", "src/schema*"]
         }
     }
 }

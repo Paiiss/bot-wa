@@ -1,0 +1,134 @@
+{
+    "ind": {
+        "startMessage": "Halo, ada yang bisa kubantu? (Pesan otomatis dari bot)",
+        "sticker": "Please send/reply the picture/video that you want to convert to a sticker",
+        "stickerMeme": "tolong kirim/balas gambar yang akan melihat stiker meme! (tidak mendukung video)",
+        "util": {
+            "needImage": "Silakan kirim/balas media!"
+        },
+        "group": {
+            "noPerms": "You are not admin of this group",
+            "botNoAdmin": "Harap jadikan bot admin !",
+            "onlyGroup": "Hanya bisa di pakai di group!",
+            "leave": "See you 😎☝🏻",
+            "mentions": "Sebutkan beberapa orang dari grup (tag/mention)"
+        },
+        "promote": {
+            "succes": "Berhasil menjadikan admin!",
+            "error": "Gagal menjadikan admin, coba ulangi kembali",
+            "owner": "tidak dapat mempromosikan pemilik group",
+            "self": "Kamu tidak dapat mempromosikan diri sendiri",
+            "bot": "Tidak dapat mempromosikan bot"
+        },
+        "demote": {
+            "succes": "Berhasil diturunkan dari admin",
+            "error": "Gagal menurunkan dari admin",
+            "owner": "tidak dapat menurunkan pemilik group",
+            "self": "Kamu tidak dapat menurunkan diri sendiri",
+            "bot": "Tidak dapat menurunkan bot dari admin"
+        },
+        "kick": {
+            "succes": "Berhasil mengeluarkan member dari group",
+            "error": "Gagal mengeluarkan member!, terdapat kesalahan!",
+            "owner": "Tidak dapat mengeluarkan pemilik group",
+            "self": "Tidak dapat mengeluarkan nomer sendiri",
+            "bot": "Tidak dapat mengeluarkan bot, gunakan .leave"
+        },
+        "error": {
+            "failLeave": "Gagal keluar dari grup, silakan coba lagi",
+            "failGetLink": "Gagal untuk mendapatkan link group",
+            "server": "terjadi kesalahan server"
+        },
+        "mute": {
+            "isMute": "Bot sudah dari tadi di mute",
+            "succes": "Berhasi membisukan bot (admin tetap bisa menggunakan)",
+            "error": "Terjadi kesalahan! gagal membisukan bot!"
+        },
+        "isBan": "Anda tidak dapat menggunakan bot karena Anda telah diblokir karena melanggar",
+        "isPrem": "Hanya anggota premium yang dapat menggunakan ini",
+        "privateOnly": "Hanya dapat digunakan dalam obrolan pribadi",
+        "adminOnly": "ini menu rahasia/khusus admin",
+        "devOnly": "ini menu rahasia/khusus developer",
+        "maintenance": "Fitur belum dapat digunakan (pemeliharaan)",
+        "setAge": "Anda harus menyetujui semua aturan untuk menggunakan bot dan memasukkan usia Anda",
+        "nsfw": "Fitur ini tidak cocok untuk usia 16 tahun ke bawah",
+        "needlimit": "Anda butuh limit! (jadilah pengguna premium!)",
+        "require": {
+            "link": "Harap masukan link!"
+        },
+        "wronglink": "Link yang di masukkan salah!",
+        "join": {
+            "succes": "Berhasil masuk ke group",
+            "error": "Gagal masuk ke group!",
+            "alert": "Silahkan masukan link/balas chat yang berisi undangan grup"
+        },
+        "pay": {
+            "less": "Uang anda kurang!"
+        }
+    },
+    "eng": {
+        "startMessage": "Hello, is there anything I can help you with? (Automatic messages from bots)",
+        "sticker": "Silakan kirim/balas gambar/video yang ingin diubah menjadi stiker",
+        "stickerMeme": "please send/reply the picture that will see the meme sticker! (does not support videos)",
+        "util": {
+            "needImage": "Please send/reply media!"
+        },
+        "group": {
+            "noPerms": "You are not admin of this group",
+            "botNoAdmin": "Please make me admin !",
+            "onlyGroup": "Can only be used in groups!",
+            "leave": "See you 😎☝🏻",
+            "mentions": "Please mention some people from the group"
+        },
+        "promote": {
+            "succes": "Successfully made admin",
+            "error": "Failed to make admin, try again",
+            "owner": "can't promote owner group",
+            "self": "you can't promote yourself"
+        },
+        "demote": {
+            "succes": "Successfully demoted from admin",
+            "error": "Failed to demote from admin",
+            "owner": "can't demote owner group",
+            "self": "you can't demote yourself"
+        },
+        "kick": {
+            "succes": "Successfully removing a member from the group",
+            "error": "Failed to remove member!, there was an error!",
+            "owner": "Unable to remove group owner",
+            "self": "Unable to issue own number",
+            "bot": "Unable to eject bot, use .leave"
+        },
+        "error": {
+            "failLeave": "Failed to leave the group, please try again",
+            "failGetLink": "Failed to get group link",
+            "server": "server error occurred"
+        },
+        "mute": {
+            "isMute": "The bot has been muted a long time ago!",
+            "succes": "Successfully muted the bot (admin can still use the bot)",
+            "error": "Failed to mute bot"
+        },
+        "isBan": "You can't use the bot because you've been blocked for violating",
+        "isPrem": "Only premium members can use this",
+        "privateOnly": "Can only be used in private chat",
+        "adminOnly": "this is a secret/khusus menu for admin",
+        "devOnly": "this is a secret/khusus menu for developer",
+        "maintenance": "The feature cannot be used yet (maintenance)",
+        "setAge": "You must agree to all the rules for using the bot and enter your age",
+        "nsfw": "This feature is not suitable for ages 16 and under",
+        "needlimit": "You need limits! (be a premium user!)",
+        "require": {
+            "link": "Please input link"
+        },
+        "wronglink": "The link entered is wrong",
+        "join": {
+            "succes": "Successfully entered the group",
+            "error": "Failed to enter the group!",
+            "alert": "Please enter the link / reply to the chat containing the invitation to the group"
+        },
+        "pay": {
+            "less": "You have less money!"
+        }
+    }
+}

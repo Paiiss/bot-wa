@@ -1,5 +1,6 @@
 import { AnyWASocket, WAMessage } from '@adiwajshing/baileys'
 import { MessageSerialize } from '@constants/message.constant'
+import { MessageCollector } from './events.utils'
 import { downloadMedia } from './helper.utils'
 
 export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<MessageSerialize> => {
@@ -7,8 +8,10 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
     if (msg.key) {
         m.id = msg.key.id
         m.isSelf = msg.key.fromMe
+        m.myId = client.type == 'md' ? client.user.id.split(':')[0] + '@s.whatsapp.net' : null
         m.from = msg.key.remoteJid
         m.isGroup = m.from.endsWith('@g.us')
+        m.pushName = msg.pushName
         m.sender = m.isSelf
             ? client.type === 'legacy'
                 ? client.state.legacy.user.id
@@ -21,7 +24,15 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
         msg.message = msg.message[m.type].message
         m.type = Object.keys(msg.message).filter((msgType) => msgType !== 'messageContextInfo')[0]
     }
-    m.body = msg.message.conversation || msg.message[m.type].text || msg.message[m.type].caption
+
+    m.body =
+        msg.message?.conversation ||
+        msg.message[m.type].text ||
+        msg.message[m.type].caption ||
+        (m.type === 'listResponseMessage' && msg.message?.[m.type]?.singleSelectReply?.selectedRowId) ||
+        (m.type === 'buttonsResponseMessage' && msg.message?.[m.type]?.selectedButtonId) ||
+        (m.type === 'templateButtonReplyMessage' && msg.message?.[m.type]?.selectedId) ||
+        ''
     m.mentions = msg.message[m.type].contextInfo ? msg.message[m.type].contextInfo.mentionedJid : []
     if (msg.message[m.type]?.contextInfo?.quotedMessage) {
         m.quoted = {}
@@ -54,8 +65,11 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
             m.typeCheck.isQuotedLocation = typeQuoted == 'locationMessage'
         }
     }
+    m.messageTimestamp = msg.messageTimestamp
     m.groupMetadata = m.isGroup ? (client.type === 'md' ? await client.groupMetadata(m.from) : await client.groupMetadata(m.from, false)) : null
-    m.reply = (text) => !m.isSelf && client.sendMessage(m.from, { text })
+    m.reply = (text) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender] })
+    // m.fakeLink = (contextInfo) => client.sendMessage(m.from, { contextInfo });
     m.download = () => downloadMedia(msg.message)
+    m.createMessageCollector = (options = { filter: null }) => new MessageCollector(client, options, m)
     return m
 }
