@@ -23,19 +23,19 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 
 ## Description
 
-    I will develop this bot and make it public on my github, I hope that the Paiiss and lolhuman watermarks don't disappear if you use this repository. (Open source with conditions)
+> I will develop this bot and make it public on my github, I hope that the Paiiss and lolhuman watermarks don't disappear if you use this repository. (Open source with conditions)
 
 ## Highlights
 
 -   [x] Only focuses on multi devices
--   [ ] Make it easier to control bots
--   [ ] Features will be expanded
--   [ ] Supports Indonesian and English
+-   [x] Make it easier to control bots
+-   [x] Features will be expanded
+-   [x] Supports Indonesian and English
+-   [x] Auto chat and cooldown
+-   [x] Database using mongodb
 
 ## TODO
 
--   Bot will support 2 languages
--   Database using mongodb
 -   Coming soon
 
 ## Installation
@@ -47,6 +47,11 @@ Node js and other npmjs installation required
 -   [Node js](https://nodejs.org/en/) v16+
 -   [This repository](https://github.com/Paiiss/bot-wa)
 -   Data/wifi for installation
+
+### Mongodb
+
+-   [mongodb tutorials](https://www.mongodb.com/developer/languages/javascript/node-crud-tutorial/)
+-   [Indonesian mongodb tutorial](https://www.petanikode.com/tutorial-dasar-mongodb/)
 
 ### Clone this repo
 
