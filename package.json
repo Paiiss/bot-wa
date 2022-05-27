@@ -7,7 +7,7 @@
         "start": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts"
     },
     "keywords": [],
-    "author": "",
+    "author": "pai",
     "license": "ISC",
     "description": "",
     "dependencies": {
