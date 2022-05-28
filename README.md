@@ -64,6 +64,20 @@ Node js and other npmjs installation required
 -   [mongodb tutorials](https://www.mongodb.com/developer/languages/javascript/node-crud-tutorial/)
 -   [Indonesian mongodb tutorial](https://www.petanikode.com/tutorial-dasar-mongodb/)
 
+### Config
+
+```json
+{
+    "groupId": "6285805609094-1635319627@​g.us", // Group id for error log
+    "lolhuman": "apikey [http://api.lolhuman.xyz/]", // This bot uses some API from lolhuman
+    "botname": "Allen Bot", // Bot Name
+    "timezone": "Asia/Jakarta", // Time for node-cron
+    "footer": "AllenBot • Paiiss" // Footer for message button
+}
+```
+
+### Clone repo
+
 ```bash
 # clone
 git clone https://github.com/Paiiss/bot-wa
@@ -104,4 +118,4 @@ Your contribution will really help me
 
 ## **Special thanks**
 
--   [![LolHuman](https://github.com/LoL-Human.png?size=100)](https://github.com/LoL-Human)
+[![LolHuman](https://github.com/LoL-Human.png?size=100)](https://github.com/LoL-Human)
