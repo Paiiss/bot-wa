@@ -4,7 +4,8 @@
     "main": "index.js",
     "scripts": {
         "start:dev": "nodemon -e ts,tsx --exec \"cls & ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts\"",
-        "start": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts"
+        "start": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts",
+        "pm2": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts"
     },
     "url": "https://github.com/Paiiss/bot-wa/issues",
     "keywords": [
