@@ -18,9 +18,11 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 ---
 
 -   [Description](#description)
+-   [Example](#example)
 -   [Highlights](#highlights)
 -   [TODO](#todo)
 -   [Installation](#installation)
+-   [FAQ](#faq)
 -   [Contributing](#contributing)
 -   [Contributors](#contributors)
 
@@ -29,6 +31,12 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 ---
 
 > I will develop this bot and make it public on my github, I hope that the Paiiss and lolhuman watermarks don't disappear if you use this repository. (Open source with conditions)
+
+### Example
+
+---
+
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/6285667606389)
 
 ## Highlights
 
@@ -40,11 +48,13 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 -   [x] Supports Indonesian and English
 -   [x] Auto chat and cooldown
 -   [x] Database using mongodb
+-   [x] Has a plugin that makes it easy
 
 ## TODO
 
 ---
 
+-   Registration system
 -   Coming soon
 
 ## Installation
@@ -108,6 +118,51 @@ sudo npm install pm2 -g
 pm2 start ecosystem.config.js
 ```
 
+## FAQ
+
+---
+
+-   How do I set up commands?
+
+### Plugin commnds
+
+> Example file `src/commands/tes.ts`
+
+```ts
+import { ICommand } from '@constants/command.constant'
+
+export default {
+    aliases: ['test'], // Alias
+    category: 'general', // Category
+    cooldown: 1, // Cooldown 1s
+    description: 'Example command', // Desc command
+    groupOnly: true, // If only in groups
+    isBotAdmin: false, // Admin bot in the group
+    premiumOnly: false, // only premium
+    privateOnly: false, // If only in private chat
+    isAdminBot: false, // Only admin bot
+    ownerOnly: false, // Only owner bot
+    nsfw: false, // There will be an age check
+    adminGroup: false, // Those who use the command must be the admin group
+    maintenance: false, // If the maintance menu (can only be accessed by the owner)
+    consume: 5, // Consumption limit
+    use: '.test', // Example to use
+    callback: async ({ msg }) => {}, // Code command
+} as ICommand
+```
+
+-   How to reply to messages?
+
+```ts
+callback: async ({ msg }) => {
+  msg.reply('Yo')
+},
+```
+
+-   Where to find interfaces?
+
+    All interfaces are in `src/constants`
+
 ## Contributing
 
 ---
@@ -126,6 +181,6 @@ Your contribution will really help me
 
 ---
 
-## **Special thanks**
+### **Special thanks**
 
 [![LolHuman](https://github.com/LoL-Human.png?size=100)](https://github.com/LoL-Human)

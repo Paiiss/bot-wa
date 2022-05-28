@@ -43,6 +43,7 @@ export class CommandHandler {
         const getCommand = commands.get(command) || commands.find((v) => v.aliases && v.aliases.includes(command))
 
         if (/allen/.test(msg.body)) await client.sendMessage(msg.from, { react: { text: '💖', key: message.key } })
+        if (body === 'prefix') return msg.reply('Prefix: ' + prefix)
 
         // Set up start message & cooldown
         const now: number = Date.now()
