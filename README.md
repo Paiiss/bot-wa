@@ -15,17 +15,24 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 
 ## Content
 
+---
+
 -   [Description](#description)
 -   [Highlights](#highlights)
 -   [TODO](#todo)
 -   [Installation](#installation)
+-   [Contributing](#contributing)
 -   [Contributors](#contributors)
 
 ## Description
 
+---
+
 > I will develop this bot and make it public on my github, I hope that the Paiiss and lolhuman watermarks don't disappear if you use this repository. (Open source with conditions)
 
 ## Highlights
+
+---
 
 -   [x] Only focuses on multi devices
 -   [x] Make it easier to control bots
@@ -36,9 +43,13 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 
 ## TODO
 
+---
+
 -   Coming soon
 
 ## Installation
+
+---
 
 Node js and other npmjs installation required
 
@@ -46,14 +57,12 @@ Node js and other npmjs installation required
 
 -   [Node js](https://nodejs.org/en/) v16+
 -   [This repository](https://github.com/Paiiss/bot-wa)
--   Data/wifi for installation
+-   [Download And Install Git](https://git-scm.com/downloads)
 
 ### Mongodb
 
 -   [mongodb tutorials](https://www.mongodb.com/developer/languages/javascript/node-crud-tutorial/)
 -   [Indonesian mongodb tutorial](https://www.petanikode.com/tutorial-dasar-mongodb/)
-
-### Clone this repo
 
 ```bash
 # clone
@@ -66,7 +75,7 @@ cd bot-wa
 npm install
 ```
 
-### Start Bot
+### Run
 
 ```bash
 # Start with
@@ -75,6 +84,24 @@ npm install
 npm start
 ```
 
+## Contributing
+
+---
+
+Your contribution will really help me
+
+**want to contribute?**
+
+1. Fork this repository
+2. edit/change what you want, for example you want to add features/fix bugs
+3. Test first
+4. You can submit a pull request
+5. If it accepts then delete the old fork and the new fork if you want to pull the request again
+
 ## Contributors
 
--   [LolHuman](https://github.com/LoL-Human/)
+---
+
+## **Special thanks**
+
+-   [![LolHuman](https://github.com/LoL-Human.png?size=100)](https://github.com/LoL-Human)

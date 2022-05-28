@@ -9,14 +9,14 @@ export default {
     aliases: ['s'],
     category: 'Sticker',
     description: 'Sticker Maker',
-    callback: async ({ msg, client, message }) => {
+    callback: async ({ msg, client, message, shortMessage }) => {
         const file = (await msg.download()) || (msg.quoted && (await msg.quoted.download()))
         if (msg.typeCheck.isImage || msg.typeCheck.isQuotedImage) {
             const data = {
                 image: `data:image/jpeg;base64,${file.toString('base64')}`,
                 stickerMetadata: {
-                    pack: 'LoL',
-                    author: 'Human',
+                    pack: 'AllenBOT',
+                    author: 'created by @mfa_daffa',
                     keepScale: true,
                     circle: false,
                     removebg: false,
@@ -29,8 +29,8 @@ export default {
             const data = {
                 file: `data:video/mp4;base64,${file.toString('base64')}`,
                 stickerMetadata: {
-                    pack: 'LoL',
-                    author: 'Human',
+                    pack: 'AllenBOT',
+                    author: 'created by @mfa_daffa',
                     keepScale: true,
                 },
                 processOptions: {
@@ -44,6 +44,8 @@ export default {
             sticker.post('/convertMp4BufferToWebpDataUrl', data).then((data) => {
                 client.sendMessage(msg.from, { sticker: Buffer.from(data.data.split(';base64,')[1], 'base64') }, { quoted: message })
             })
+        } else {
+            msg.reply(shortMessage.sticker)
         }
     },
 } as ICommand
