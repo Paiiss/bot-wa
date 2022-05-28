@@ -66,7 +66,7 @@ Node js and other npmjs installation required
 
 ### Config
 
-```json
+```ts
 {
     "groupId": "6285805609094-1635319627@​g.us", // Group id for error log
     "lolhuman": "apikey [http://api.lolhuman.xyz/]", // This bot uses some API from lolhuman
