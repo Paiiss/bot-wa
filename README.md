@@ -98,6 +98,16 @@ npm install
 npm start
 ```
 
+### FOR PM2
+
+```bash
+# Install pm2
+sudo npm install pm2 -g
+
+# Run pm2
+pm2 start ecosystem.config.js
+```
+
 ## Contributing
 
 ---

@@ -1,15 +1,11 @@
-import userSchema from '@schema/user.schema'
-import { data } from 'cheerio/lib/api/attributes'
 import cron, { CronJob } from 'node-cron'
 import { deletePremium } from '@utils/premium.utils'
-import { getAll, resetAllLimit } from './user.utils'
+import { resetAllLimit } from './user.utils'
 import color from 'chalk'
-import moment from 'moment-timezone'
 import fs from 'fs'
 import { AnyWASocket } from '@adiwajshing/baileys'
-import { deleteRent, leaveGroup } from './group.utils'
-import { sleep } from './helper.utils'
-import groupSchema, { IGroup } from '@schema/group.schema'
+import { leaveGroup } from './group.utils'
+import groupSchema from '@schema/group.schema'
 
 interface Ig {
     id: string
@@ -19,6 +15,7 @@ interface Ig {
 const p: Array<{ id: string; e: number; l: number; c: string }> = require('../data/p.json')
 const g: Array<Ig> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
+const { timezone } = require('../../config.json')
 
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 
@@ -53,7 +50,7 @@ export const autonodecron = async (client: AnyWASocket) => {
                 }
             })
         },
-        { scheduled: true, timezone: 'Asia/Jakarta' }
+        { scheduled: true, timezone: timezone }
     )
     task1.start()
 
@@ -73,7 +70,7 @@ export const autonodecron = async (client: AnyWASocket) => {
                 await leaveGroupCron(data, client)
             })
         },
-        { scheduled: true, timezone: 'Asia/Jakarta' }
+        { scheduled: true, timezone: timezone }
     )
     everyday.start()
 }
