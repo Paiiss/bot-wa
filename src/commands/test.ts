@@ -1,7 +1,7 @@
 import { ICommand } from '@constants/command.constant'
 
 export default {
-    aliases: ['test'], // Alias
+    aliases: ['tes'], // Alias
     category: 'private', // Category
     cooldown: 1, // Cooldown 1s
     description: 'Example command', // Desc command
