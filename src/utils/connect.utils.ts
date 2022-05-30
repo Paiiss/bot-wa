@@ -19,7 +19,7 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
             logger: P({ level: 'error' }),
             printQRInTerminal: true,
             auth: state,
-            browser: ['LoL Human', 'Safari', '1.0'],
+            browser: ['Allen', 'Safari', '1.0'],
         })
         client.ev.on('creds.update', saveState)
     } else {
@@ -28,7 +28,7 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
             logger: P({ level: 'silent' }),
             version,
             printQRInTerminal: true,
-            browser: ['LoL Human', 'Safari', '1.0'],
+            browser: ['Allen', 'Safari', '1.0'],
             auth: state,
         })
         client.ev.on('creds.update', saveState)

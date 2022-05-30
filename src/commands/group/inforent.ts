@@ -1,15 +1,15 @@
-import { ICommand } from "@constants/command.constant";
-import { toTime } from "@utils/helper.utils";
-import toMs from "ms";
+import { ICommand } from '@constants/command.constant'
+import { toTime } from '@utils/helper.utils'
+import toMs from 'ms'
 
 export default {
-  category: "group",
-  description: "",
-  groupOnly: true,
-  callback: async ({ client, msg, Group }) => {
-    let ex = Group.expired;
+    category: 'group',
+    description: '',
+    groupOnly: true,
+    callback: async ({ client, msg, Group }) => {
+        let ex = Group.expired
 
-    if (ex === null) return msg.reply(`Your group doesn't have a trial/rental`);
-    msg.reply(`Ends in: ${toTime(ex)}`);
-  },
-} as ICommand;
+        if (ex === null) return msg.reply(`Your group doesn't have a trial/rental`)
+        return msg.reply(`Ends in: ${toTime(ex)}`)
+    },
+} as ICommand

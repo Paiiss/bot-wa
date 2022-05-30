@@ -11,7 +11,8 @@
             "botNoAdmin": "Harap jadikan bot admin !",
             "onlyGroup": "Hanya bisa di pakai di group!",
             "leave": "See you 😎☝🏻",
-            "mentions": "Sebutkan beberapa orang dari grup (tag/mention)"
+            "mentions": "Sebutkan beberapa orang dari grup (tag/mention)",
+            "antinsfw": "Anti nsfw diaktifkan di grup ini, gunakan perintah nsfw di bot obrolan pribadi!"
         },
         "promote": {
             "succes": "Berhasil menjadikan admin!",
@@ -78,7 +79,8 @@
             "botNoAdmin": "Please make me admin !",
             "onlyGroup": "Can only be used in groups!",
             "leave": "See you 😎☝🏻",
-            "mentions": "Please mention some people from the group"
+            "mentions": "Please mention some people from the group",
+            "antinsfw": "Anti nsfw is activated in this group, use the nsfw command in the private chat bot!"
         },
         "promote": {
             "succes": "Successfully made admin",

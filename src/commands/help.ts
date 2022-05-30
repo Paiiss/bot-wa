@@ -34,6 +34,7 @@ export default {
             `👨🏼‍💻 *Program Lang: TypeScript\n` +
             `―――――――――――――――\n\n` +
             `📰 Additional information\n\n` +
+            `* Source : https://github.com/Paiiss/bot-wa\n` +
             `* Receive bot creation services / for companies / payment reminders etc\n` +
             `* To add bots to the group, please rent a bot by contacting the owner`
         if (msg.isGroup) str += `\n\n―――――――――――――――\n` + `📂 * Group Subject: ${msg.groupMetadata.subject}\n` + `👥 * Total Mems: ${msg.groupMetadata.participants.length}\n` + `🚧 * Bot out in:  ${toTime(Group.expired) || '-'}\n` + `―――――――――――――――`
@@ -41,7 +42,6 @@ export default {
         str += `\n\n*Supporter*\n- LoLHuman (handler maker and others)`
         const templateButtons = [
             { index: 1, urlButton: { displayText: '⭐ Contact me via Instagram!', url: 'https://instagram.com/mfa_daffa' } },
-            // { index: 2, callButton: { displayText: "Call me!", phoneNumber: "+1 (234) 5678-901" } },
             { index: 2, quickReplyButton: { displayText: 'Click here to see the menu list!', id: prefix + 'listmenu' } },
         ]
 

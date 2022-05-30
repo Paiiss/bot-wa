@@ -3,6 +3,13 @@ import { MessageSerialize } from '@constants/message.constant'
 import { MessageCollector } from './events.utils'
 import { downloadMedia } from './helper.utils'
 
+export class MessageError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'MessageError'
+    }
+}
+
 export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<MessageSerialize> => {
     const m = {} as MessageSerialize
     if (msg.key) {
@@ -67,8 +74,11 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
     }
     m.messageTimestamp = msg.messageTimestamp
     m.groupMetadata = m.isGroup ? (client.type === 'md' ? await client.groupMetadata(m.from) : await client.groupMetadata(m.from, false)) : null
-    m.reply = (text) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender] })
-    // m.fakeLink = (contextInfo) => client.sendMessage(m.from, { contextInfo });
+    m.reply = (text, q = null) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender] }, { quoted: q ? msg : null })
+    m.error = (text, q = null) => {
+        m.reply(text, q)
+        throw new MessageError(text)
+    }
     m.download = () => downloadMedia(msg.message)
     m.createMessageCollector = (options = { filter: null }) => new MessageCollector(client, options, m)
     return m

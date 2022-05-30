@@ -38,6 +38,8 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/6285667606389)
 
+Join the group [Allen Group](https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd)
+
 ## Highlights
 
 ---
@@ -49,12 +51,15 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 -   [x] Auto chat and cooldown
 -   [x] Database using mongodb
 -   [x] Has a plugin that makes it easy
+-   [x] reply plugin with quoted
+-   [x] The rental bot and bot feature will automatically exit when the rental period runs out!
 
 ## TODO
 
 ---
 
 -   Registration system
+-   Anti nsfw
 -   Coming soon
 
 ## Installation
@@ -155,7 +160,7 @@ export default {
 
 ```ts
 callback: async ({ msg }) => {
-  msg.reply('Yo')
+  msg.reply('Yo', true) // Support quotes, true / false / leave it blank msg.reply('Yo')
 },
 ```
 

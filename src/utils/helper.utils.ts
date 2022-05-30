@@ -162,3 +162,17 @@ export function makeid(length) {
     }
     return result
 }
+
+export const postJson = async (url, formdata) => {
+    try {
+        const res = await axios.post(url, formdata, {
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${formdata._boundary}`,
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 Mobile Safari/537.36.',
+            },
+        })
+        return res.data
+    } catch (error) {
+        throw error
+    }
+}

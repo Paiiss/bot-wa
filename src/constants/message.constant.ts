@@ -16,7 +16,8 @@ export interface MessageSerialize {
     quoted?: MessageQuote
     body?: string
     messageTimestamp?: number | Long.Long
-    reply?: (text: string) => Promise<proto.WebMessageInfo>
+    reply?: (text: string, q?: boolean) => Promise<proto.WebMessageInfo>
+    error?: (text: string, q?: boolean) => Promise<proto.WebMessageInfo>
     download?: () => Promise<Buffer>
     createMessageCollector?: (options: MessageCollectorOptions) => MessageCollector
 }
@@ -67,6 +68,7 @@ export interface IMess {
         onlyGroup: string
         leave: string
         mentions: string
+        antinsfw: string
     }
     promote: {
         succes: string

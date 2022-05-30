@@ -7,10 +7,21 @@
         "start": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts",
         "pm2": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts"
     },
-    "url": "https://github.com/Paiiss/bot-wa/issues",
+    "homepage": "https://github.com/Paiiss/bot-wa/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Paiiss/bot-wa.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Paiiss/bot-wa/issues"
+    },
     "keywords": [
         "Bot",
-        "wa-bot"
+        "wa-bot",
+        "baileys",
+        "websocket",
+        "whatsapp",
+        "sticker"
     ],
     "author": "Paiiss",
     "license": "ISC",
