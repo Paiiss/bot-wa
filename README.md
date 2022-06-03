@@ -53,14 +53,14 @@ Join the group [Allen Group](https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd)
 -   [x] Has a plugin that makes it easy
 -   [x] reply plugin with quoted
 -   [x] The rental bot and bot feature will automatically exit when the rental period runs out!
+-   [x] Registration
+-   [x] Anti nsfw
 
 ## TODO
 
 ---
 
--   Registration system
--   Anti nsfw
--   Coming soon
+-   Any suggestion??
 
 ## Installation
 
@@ -129,52 +129,36 @@ pm2 start ecosystem.config.js
 
 -   How do I set up commands?
 
-### Plugin commnds
+    Plugin commnds [`src/commands/tes.ts`](https://github.com/Paiiss/bot-wa/blob/master/src/commands/test.ts)
 
-> Example file `src/commands/tes.ts`
-
-```ts
-import { ICommand } from '@constants/command.constant'
-
-export default {
-    aliases: ['test'], // Alias
-    category: 'general', // Category
-    cooldown: 1, // Cooldown 1s
-    description: 'Example command', // Desc command
-    groupOnly: true, // If only in groups
-    isBotAdmin: false, // Admin bot in the group
-    premiumOnly: false, // only premium
-    privateOnly: false, // If only in private chat
-    isAdminBot: false, // Only admin bot
-    ownerOnly: false, // Only owner bot
-    nsfw: false, // There will be an age check
-    adminGroup: false, // Those who use the command must be the admin group
-    maintenance: false, // If the maintance menu (can only be accessed by the owner)
-    consume: 5, // Consumption limit
-    use: '.test', // Example to use
-    callback: async ({ msg }) => {}, // Code command
-} as ICommand
-```
-
--   How to reply to messages?
+-   How to reply / reply error / react ?
 
 ```ts
-callback: async ({ msg }) => {
+callback: async ({ msg, args }) => {
+
+  // Error
+  if (args.length < 1) return msg.error("you have to enter a word") // This is useful if the limit is used, if the command fails to be received by the user, the limit will not be used
+
+  // React message
+  if (args[0] === "👍🏻") return msg.react("👍🏻")
+
+  // Reply
   msg.reply('Yo', true) // Support quotes, true / false / leave it blank msg.reply('Yo')
 },
+
 ```
 
 -   Where to find interfaces?
 
-    All interfaces are in `src/constants`
+    All interfaces are in [`src/constants`](https://github.com/Paiiss/bot-wa/blob/master/src/constants/command.constant.ts)
 
 ## Contributing
 
 ---
 
-Your contribution will really help me
+### Your contribution will really help me
 
-**want to contribute?**
+If you want to contribute
 
 1. Fork this repository
 2. edit/change what you want, for example you want to add features/fix bugs
@@ -184,8 +168,6 @@ Your contribution will really help me
 
 ## Contributors
 
----
-
-### **Special thanks**
+#### Special thanks
 
 [![LolHuman](https://github.com/LoL-Human.png?size=100)](https://github.com/LoL-Human)

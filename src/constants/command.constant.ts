@@ -8,6 +8,7 @@ export const commands = new Collection<String, ICommand>() // new Map<String, IC
 export const cooldown = new Collection<string, number>() // new Map<String, number>
 export const startMessage = new Collection<string, number>() // new Map<String, number>
 
+// Read the JSDOC docs : https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html
 export interface ICommand {
     /**
      * @type {string[]}
