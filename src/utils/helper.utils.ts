@@ -96,10 +96,16 @@ export const memeText = (imageData, top, bottom) =>
 export const getBuffer = async (url: string) => {
     const res = await fetch(url, { headers: { 'User-Agent': 'okhttp/4.5.0' }, method: 'GET' })
     if (!res.ok) throw 'Error while fetching data'
-    const buff: any = await res.buffer()
+    const buff = res.buffer()
     if (buff) return buff
 }
 
+export const getJson = async (url: string) => {
+    const res = await fetch(url, { headers: { 'User-Agent': 'okhttp/4.5.0' }, method: 'GET' })
+    if (!res.ok) throw 'Error while fetching data'
+    let json = res.json()
+    if (json) return json
+}
 export const getRandom = (ext) => {
     return randomBytes(7).toString('hex').toUpperCase() + ext
 }

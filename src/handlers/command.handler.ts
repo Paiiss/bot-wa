@@ -105,7 +105,7 @@ export class CommandHandler {
         const command = body ? (body.startsWith(prefix) ? body.slice(prefix.length).trim().split(/ +/).shift().toLowerCase() : null) : null
         const getCommand = commands.get(command) || commands.find((v) => v.aliases && v.aliases.includes(command))
 
-        if (/allen/.test(msg.body)) await client.sendMessage(msg.from, { react: { text: '💖', key: message.key } })
+        if (/allen/.test(msg.body) && !msg.isSelf) await msg.react('💖')
         if (body === 'prefix') return msg.reply('Prefix: ' + prefix)
 
         // Set up start message & cooldown
@@ -138,7 +138,7 @@ export class CommandHandler {
             if (getCommand?.nsfw) {
                 if (isGroup && Group.antiNsfw) return msg.reply(shortMessage.group.antinsfw)
                 if (!User.age) {
-                    return msg.reply(shortMessage.setAge)
+                    return msg.reply(shortMessage.register.setAge)
                 } else if (User.age < 16) {
                     return msg.reply(shortMessage.nsfw)
                 }
@@ -175,7 +175,7 @@ export class CommandHandler {
                 .callback({ client, message, msg, command, prefix, args, shortMessage, User, Group })
                 .then(async () => await User.updateOne({ $inc: { limit: +(getCommand.consume || 0), tReq: +1, dReq: +1 } }))
                 .catch((error) => {
-                    if (error instanceof MessageError) console.log(`User ${sender} Error: ${error.message}`)
+                    if (error instanceof MessageError) console.log(chalk.whiteBright('├'), chalk.keyword('red')(`[ ERROR ]`), chalk.greenBright('from'), chalk.yellow(msg.senderNumber))
                     else if (error instanceof Error) msg.reply(error.message, true), console.log(error.message)
                 })
         } else {

@@ -1,6 +1,6 @@
 {
     "ind": {
-        "startMessage": "Halo, ada yang bisa kubantu? (Pesan otomatis dari bot)",
+        "startMessage": "Halo, ada yang bisa kubantu?",
         "sticker": "Please send/reply the picture/video that you want to convert to a sticker",
         "stickerMeme": "tolong kirim/balas gambar yang akan melihat stiker meme! (tidak mendukung video)",
         "util": {
@@ -51,11 +51,23 @@
         "adminOnly": "ini menu rahasia/khusus admin",
         "devOnly": "ini menu rahasia/khusus developer",
         "maintenance": "Fitur belum dapat digunakan (pemeliharaan)",
-        "setAge": "Anda harus menyetujui semua aturan untuk menggunakan bot dan memasukkan usia Anda",
+        "register": {
+            "setAge": "Anda harus mendaftarkan usia Anda!",
+            "must": "Anda harus mendaftar dulu, .register <umur>",
+            "needAge": "Untuk mendaftar, Anda harus memasukkan usia Anda! .reg <age>",
+            "ageNumber": "Usia harus berupa angka!",
+            "old": "maaf kamu terlalu tua!",
+            "young": "maaf kamu terlalu muda!",
+            "already": "Anda sudah terdaftar!, Anda hanya dapat mendaftar sekali!, jika Anda ingin mengubah chat owner!",
+            "success": "Registrasi kamu berhasil!",
+            "error": "terjadi kesalahan!"
+        },
         "nsfw": "Fitur ini tidak cocok untuk usia 16 tahun ke bawah",
         "needlimit": "Anda butuh limit! (jadilah pengguna premium!)",
         "require": {
-            "link": "Harap masukan link!"
+            "link": "Harap masukan link!",
+            "text": "Harap masukan text",
+            "text2": "Harap masukan text ke 2, di batasi oleh \"|\""
         },
         "wronglink": "Link yang di masukkan salah!",
         "join": {
@@ -68,7 +80,7 @@
         }
     },
     "eng": {
-        "startMessage": "Hello, is there anything I can help you with? (Automatic messages from bots)",
+        "startMessage": "Hello, is there anything I can help you with?",
         "sticker": "Silakan kirim/balas gambar/video yang ingin diubah menjadi stiker",
         "stickerMeme": "please send/reply the picture that will see the meme sticker! (does not support videos)",
         "util": {
@@ -117,11 +129,23 @@
         "adminOnly": "this is a secret/khusus menu for admin",
         "devOnly": "this is a secret/khusus menu for developer",
         "maintenance": "The feature cannot be used yet (maintenance)",
-        "setAge": "You must agree to all the rules for using the bot and enter your age",
+        "registers": {
+            "setAge": "You must register your age!",
+            "must": "You must register first, .register <age>",
+            "needAge": "To register, you must enter your age! .reg <age>",
+            "ageNumber": "Age must be a number!",
+            "old": "sorry you are too old!",
+            "young": "sorry you are too young!",
+            "already": "you are already registered!, you can only register once!, if you want to change the chat owner!",
+            "success": "Your registration was successful!",
+            "error": "An error occurred"
+        },
         "nsfw": "This feature is not suitable for ages 16 and under",
         "needlimit": "You need limits! (be a premium user!)",
         "require": {
-            "link": "Please input link"
+            "link": "Please input link",
+            "text": "Please enter text",
+            "text2": "Please enter 2nd text, limit by \"|\""
         },
         "wronglink": "The link entered is wrong",
         "join": {

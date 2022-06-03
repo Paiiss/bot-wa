@@ -80,6 +80,7 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
         throw new MessageError(text)
     }
     m.download = () => downloadMedia(msg.message)
+    m.react = (react: string = '👋🏻') => !m.isSelf && client.sendMessage(m.from, { react: { text: react, key: msg.key } })
     m.createMessageCollector = (options = { filter: null }) => new MessageCollector(client, options, m)
     return m
 }

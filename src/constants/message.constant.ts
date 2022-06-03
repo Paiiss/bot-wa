@@ -18,6 +18,7 @@ export interface MessageSerialize {
     messageTimestamp?: number | Long.Long
     reply?: (text: string, q?: boolean) => Promise<proto.WebMessageInfo>
     error?: (text: string, q?: boolean) => Promise<proto.WebMessageInfo>
+    react?: (text?: string) => Promise<proto.WebMessageInfo | any>
     download?: () => Promise<Buffer>
     createMessageCollector?: (options: MessageCollectorOptions) => MessageCollector
 }
@@ -107,12 +108,24 @@ export interface IMess {
     adminOnly: string
     devOnly: string
     maintenance: string
-    setAge: string
+    register: {
+        must: string
+        setAge: string
+        ageNumber: string
+        needAge: string
+        old: string
+        young: string
+        already: string
+        success: string
+        error: string
+    }
     nsfw: string
     needlimit: string
     startMessage: string
     require: {
         link: string
+        text: string
+        text2: string
     }
     wronglink: string
     join: {
