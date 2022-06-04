@@ -106,9 +106,11 @@ export const getJson = async (url: string) => {
     let json = res.json()
     if (json) return json
 }
+
 export const getRandom = (ext) => {
     return randomBytes(7).toString('hex').toUpperCase() + ext
 }
+
 export const post = async (url: string, formdata: {}) => {
     return fetch(url, {
         method: 'POST',

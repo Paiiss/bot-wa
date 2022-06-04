@@ -150,7 +150,7 @@ callback: async ({ msg, args }) => {
 
 -   Where to find interfaces?
 
-    All interfaces are in [`src/constants`](https://github.com/Paiiss/bot-wa/blob/master/src/constants/command.constant.ts)
+    All interfaces are in [`src/constants`](https://github.com/Paiiss/bot-wa/blob/master/src/constants)
 
 ## Contributing
 

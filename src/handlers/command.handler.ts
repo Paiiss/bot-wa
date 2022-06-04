@@ -173,7 +173,7 @@ export class CommandHandler {
 
             await getCommand
                 .callback({ client, message, msg, command, prefix, args, shortMessage, User, Group })
-                .then(async () => await User.updateOne({ $inc: { limit: +(getCommand.consume || 0), tReq: +1, dReq: +1 } }))
+                .then(async () => await User.updateOne({ $inc: { limit: +(getCommand.consume || 0), totalRequest: +1, dayRequest: +1 } }))
                 .catch((error) => {
                     if (error instanceof MessageError) console.log(chalk.whiteBright('├'), chalk.keyword('red')(`[ ERROR ]`), chalk.greenBright('from'), chalk.yellow(msg.senderNumber))
                     else if (error instanceof Error) msg.reply(error.message, true), console.log(error.message)

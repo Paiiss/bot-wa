@@ -96,6 +96,7 @@ export interface IMess {
         failLeave: string
         failGetLink: string
         server: string
+        nosong: string
     }
     mute: {
         isMute: string
@@ -126,6 +127,7 @@ export interface IMess {
         link: string
         text: string
         text2: string
+        find: string
     }
     wronglink: string
     join: {

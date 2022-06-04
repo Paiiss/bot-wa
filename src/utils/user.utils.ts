@@ -1,4 +1,4 @@
-import userSchema from '@schema/user.schema'
+import userSchema, { IUser } from '@schema/user.schema'
 
 export const findUser = async (sender: string) => {
     if (!/@s.whatsapp.net/.test(sender)) throw 'Invalid id/sender'
@@ -7,23 +7,23 @@ export const findUser = async (sender: string) => {
     return data
 }
 
-const getNeededXP = (level) => level * level * 100
-export const updateUser = async ({ client, sender, limit, xpToAdd, msg }) => {
-    try {
-        const result = await userSchema.findOneAndUpdate({ sender: sender }, { sender: sender, $inc: { exp: xpToAdd, tReq: +1, limit: +limit } }, { upsert: true, new: true })
-        let { exp, level } = result
-        const needed = getNeededXP(level)
-        if (exp >= needed) {
-            ++level
-            exp -= needed
-            await userSchema.updateOne({ sender: sender }, { level, exp })
-            msg.reply(`@${sender.split('@')[0]} Congratulations you leveled up 🥳, now level ${level}`)
-            // await client.sendMessage(sender, { text: `@${sender.split("@")[0]} Congratulations you leveled up 🥳, now level ${level}`, mentions: [sender] }, { quoted: msg });
-        }
-    } catch (e) {
-        console.log(e)
-    }
-}
+// const getNeededXP = (level) => level * level * 100
+// export const updateUser = async ({ client, sender, limit, xpToAdd, msg }) => {
+//     try {
+//         const result = await userSchema.findOneAndUpdate({ sender: sender }, { sender: sender, $inc: { exp: xpToAdd, tReq: +1, limit: +limit } }, { upsert: true, new: true })
+//         let { exp, level } = result
+//         const needed = getNeededXP(level)
+//         if (exp >= needed) {
+//             ++level
+//             exp -= needed
+//             await userSchema.updateOne({ sender: sender }, { level, exp })
+//             msg.reply(`@${sender.split('@')[0]} Congratulations you leveled up 🥳, now level ${level}`)
+//             // await client.sendMessage(sender, { text: `@${sender.split("@")[0]} Congratulations you leveled up 🥳, now level ${level}`, mentions: [sender] }, { quoted: msg });
+//         }
+//     } catch (e) {
+//         console.log(e)
+//     }
+// }
 
 export const blockUser = async (sender: string, is: boolean) => {
     try {

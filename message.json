@@ -38,7 +38,8 @@
         "error": {
             "failLeave": "Gagal keluar dari grup, silakan coba lagi",
             "failGetLink": "Gagal untuk mendapatkan link group",
-            "server": "terjadi kesalahan server"
+            "server": "terjadi kesalahan server",
+            "nosong": "Tidak dapat menemukan lagu tersebut!"
         },
         "mute": {
             "isMute": "Bot sudah dari tadi di mute",
@@ -67,7 +68,8 @@
         "require": {
             "link": "Harap masukan link!",
             "text": "Harap masukan text",
-            "text2": "Harap masukan text ke 2, di batasi oleh \"|\""
+            "text2": "Harap masukan text ke 2, di batasi oleh \"|\"",
+            "find": "Harap masukan apa yang ingin kamu cari!"
         },
         "wronglink": "Link yang di masukkan salah!",
         "join": {
@@ -116,7 +118,8 @@
         "error": {
             "failLeave": "Failed to leave the group, please try again",
             "failGetLink": "Failed to get group link",
-            "server": "server error occurred"
+            "server": "server error occurred",
+            "nosong": "we didn't find the song!"
         },
         "mute": {
             "isMute": "The bot has been muted a long time ago!",
@@ -145,7 +148,8 @@
         "require": {
             "link": "Please input link",
             "text": "Please enter text",
-            "text2": "Please enter 2nd text, limit by \"|\""
+            "text2": "Please enter 2nd text, limit by \"|\"",
+            "find": "Please enter what you are looking for!"
         },
         "wronglink": "The link entered is wrong",
         "join": {
