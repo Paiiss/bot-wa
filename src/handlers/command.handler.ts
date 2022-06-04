@@ -17,12 +17,11 @@ import { postJson, sleep } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
 import color from 'chalk'
 import FormData from 'form-data'
-import { data } from 'cheerio/lib/api/attributes'
+import { lolhuman, botname } from 'config.json'
 dotenv.config()
 
 const gRent = require('../data/g.json')
 const rendemCode = require('../data/rendem.json')
-const { lolhuman } = require('../../config.json')
 
 async function checkRendem(body: string, client: AnyWASocket, msg: MessageSerialize) {
     let reg = new RegExp(Object.keys(rendemCode).join('|'))
@@ -50,7 +49,7 @@ async function antinsfw(msg: MessageSerialize, group: IGroup) {
         console.log(filebuffer)
         let formdata = new FormData()
         formdata.append('img', filebuffer, '.png')
-        let res = await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=}`, formdata)
+        let res = await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata)
         if (res.status !== 500) {
             if (Number(res.result.replace('%', '')) >= 30) {
                 console.log(color('[ANTI NSFW]', 'red'), 'detected', color(msg.sender.split('@')[0], 'lime'), 'in', color(msg.groupMetadata.subject, 'lime'))
@@ -176,7 +175,7 @@ export class CommandHandler {
                 .then(async () => await User.updateOne({ $inc: { limit: +(getCommand.consume || 0), totalRequest: +1, dayRequest: +1 } }))
                 .catch((error) => {
                     if (error instanceof MessageError) console.log(chalk.whiteBright('├'), chalk.keyword('red')(`[ ERROR ]`), chalk.greenBright('from'), chalk.yellow(msg.senderNumber))
-                    else if (error instanceof Error) msg.reply(error.message, true), console.log(error.message)
+                    else if (error instanceof Error) msg.reply(`There is an error!`, true), console.log(error)
                 })
         } else {
             if (msg.isGroup) return
@@ -226,7 +225,7 @@ export class CommandHandler {
 }
 
 const t = [
-    `hello i'm allen bot 🐱👋🏻`,
+    `hello i'm ${botname} 🐱👋🏻`,
     `This group ID is automatically saved to the database👨🏼‍💻`,
     `We provide a trial period for using bots within 3 days, within 3 days the bot will automatically leave the group, if you want to extend the bot usage period, please rent a bot by contacting the admin`,
     `*Rental price*\n• 2 day / IDR: 1k\n• 2 Weeks / IDR: 5k\n• 1 Month / IDR: 10k\n• 3 Month / IDR: 25k`,

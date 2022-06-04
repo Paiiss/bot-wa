@@ -61,7 +61,7 @@ export const autonodecron = async (client: AnyWASocket) => {
                 resetAllLimit()
             } catch (error) {
                 console.log(error)
-                client.sendMessage(process.env.gcid, { text: `Error reset limit!\n${error}` })
+                await client.sendMessage(process.env.gcid, { text: `Error reset limit!\n${error}` })
             }
 
             let allData: any = groupSchema.find()
