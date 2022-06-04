@@ -138,4 +138,5 @@ export interface IMess {
     pay: {
         less: string
     }
+    reply: string
 }

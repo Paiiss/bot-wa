@@ -79,7 +79,8 @@
         },
         "pay": {
             "less": "Uang anda kurang!"
-        }
+        },
+        "reply": "Harap reply pesan!"
     },
     "eng": {
         "startMessage": "Hello, is there anything I can help you with?",
@@ -159,6 +160,7 @@
         },
         "pay": {
             "less": "You have less money!"
-        }
+        },
+        "reply": "please reply message"
     }
 }

@@ -5,10 +5,12 @@ import { Boom } from '@hapi/boom'
 import qrcode from 'qrcode'
 import chalk from 'chalk'
 import P from 'pino'
+import { GroupHandler } from '@handlers/group.handler'
 
 // start a connection
 export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = false, jid?: string) => {
-    const commandHander = new CommandHandler()
+    const commandHandler = new CommandHandler()
+    const groupHandler = new GroupHandler()
     console.log(chalk.whiteBright('╭─── [ LOG ]'))
     let client: AnyWASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()
@@ -34,9 +36,13 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
         client.ev.on('creds.update', saveState)
     }
 
-    commandHander.registerCommand()
+    commandHandler.registerCommand()
     client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpdateType }) => {
-        commandHander.messageHandler(m, client)
+        commandHandler.messageHandler(m, client)
+    })
+
+    client.ev.on('group-participants.update', (log) => {
+        groupHandler.joinhandler(log, client)
     })
 
     client.ev.on('connection.update', async (update: ConnectionState) => {
