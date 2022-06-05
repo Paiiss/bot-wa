@@ -80,7 +80,12 @@
         "pay": {
             "less": "Uang anda kurang!"
         },
-        "reply": "Harap reply pesan!"
+        "reply": "Harap reply pesan!",
+        "quiz": {
+            "already": "Sudah ada quiz yang berlangsung",
+            "winner": "Selamat kepada {winner}!, kamu menjawab dengan benar",
+            "timeout": "Waktu sudah habis, tidak ada yang bisa memecahkan tekateki"
+        }
     },
     "eng": {
         "startMessage": "Hello, is there anything I can help you with?",
@@ -161,6 +166,11 @@
         "pay": {
             "less": "You have less money!"
         },
-        "reply": "please reply message"
+        "reply": "please reply message",
+        "quiz": {
+            "already": "There is already a quiz running",
+            "winner": "Congratulations to {winner}!, you answered correctly",
+            "timeout": "Time is up, no one can solve the puzzle"
+        }
     }
 }

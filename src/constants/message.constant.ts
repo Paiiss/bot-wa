@@ -139,4 +139,9 @@ export interface IMess {
         less: string
     }
     reply: string
+    quiz: {
+        already: string
+        winner: string
+        timeout: string
+    }
 }

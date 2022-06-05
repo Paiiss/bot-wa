@@ -5,7 +5,6 @@ export default {
     description: 'Asking bots to join the group',
     category: 'group',
     callback: async ({ client, msg, args, shortMessage, message }) => {
-        console.log(message)
         let { from, sender, quoted } = msg
         const rex1 = /chat.whatsapp.com\/([\w\d]*)/g
         if (client.type == 'legacy') return msg.reply(`!`)

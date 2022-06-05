@@ -6,11 +6,13 @@ import qrcode from 'qrcode'
 import chalk from 'chalk'
 import P from 'pino'
 import { GroupHandler } from '@handlers/group.handler'
+import { protoType } from '@constants/global.constant'
 
 // start a connection
 export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = false, jid?: string) => {
     const commandHandler = new CommandHandler()
     const groupHandler = new GroupHandler()
+    protoType()
     console.log(chalk.whiteBright('╭─── [ LOG ]'))
     let client: AnyWASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()

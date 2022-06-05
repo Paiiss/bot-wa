@@ -7,7 +7,7 @@
         "start": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts",
         "pm2": "ts-node --project ./tsconfig.json -r tsconfig-paths/register src/main.ts"
     },
-    "homepage": "https://github.com/Paiiss/bot-wa/",
+    "homepage": "https://github.com/Paiiss/bot-wa/#readme",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Paiiss/bot-wa.git"
@@ -28,6 +28,7 @@
     "description": "",
     "dependencies": {
         "@adiwajshing/baileys": "^4.0.1",
+        "@bochilteam/scraper": "^2.0.0",
         "@hapi/boom": "^9.1.4",
         "@types/glob": "^7.2.0",
         "@types/qrcode": "^1.4.2",

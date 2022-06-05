@@ -39,10 +39,10 @@ export class MessageCollector extends EventEmitter {
         if (this.msg.from !== msg.from) return
         if (this.options.filter.test(msg.body)) {
             this.countMessage++
-            if (this.countMessage > this.options.max) {
+            await this.emit('collect', msg)
+            if (this.countMessage >= this.options.max) {
                 return this.stop('limit')
             }
-            return this.emit('collect', msg)
         }
     }
 

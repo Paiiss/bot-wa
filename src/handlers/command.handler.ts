@@ -124,15 +124,15 @@ export class CommandHandler {
                 if (!cekA[0].admin) return
             }
 
-            if (User.isBan) return msg.reply(shortMessage.isBan)
+            if (User.banned) return msg.reply(shortMessage.isBan)
             if (getCommand?.premiumOnly && !User.premium) return msg.reply(shortMessage.isPrem)
             // if (getCommand?.groupOnly && !msg.isGroup) return msg.reply(shortMessage.group.onlyGroup);
             if ((getCommand?.adminGroup || getCommand?.groupOnly || getCommand?.isBotAdmin) && !msg.isGroup) return msg.reply(shortMessage.group.onlyGroup)
             if (getCommand?.privateOnly && msg.isGroup) return msg.reply(shortMessage.privateOnly)
-            if (getCommand?.isAdminBot && !User.isAdm) return msg.reply(shortMessage.adminOnly)
-            if (getCommand?.ownerOnly && !User.isOwn) return msg.reply(shortMessage.devOnly)
-            if (getCommand?.maintenance && !User.isOwn) return msg.reply(shortMessage.maintenance)
-            if (getCommand?.adminGroup && !isSenderAdmin && !User.isOwn && !User.isAdm) return msg.reply(shortMessage.group.noPerms)
+            if (getCommand?.isAdminBot && !User.admin) return msg.reply(shortMessage.adminOnly)
+            if (getCommand?.ownerOnly && !User.owner) return msg.reply(shortMessage.devOnly)
+            if (getCommand?.maintenance && !User.owner) return msg.reply(shortMessage.maintenance)
+            if (getCommand?.adminGroup && !isSenderAdmin && !User.owner && !User.admin) return msg.reply(shortMessage.group.noPerms)
             if (getCommand?.isBotAdmin && !isBotAdmin) return msg.reply(shortMessage.group.botNoAdmin)
             if (getCommand?.nsfw) {
                 if (isGroup && Group.antiNsfw) return msg.reply(shortMessage.group.antinsfw)
@@ -142,7 +142,7 @@ export class CommandHandler {
                     return msg.reply(shortMessage.nsfw)
                 }
             }
-            if (getCommand?.consume && User.limit > User.limitRequest) return msg.reply(shortMessage.needlimit)
+            if (getCommand?.consume && User.limit > User.limitRequest && !User.owner) return msg.reply(shortMessage.needlimit)
 
             const command_log = [chalk.whiteBright('├'), chalk.keyword('aqua')(`[ ${msg.isGroup ? ' GROUP ' : 'PRIVATE'} ]`), msg.body.substr(0, 50).replace(/\n/g, ''), chalk.greenBright('from'), chalk.yellow(msg.senderNumber)]
             if (msg.isGroup) {
@@ -162,7 +162,7 @@ export class CommandHandler {
                     return await client.sendMessage(msg.from, { text: `Cooldown applies, please wait another _${timeLeft.toFixed(1)} second(s)_` })
                 }
             }
-            if (!User.isAdm && !User.isOwn && !User.premium) {
+            if (!User.admin && !User.owner && !User.premium) {
                 cooldown.set(msg.from, now)
                 setTimeout(() => cooldown.delete(msg.from), cdAmount)
             }

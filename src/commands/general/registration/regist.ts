@@ -6,7 +6,7 @@ export default {
     category: 'registration',
     aliases: ['reg', 'regi', 'registration', 'daftar'],
     callback: async ({ msg, client, args, shortMessage, User }) => {
-        const { from, sender } = msg
+        const { from, sender, pushName } = msg
         let nbr = args.join(' ')
         if (User.age) return msg.error(shortMessage.register.already)
         if (args.length < 1) return msg.error(shortMessage.register.needAge)
@@ -14,7 +14,7 @@ export default {
         if (Number(nbr) < 6) return msg.error(shortMessage.register.young)
         if (Number(nbr) > 60) return msg.error(shortMessage.register.old)
 
-        await editUser(sender, { age: Number(nbr) }).catch((e) => {
+        await editUser(sender, { age: Number(nbr), nickname: pushName }).catch((e) => {
             console.log(e)
             return msg.error(shortMessage.register.error)
         })
