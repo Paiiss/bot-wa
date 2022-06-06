@@ -49,7 +49,7 @@ async function antinsfw(msg: MessageSerialize, group: IGroup) {
         console.log(filebuffer)
         let formdata = new FormData()
         formdata.append('img', filebuffer, '.png')
-        let res = await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata)
+        let res = await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata).catch((e) => console.log(`Anti nsfw api still error`))
         if (res.status !== 500) {
             if (Number(res.result.replace('%', '')) >= 30) {
                 console.log(color('[ANTI NSFW]', 'red'), 'detected', color(msg.sender.split('@')[0], 'lime'), 'in', color(msg.groupMetadata.subject, 'lime'))
