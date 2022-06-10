@@ -2,6 +2,7 @@ import { AnyWASocket, WAMessage } from '@adiwajshing/baileys'
 import { MessageSerialize } from '@constants/message.constant'
 import { MessageCollector } from './events.utils'
 import { downloadMedia } from './helper.utils'
+import { footer } from 'config.json'
 
 export class MessageError extends Error {
     constructor(message) {
@@ -74,7 +75,7 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
     }
     m.messageTimestamp = msg.messageTimestamp
     m.groupMetadata = m.isGroup ? (client.type === 'md' ? await client.groupMetadata(m.from) : await client.groupMetadata(m.from, false)) : null
-    m.reply = (text, q = null) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender] }, { quoted: q ? msg : null })
+    m.reply = (text, q = null, templateButtons = []) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender], templateButtons, footer: footer || null }, { quoted: q ? msg : null })
     m.error = (text, q = null) => {
         m.reply(text, q)
         throw new MessageError(text)

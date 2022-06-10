@@ -11,7 +11,7 @@ import { IMess, MessageSerialize } from '@constants/message.constant'
 import { IGroup } from 'src/schema/group.schema'
 import { addRentGroup, findGroup } from '@utils/group.utils'
 import toMS from 'ms'
-import { findUser } from '@utils/user.utils'
+import { expUpdate, findUser } from '@utils/user.utils'
 import gSchema from '@schema/group.schema'
 import { postJson, sleep } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
@@ -174,7 +174,7 @@ export class CommandHandler {
 
             await getCommand
                 .callback({ client, message, msg, command, prefix, args, shortMessage, User, Group })
-                .then(async () => await User.updateOne({ $inc: { limit: +(getCommand.consume || 0), totalRequest: +1, dayRequest: +1 } }))
+                .then(async () => await expUpdate({ msg, toAdd: { exp: +5, limit: +(getCommand.consume || 0), totalRequest: +1, dayRequest: +1 } }).catch((e) => console.log(e)))
                 .catch((error) => {
                     if (error instanceof MessageError) console.log(chalk.whiteBright('├'), chalk.keyword('red')(`[ ERROR ]`), chalk.greenBright('from'), chalk.yellow(msg.senderNumber))
                     else if (error instanceof Error) msg.reply(`There is an error!`, true), console.log(error)
