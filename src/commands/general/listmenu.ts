@@ -54,7 +54,8 @@ export default {
             let d = category[key].map((cmd) => cmd.name)
             let e = []
             for (let i = 0; i < d.length; i++) {
-                e.push({ title: d[i], rowId: prefix + `lmenu ` + d[i] })
+                let __cmd = commands.get(d[i])
+                e.push({ title: d[i], rowId: prefix + `lmenu ` + d[i], description: __cmd.description || null })
             }
             t += `*${key.toUpperCase()}*\n~> \`\`\`${category[key].map((cmd) => cmd.name).join(', ')}\`\`\`\n\n`
             sections.push({

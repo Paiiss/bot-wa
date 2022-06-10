@@ -1,8 +1,6 @@
 import { startConnection } from '@utils/connect.utils'
 import { autonodecron } from '@utils/cron.utils'
 import { mongodb } from '@utils/database/mongodb'
-import { protoType } from '@constants/global.constant'
-protoType()
 
 mongodb(process.env.MONGODB_URL)
 startConnection('md').then(async (client) => {

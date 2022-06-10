@@ -1,9 +1,12 @@
 import userSchema, { IUser } from '@schema/user.schema'
+import chalk from 'chalk'
+import moment from 'moment-timezone'
+import { timezone } from 'config.json'
 
 export const findUser = async (sender: string) => {
     if (!/@s.whatsapp.net/.test(sender)) throw 'Invalid id/sender'
     let data = await userSchema.findOne({ sender })
-    if (!data) data = await userSchema.create({ sender: sender })
+    if (!data) (data = await userSchema.create({ sender: sender })), console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[ NEW USER ]'), sender.split('@')[0], 'on', chalk.yellowBright(moment.tz(timezone).format('hh:mm:ss')))
     return data
 }
 

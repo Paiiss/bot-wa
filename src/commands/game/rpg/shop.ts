@@ -1,4 +1,5 @@
 import { ICommand } from '@constants/command.constant'
+import { findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
@@ -8,7 +9,7 @@ export default {
 
     callback: async ({ msg, client, User, args, command, prefix }) => {
         const { sender, from } = msg
-        let user = User.rpg
+        let user = await findUserRpg(sender)
         if (command == 'shop') return msg.reply(`Use it by ${prefix}buy / ${prefix}sell`)
         const listItems: any = Object.fromEntries(Object.entries(items[command.toLowerCase()]).filter(([v]) => v && v in user))
 

@@ -1,4 +1,5 @@
 import { ICommand } from '@constants/command.constant'
+import { findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
@@ -7,7 +8,7 @@ export default {
 
     callback: async ({ msg, client, User, args, prefix }) => {
         const { sender, pushName, from } = msg
-        let user = User.rpg
+        let user = await findUserRpg(sender)
         const tfcrates = Object.keys(tfinventory.tfcrates)
             .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`)
             .filter((v) => v)

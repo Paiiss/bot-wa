@@ -1,4 +1,5 @@
 import { ICommand } from '@constants/command.constant'
+import { findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 import adventure from './adventure'
 
@@ -9,7 +10,7 @@ export default {
 
     callback: async ({ msg, client, User, args }) => {
         const { sender, pushName } = msg
-        let user = User.rpg
+        let user = await findUserRpg(sender)
         const tools = Object.keys(inventory.tools)
             .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)}${v}: ${typeof inventory.tools[v] === 'object' ? inventory.tools[v][user[v]?.toString()] : `Level(s) ${user[v]}`}`)
             .filter((v) => v)

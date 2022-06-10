@@ -1,4 +1,5 @@
 import { ICommand } from '@constants/command.constant'
+import { findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
@@ -8,25 +9,26 @@ export default {
         const { sender } = msg
         const cooldown = 300000
         let __date: any = new Date()
-        let timers = cooldown - (__date - User.rpg.lastadventure)
-        if (User.rpg.health < 80) return msg.reply(`You need blood for adventure`)
-        if (__date - User.rpg.lastadventure <= cooldown) return msg.reply(`Please wait for the cooldown adventure! ⏱️ ${(timers / 1000).toFixed(1)} second(s)`, true)
-        const rewards = reward(User.rpg)
+        let __rpg = await findUserRpg(sender)
+        let timers = cooldown - (__date - __rpg.lastadventure)
+        if (__rpg.health < 80) return msg.reply(`You need blood for adventure`)
+        if (__date - __rpg.lastadventure <= cooldown) return msg.reply(`Please wait for the cooldown adventure! ⏱️ ${(timers / 1000).toFixed(1)} second(s)`, true)
+        const rewards = reward(__rpg)
         let text = "You've been adventure and decrease"
         for (const lost in rewards.lost)
-            if (User.rpg[lost]) {
+            if (__rpg[lost]) {
                 const total = rewards.lost[lost].getRandom()
-                User.rpg[lost] -= total * 1
+                __rpg[lost] -= total * 1
                 if (total) text += `\n${global.rpg.emoticon(lost)}${lost}: ${total}`
             }
         text += '\n\n🔖 ᴀᴅᴠᴇɴᴛᴜʀᴇ ʀᴇᴡᴀʀᴅ ʀᴇᴄᴇɪᴠᴇᴅ :'
         for (const rewardItem in rewards.reward)
-            if (rewardItem in User.rpg) {
+            if (rewardItem in __rpg) {
                 const total = rewards.reward[rewardItem].getRandom()
-                User.rpg[rewardItem] += total * 1
+                __rpg[rewardItem] += total * 1
                 if (total) text += `\n⮕ ${global.rpg.emoticon(rewardItem)}${rewardItem}: ${total}`
             }
-        User.rpg.lastadventure = Date.now() * 1
+        __rpg.lastadventure = Date.now() * 1
         await editUser(sender, User)
         return msg.reply(text)
     },

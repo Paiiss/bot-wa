@@ -1,4 +1,5 @@
 import { ICommand } from '@constants/command.constant'
+import { findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
@@ -8,7 +9,7 @@ export default {
 
     callback: async ({ msg, client, User, args }) => {
         const { sender } = msg
-        let user = User.rpg
+        let user = await findUserRpg(sender)
         if (Date.now() - user.lastmonthly < cooldown) return msg.reply(`You have claimed today, please wait for the cooldown to finish`, true)
         let text = ''
         for (let reward of Object.keys(rewards))

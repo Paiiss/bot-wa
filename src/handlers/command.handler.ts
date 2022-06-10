@@ -28,11 +28,12 @@ async function checkRendem(body: string, client: AnyWASocket, msg: MessageSerial
     let mat = body.match(reg)
     if (reg.test(body) && rendemCode.hasOwnProperty(mat[0])) {
         if (!msg.isGroup && rendemCode[mat[0]].type === 'rent') await msg.reply(`Code can only be used in groups`)
-
         addRentGroup(msg.from, rendemCode[mat[0]].duration)
             .then(async (res: number) => {
                 delete rendemCode[mat[0]]
-                await client.sendMessage(msg.from, { text: `Redeem code used successfully, validity period: ${toMS(res - Date.now(), { long: true })}`, mentions: [msg.sender] }).then(async () => {
+                let __ms = toMS(res - Date.now(), { long: true })
+                console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[ RENT ]'), `group ${msg.groupMetadata.subject} activates rental for ${__ms}`)
+                await client.sendMessage(msg.from, { text: `Redeem code used successfully, validity period: ${__ms}`, mentions: [msg.sender] }).then(async () => {
                     fs.writeFileSync('./src/data/rendem.json', JSON.stringify(rendemCode))
                 })
             })
@@ -49,13 +50,14 @@ async function antinsfw(msg: MessageSerialize, group: IGroup) {
         console.log(filebuffer)
         let formdata = new FormData()
         formdata.append('img', filebuffer, '.png')
-        let res = await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata).catch((e) => console.log(`Anti nsfw api still error`))
-        if (res.status !== 500) {
-            if (Number(res.result.replace('%', '')) >= 30) {
-                console.log(color('[ANTI NSFW]', 'red'), 'detected', color(msg.sender.split('@')[0], 'lime'), 'in', color(msg.groupMetadata.subject, 'lime'))
-                msg.reply(`Nswf detected, Score: ${res.result}`)
-            }
-        }
+        await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata)
+            .then(async (res) => {
+                if (Number(res.result.replace('%', '')) >= 30) {
+                    console.log(color('[ANTI NSFW]', 'red'), 'detected', color(msg.sender.split('@')[0], 'lime'), 'in', color(msg.groupMetadata.subject, 'lime'))
+                    msg.reply(`Nswf detected, Score: ${res.result}`)
+                }
+            })
+            .catch((e) => console.log(`Anti nsfw api still error`))
     }
 }
 

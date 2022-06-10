@@ -6,6 +6,8 @@ import qrcode from 'qrcode'
 import chalk from 'chalk'
 import P from 'pino'
 import { GroupHandler } from '@handlers/group.handler'
+import { protoType } from '@constants/global.constant'
+protoType()
 
 // start a connection
 export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = false, jid?: string) => {

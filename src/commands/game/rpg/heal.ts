@@ -1,4 +1,5 @@
 import { ICommand } from '@constants/command.constant'
+import { findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
@@ -7,7 +8,7 @@ export default {
 
     callback: async ({ msg, client, User, args }) => {
         const { sender } = msg
-        let user = User.rpg
+        let user = await findUserRpg(sender)
         if (user.health >= 100) return msg.reply(`Your ❤️health is full!`)
         const heal = 40 + user.cat * 4
         let count = Math.max(1, Math.min(Number.MAX_SAFE_INTEGER, (isNumber(args[0]) && parseInt(args[0])) || Math.round((100 - user.health) / heal))) * 1
