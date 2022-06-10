@@ -1,4 +1,6 @@
 import { commands, ICommand } from '@constants/command.constant'
+import { getAll } from '@utils/user.utils'
+import { botname } from 'config.json'
 
 export default {
     aliases: ['hlist', 'menulist', 'lmenu', 'info'],
@@ -14,7 +16,7 @@ export default {
             const cmd = commands.get(name) || commands.find((cmd) => cmd.aliases && cmd.aliases.includes(name))
             let txt: string = ``
             if (!cmd || cmd.category === 'private') return await msg.reply('No command found')
-            else txt += `⍟────── *${name}* ──────⍟\n\n`
+            else txt += `⍟──── *${name}* ────⍟\n\n`
 
             txt += `*Alias:* ${cmd.aliases ? cmd.aliases.join(', ') : '-'}\n`
             txt += `*Category:* ${cmd.category || `-`}\n`
@@ -44,8 +46,8 @@ export default {
             }
         }
 
-        let str = ``,
-            t = `*Here My Command List*\n\n`
+        let str = [`┌──「 ${botname} 」──⬣`, `│⬡ ${await (await getAll()).length} Users`, `╰──────⬣`]
+        let t = `*Here My Command List*\n\n`
         const keys = Object.keys(category)
 
         let sections = []
@@ -64,12 +66,12 @@ export default {
             })
         }
 
-        await client.sendMessage(from, { text: t })
+        // await client.sendMessage(from, { text: t })
         return client.sendMessage(from, {
-            text: str,
-            footer: `AllenBOT - made by @mfa_daffa`,
+            text: str.join('\n'),
+            footer: `\`\`\`AllenBOT - made by @mfa_daffa\`\`\``,
             title: 'AllenBOT menu list',
-            buttonText: 'Click here to see the menu list by category',
+            buttonText: 'LIST MENU',
             sections,
         })
     },

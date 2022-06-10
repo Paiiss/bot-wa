@@ -2,7 +2,6 @@ import User from '@schema/user.schema'
 import chalk from 'chalk'
 import moment from 'moment-timezone'
 import { timezone } from 'config.json'
-import { data } from 'cheerio/lib/api/attributes'
 
 export const findUser = async (sender: string) => {
     if (!/@s.whatsapp.net/.test(sender)) throw 'Invalid id/sender'

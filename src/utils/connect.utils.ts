@@ -61,5 +61,7 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
         }
         console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `Connection : ${update?.connection}`)
     })
+    /* client.ev.on('presence.update', (json) => console.log(json)) Will continue when the afk feature is ready!  */
+
     return client
 }
