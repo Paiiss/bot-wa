@@ -9,7 +9,7 @@ export default {
         await client
             .onWhatsApp(args[0])
             .then((res) => {
-                if (res[0].exists) return msg.reply(`Number available on whatsapp!`, false, [{ index: 1, urlButton: { displayText: 'Click here', url: `https://wa.me/${res[0].jid.split('@')[0]}` } }])
+                if (res[0].exists) return msg.button(`Number available on whatsapp!`, [{ index: 1, urlButton: { displayText: 'Click here', url: `https://wa.me/${res[0].jid.split('@')[0]}` } }])
                 else return msg.error(`ID not found!`)
             })
             .catch((e) => msg.error(`ID not found!`))

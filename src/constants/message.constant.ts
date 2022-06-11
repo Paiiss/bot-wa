@@ -16,7 +16,8 @@ export interface MessageSerialize {
     quoted?: MessageQuote
     body?: string
     messageTimestamp?: number | Long.Long
-    reply?: (text: string, q?: boolean, button?: proto.IHydratedTemplateButton[]) => Promise<proto.WebMessageInfo>
+    reply?: (text: string, q?: boolean) => Promise<proto.WebMessageInfo>
+    button?: (text: string, button?: proto.IHydratedTemplateButton[]) => Promise<proto.WebMessageInfo>
     error?: (text: string, q?: boolean) => Promise<proto.WebMessageInfo>
     react?: (text?: string) => Promise<proto.WebMessageInfo | any>
     download?: () => Promise<Buffer>
