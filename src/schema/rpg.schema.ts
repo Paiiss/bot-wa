@@ -48,7 +48,7 @@ export interface IUser {
     lasthunt: number
     lastweekly: number
     lastmonthly: number
-    petFood: number
+    food: number
     catexp: number
 }
 
@@ -110,7 +110,7 @@ var userSchema = new Schema<IUser>({
     lasthunt: noll,
     lastweekly: noll,
     lastmonthly: noll,
-    petFood: noll,
+    food: noll,
     catexp: noll,
 })
 

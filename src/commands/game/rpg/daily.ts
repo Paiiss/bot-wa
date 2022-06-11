@@ -1,5 +1,5 @@
 import { ICommand } from '@constants/command.constant'
-import { findUserRpg } from '@utils/rpg.utils'
+import { editRpg, findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
@@ -8,17 +8,17 @@ export default {
 
     callback: async ({ msg, client, User, args }) => {
         const { sender } = msg
-        let user = await findUserRpg(sender)
-        if (Date.now() - user.lastclaim < cooldown) return msg.reply(`You have claimed today, please wait for the cooldown to finish`, true)
+        let __rpg = await findUserRpg(sender)
+        if (Date.now() - __rpg.lastclaim < cooldown) return msg.reply(`You have claimed today, please wait for the cooldown to finish`, true)
         let text = ''
         for (let reward of Object.keys(rewards)) {
-            if (!(reward in user)) continue
-            user[reward] += rewards[reward]
+            if (!(reward in __rpg)) continue
+            __rpg[reward] += rewards[reward]
             text += `⮕ ${global.rpg.emoticon(reward)} ${reward}: ${rewards[reward]}\n`
         }
 
-        user.lastclaim = Date.now() * 1
-        await editUser(sender, { rpg: user })
+        __rpg.lastclaim = Date.now() * 1
+        await editRpg(sender, __rpg)
         return msg.reply(`*––––『 DAILY REWARD 』––––*\n\n${text}`)
     },
 } as ICommand

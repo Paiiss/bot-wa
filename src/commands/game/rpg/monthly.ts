@@ -1,24 +1,22 @@
 import { ICommand } from '@constants/command.constant'
-import { findUserRpg } from '@utils/rpg.utils'
-import { editUser } from '@utils/user.utils'
+import { findUserRpg, editRpg } from '@utils/rpg.utils'
 
 export default {
     description: 'RPG games for adventure',
     category: 'game/rpg',
-    maintenance: true,
 
     callback: async ({ msg, client, User, args }) => {
         const { sender } = msg
-        let user = await findUserRpg(sender)
-        if (Date.now() - user.lastmonthly < cooldown) return msg.reply(`You have claimed today, please wait for the cooldown to finish`, true)
+        let __rpg = await findUserRpg(sender)
+        if (Date.now() - __rpg.lastmonthly < cooldown) return msg.reply(`You've already picked up the monthly reward!`, true)
         let text = ''
         for (let reward of Object.keys(rewards))
-            if (reward in user) {
-                user[reward] += rewards[reward]
+            if (reward in __rpg) {
+                __rpg[reward] += rewards[reward]
                 text += `⮕ ${global.rpg.emoticon(reward)} ${reward}: ${rewards[reward]}\n`
             }
-        user.lastclaim = Date.now() * 1
-        await editUser(sender, { rpg: user })
+        __rpg.lastmonthly = Date.now() * 1
+        await editRpg(sender, __rpg)
         return msg.reply(`*––––『 MONTHLY REWARD 』––––*\n\n${text}`)
     },
 } as ICommand

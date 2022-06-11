@@ -1,6 +1,5 @@
 import { ICommand } from '@constants/command.constant'
-import { findUserRpg } from '@utils/rpg.utils'
-import { editUser } from '@utils/user.utils'
+import { findUserRpg, editRpg } from '@utils/rpg.utils'
 
 export default {
     description: 'RPG games for adventure',
@@ -27,26 +26,25 @@ ${Object.keys(tfinventory.tfcrates)
 ⮕ ᴏᴩᴇɴ ᴄʀᴀᴛᴇ:
 ${prefix}open [crate] [quantity]
 ★ ᴇxᴀᴍᴩʟᴇ:
-${[prefix]}open mythic 3
-`
+${[prefix]}open mythic 3`
 
         let type = (args[0] || '').toLowerCase()
         let count = Math.floor(isNumber(args[1]) ? Math.min(Math.max(parseInt(args[1]), 1), Number.MAX_SAFE_INTEGER) : 1) * 1
         if (!(type in listCrate))
             return client.sendMessage(from, {
                 text: `*––––『 OPEN CRATES 』––––*`,
-                templateButtons: [
-                    { index: 1, quickReplyButton: { displayText: `ᴄᴏᴍᴍᴏɴ`, id: prefix + `open common` } },
-                    { index: 2, quickReplyButton: { displayText: 'ᴜɴᴄᴏᴍᴍᴏɴ', id: prefix + `open uncommon` } },
+                footer: info,
+                buttons: [
+                    { buttonId: prefix + `open common`, buttonText: { displayText: 'Cummon' }, type: 1 },
+                    { buttonId: prefix + `open uncommon`, buttonText: { displayText: 'Uncummon' }, type: 1 },
+                    { buttonId: prefix + `open mythic`, buttonText: { displayText: 'Mythic' }, type: 1 },
+                    { buttonId: prefix + `open legendary`, buttonText: { displayText: 'Legend' }, type: 1 },
+                    { buttonId: prefix + `open pet`, buttonText: { displayText: 'Pet' }, type: 1 },
                 ],
             })
 
         if (user[type] < count)
-            return msg.reply(
-                `Your *${global.rpg.emoticon(type)}${type} crate* is not enough!, you only have ${user[type]} *${global.rpg.emoticon(type)}${type} crate*
-type *${prefix}buy ${type} ${count - user[type]}* to buy
-`.trim()
-            )
+            return msg.reply(`Your *${global.rpg.emoticon(type)}${type} crate* is not enough!, you only have ${user[type]} *${global.rpg.emoticon(type)}${type} crate*\ntype *${prefix}buy ${type} ${count - user[type]}* to buy`.trim())
 
         let crateReward = {}
         for (let i = 0; i < count; i++)
@@ -58,19 +56,13 @@ type *${prefix}buy ${type} ${count - user[type]}* to buy
                         crateReward[reward] = (crateReward[reward] || 0) + total * 1
                     }
                 }
+
         user[type] -= count * 1
         msg.reply(
-            `
-You have opened *${count}* ${global.rpg.emoticon(type)}${type} crate and got:
-${Object.keys(crateReward)
-    .filter((v) => v && crateReward[v] && !/legendary|pet|mythic|diamond|emerald/i.test(v))
-    .map((reward) =>
-        `
-*${global.rpg.emoticon(reward)}${reward}:* ${crateReward[reward]}
-`.trim()
-    )
-    .join('\n')}
-`.trim()
+            `You have opened *${count}* ${global.rpg.emoticon(type)}${type} crate and got:\n${Object.keys(crateReward)
+                .filter((v) => v && crateReward[v] && !/legendary|pet|mythic|diamond|emerald/i.test(v))
+                .map((reward) => `*${global.rpg.emoticon(reward)}${reward}:* ${crateReward[reward]}`.trim())
+                .join('\n')}`.trim()
         )
         let diamond = crateReward['diamond'],
             mythic = crateReward['mythic'],
@@ -78,20 +70,14 @@ ${Object.keys(crateReward)
             legendary = crateReward['legendary'],
             emerald = crateReward['emerald']
         if (mythic || diamond)
-            msg.reply(
-                `
-Congrats you got a rare item, which is ${diamond ? `*${diamond}* ${global.rpg.emoticon('diamond')}diamond` : ''}${diamond && mythic ? 'and ' : ''}${mythic ? `*${mythic}* ${global.rpg.emoticon('mythic')}mythic` : ''}
-`.trim()
-            )
+            msg.reply(`Congrats you got a rare item, which is ${diamond ? `*${diamond}* ${global.rpg.emoticon('diamond')}diamond` : ''}${diamond && mythic ? 'and ' : ''}${mythic ? `*${mythic}* ${global.rpg.emoticon('mythic')}mythic` : ''}`.trim())
         if (pet || legendary || emerald)
             msg.reply(
-                `
-Congrats you got a epic item, which is ${pet ? `*${pet}* ${global.rpg.emoticon('pet')}pet` : ''}${pet && legendary && emerald ? ', ' : (pet && legendary) || (legendary && emerald) || (emerald && pet) ? 'and ' : ''}${
+                `Congrats you got a epic item, which is ${pet ? `*${pet}* ${global.rpg.emoticon('pet')}pet` : ''}${pet && legendary && emerald ? ', ' : (pet && legendary) || (legendary && emerald) || (emerald && pet) ? 'and ' : ''}${
                     legendary ? `*${legendary}* ${global.rpg.emoticon('legendary')}legendary` : ''
-                }${pet && legendary && emerald ? 'and ' : ''}${emerald ? `*${emerald}* ${global.rpg.emoticon('emerald')}emerald` : ''}
-`.trim()
+                }${pet && legendary && emerald ? 'and ' : ''}${emerald ? `*${emerald}* ${global.rpg.emoticon('emerald')}emerald` : ''}`.trim()
             )
-        return editUser(sender, { rpg: user })
+        // return editRpg(sender, user)
     },
 } as ICommand
 
@@ -181,6 +167,9 @@ const rewards = {
         wood: [0, 1, 0, 0],
         rock: [0, 1, 0, 0],
         string: [0, 1, 0, 0],
+    },
+    pet: {
+        food: 5,
     },
 }
 function isNumber(number) {

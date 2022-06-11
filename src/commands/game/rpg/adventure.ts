@@ -1,17 +1,18 @@
 import { ICommand } from '@constants/command.constant'
-import { findUserRpg } from '@utils/rpg.utils'
+import { editRpg, findUserRpg } from '@utils/rpg.utils'
 import { editUser } from '@utils/user.utils'
 
 export default {
     description: 'RPG games for adventure',
     category: 'game/rpg',
-    callback: async ({ msg, client, User }) => {
+    // maintenance: true,
+    callback: async ({ msg, prefix }) => {
         const { sender } = msg
         const cooldown = 300000
         let __date: any = new Date()
         let __rpg = await findUserRpg(sender)
         let timers = cooldown - (__date - __rpg.lastadventure)
-        if (__rpg.health < 80) return msg.reply(`You need blood for adventure`)
+        if (__rpg.health < 80) return msg.button(`You need blood for adventure`, [{ index: 1, quickReplyButton: { displayText: 'HEAL', id: prefix + 'heal' } }])
         if (__date - __rpg.lastadventure <= cooldown) return msg.reply(`Please wait for the cooldown adventure! ⏱️ ${(timers / 1000).toFixed(1)} second(s)`, true)
         const rewards = reward(__rpg)
         let text = "You've been adventure and decrease"
@@ -29,7 +30,7 @@ export default {
                 if (total) text += `\n⮕ ${global.rpg.emoticon(rewardItem)}${rewardItem}: ${total}`
             }
         __rpg.lastadventure = Date.now() * 1
-        await editUser(sender, User)
+        await editRpg(sender, __rpg)
         return msg.reply(text)
     },
 } as ICommand

@@ -1,11 +1,11 @@
 import { ICommand } from '@constants/command.constant'
-import { findUserRpg } from '@utils/rpg.utils'
-import { editUser } from '@utils/user.utils'
+import { findUserRpg, editRpg } from '@utils/rpg.utils'
 
 export default {
     description: 'RPG games for adventure',
     category: 'game/rpg',
     aliases: ['sell', 'buy'],
+    maintenance: true,
 
     callback: async ({ msg, client, User, args, command, prefix }) => {
         const { sender, from } = msg
@@ -87,7 +87,7 @@ ${prefix}${command} potion 10
                 })
             user[paymentMethod] -= listItems[item][paymentMethod] * total
             user[item] += total
-            await editUser(sender, { rpg: user })
+            await editRpg(sender, user)
 
             return client.sendMessage(from, {
                 text: `*––––––『 BOUGHT 』––––––*\n\nʏᴏᴜ *ʙᴏᴜɢʜᴛ ${total} ${global.rpg.emoticon(item)}${item}*.`,
@@ -97,7 +97,7 @@ ${prefix}${command} potion 10
             if (user[item] < total) return msg.reply(`You don't have enough *${global.rpg.emoticon(item)}${item}* to sell, you only have ${user[item]} items`)
             user[item] -= total
             user.money += listItems[item].money * total
-            await editUser(sender, { rpg: user })
+            await editRpg(sender, user)
             return client.sendMessage(from, { text: `*–––––––『 SOLD 』–––––––*\n\nʏᴏᴜ *sᴏʟᴅ ${total} ${global.rpg.emoticon(item)}${item}*.` })
         }
     },

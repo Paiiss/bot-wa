@@ -1,6 +1,6 @@
 {
     "ind": {
-        "startMessage": "Halo, ada yang bisa kubantu?",
+        "startMessage": "Hai aku bot, ada yang bisa ku bantu?, liat menu di *.help*",
         "sticker": "Please send/reply the picture/video that you want to convert to a sticker",
         "stickerMeme": "tolong kirim/balas gambar yang akan melihat stiker meme! (tidak mendukung video)",
         "util": {

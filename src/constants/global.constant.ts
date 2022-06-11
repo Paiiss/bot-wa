@@ -54,7 +54,7 @@ global.rpg = {
             cat: '🐈',
             dog: '🐕',
             fox: '🦊',
-            petFood: '🍖',
+            food: '🍖',
             iron: '⛓️',
             gold: '👑',
             emerald: '💚',

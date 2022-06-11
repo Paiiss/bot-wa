@@ -1,6 +1,5 @@
 import { ICommand } from '@constants/command.constant'
 import { findUserRpg } from '@utils/rpg.utils'
-import { editUser } from '@utils/user.utils'
 import adventure from './adventure'
 
 export default {

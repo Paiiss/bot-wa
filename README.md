@@ -7,7 +7,7 @@
   <a href="https://github.com/Paiiss"><img title="Author" src="https://img.shields.io/badge/Author-Paiiss-red.svg?style=for-the-badge&logo=github" /></a>
 </p>
 
-Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read carefully
+Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read carefully | 90+ features
 
 ## [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
@@ -60,7 +60,7 @@ Join the group [Allen Group](https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd)
 
 ---
 
--   Any suggestion??
+-   rpg games
 
 ## Installation
 
