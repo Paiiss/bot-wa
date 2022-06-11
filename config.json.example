@@ -3,5 +3,6 @@
     "lolhuman": "apikey [https://api.lolhuman.xyz/]", // This bot uses some API from lolhuman
     "botname": "Allen Bot", // Bot Name
     "timezone": "Asia/Jakarta", // Time for node-cron
-    "footer": "AllenBot • Paiiss"  // Footer for message button
+    "footer": "AllenBot • Paiiss"  // Footer for message button,
+    "link_group": "https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd",
 }

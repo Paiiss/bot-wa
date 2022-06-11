@@ -1,7 +1,7 @@
 import { AnyWASocket } from '@adiwajshing/baileys'
 import { getBuffer } from '@utils/helper.utils'
 import { checkData, getData, deleteData } from '@utils/setting/group.setting'
-import { footer, lolhuman } from 'config.json'
+import { footer, link_group } from 'config.json'
 
 /**
  * @param {import("@adiwajshing/baileys/src").AnyWAclientet} client
@@ -75,7 +75,7 @@ export class GroupHandler {
                         text,
                         mentions: data.participants,
                         templateButtons: [
-                            { index: 1, urlButton: { displayText: 'Source bot', url: 'https://github.com/Paiiss/bot-wa/' } },
+                            { index: 1, urlButton: { displayText: 'Join', url: link_group } },
                             { index: 2, quickReplyButton: { displayText: 'Start viewing the menu', id: '.help' } },
                         ],
                         footer,

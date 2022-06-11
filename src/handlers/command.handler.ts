@@ -47,7 +47,6 @@ async function antinsfw(msg: MessageSerialize, group: IGroup) {
     // lolhuman api error, is requesting a fix
     if (msg.isGroup && group.antiNsfw && msg.typeCheck.isImage && !msg.isSelf) {
         let filebuffer = await msg.download()
-        console.log(filebuffer)
         let formdata = new FormData()
         formdata.append('img', filebuffer, '.png')
         await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata)
@@ -84,6 +83,7 @@ export class CommandHandler {
         }
 
         const Group: IGroup = msg.isGroup ? await findGroup(msg.from) : null
+        if (isGroup && Group?.isBan) return
         if (Group && isGroup) await checkRendem(body, client, msg)
         await antinsfw(msg, Group)
 
@@ -92,7 +92,7 @@ export class CommandHandler {
             await gSchema.findOneAndUpdate({ id: from }, { $set: { new: true } })
             for (let i of msg.groupMetadata.participants) s.push(i.id)
             await client.sendMessage(from, { text: t.join('\n\n'), mentions: s })
-            await addRentGroup(from, '3d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STAT  ]'), `New group : ${msg.groupMetadata.subject}`))
+            await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STAT  ]'), `New group : ${msg.groupMetadata.subject}`))
         } else if (isGroup && Group && Group.new && Group.trial && Group.expired === null) {
             sleep(60 * 1000).then(async () => {
                 let some = gRent.some((e) => e.id == from)
@@ -121,19 +121,19 @@ export class CommandHandler {
             let isBotAdmin = msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.myId)[0]?.admin : null
             let isSenderAdmin = msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.sender)[0]?.admin : null
 
-            if (msg.isGroup && Group.isMute) {
+            if (msg.isGroup && Group?.isMute) {
                 let cekA = msg.groupMetadata.participants.filter((v) => v.id === msg.sender)
                 if (!cekA[0].admin) return
             }
 
-            if (User.banned) return msg.reply(shortMessage.isBan)
+            if (User?.banned) return msg.reply(shortMessage.isBan)
             if (getCommand?.premiumOnly && !User.premium) return msg.reply(shortMessage.isPrem)
             // if (getCommand?.groupOnly && !msg.isGroup) return msg.reply(shortMessage.group.onlyGroup);
             if ((getCommand?.adminGroup || getCommand?.groupOnly || getCommand?.isBotAdmin) && !msg.isGroup) return msg.reply(shortMessage.group.onlyGroup)
             if (getCommand?.privateOnly && msg.isGroup) return msg.reply(shortMessage.privateOnly)
             if (getCommand?.isAdminBot && !User.admin) return msg.reply(shortMessage.adminOnly)
             if (getCommand?.ownerOnly && !User.owner) return msg.reply(shortMessage.devOnly)
-            if (getCommand?.maintenance && !User.owner) return msg.reply(shortMessage.maintenance)
+            if (getCommand?.maintenance && !User.owner && !User.admin) return msg.reply(shortMessage.maintenance)
             if (getCommand?.adminGroup && !isSenderAdmin && !User.owner && !User.admin) return msg.reply(shortMessage.group.noPerms)
             if (getCommand?.isBotAdmin && !isBotAdmin) return msg.reply(shortMessage.group.botNoAdmin)
             if (getCommand?.nsfw) {
@@ -229,7 +229,7 @@ export class CommandHandler {
 const t = [
     `hello i'm ${botname} 🐱👋🏻`,
     `This group ID is automatically saved to the database👨🏼‍💻`,
-    `We provide a trial period for using bots within 3 days, within 3 days the bot will automatically leave the group, if you want to extend the bot usage period, please rent a bot by contacting the admin`,
+    `We provide a trial period for using bots within 7 days, within 7 days the bot will automatically leave the group, if you want to extend the bot usage period, please rent a bot by contacting the admin`,
     `*Rental price*\n• 2 day / IDR: 1k\n• 2 Weeks / IDR: 5k\n• 1 Month / IDR: 10k\n• 3 Month / IDR: 25k`,
     `*Advantages of rent*\n• Make stickers with friends without limits\n• Play games from bots with friends (in progress)\n• More features will be made soon`,
 ]

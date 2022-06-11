@@ -42,7 +42,7 @@ export const addRentGroup = async (id: string, time: string = '3d') =>
         let data = await findGroup(id)
 
         let ex = data.expired ? data.expired + toMs(time) : Date.now() + toMs(time)
-        data = await groupSchema.findOneAndUpdate({ id: data.id }, { $set: { new: true, trial: true, expired: ex } })
+        data = await groupSchema.findOneAndUpdate({ id: data.id }, { $set: { new: true, trial: true, expired: ex, leave: false } })
         let some = g.some((e) => e.id == id)
         if (some) {
             g.splice(

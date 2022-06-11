@@ -76,20 +76,22 @@ export const autonodecron = async (client: AnyWASocket) => {
 }
 
 export async function leaveGroupCron(data: Ig, client: AnyWASocket) {
-    if (client.type == 'legacy') return
-    const meta = (await client.groupMetadata(data.id)) ? await client.groupMetadata(data.id) : null
-
-    let s = []
-    for (let i of meta.participants) {
-        s.push(i.id)
-    }
-
-    if (Date.now() >= data.expired || data.expired === null) {
-        try {
-            await client.sendMessage(data.id, { text: rText, mentions: s })
-            await leaveGroup(data.id, client)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    if (client.type !== 'md') return
+    await client
+        .groupMetadata(data.id)
+        .then(async (meta) => {
+            let s = []
+            for (let i of meta.participants) {
+                s.push(i.id)
+            }
+            if (Date.now() >= data.expired || data.expired === null) {
+                try {
+                    await client.sendMessage(data.id, { text: rText, mentions: s })
+                    await leaveGroup(data.id, client)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })
+        .catch((e) => {})
 }

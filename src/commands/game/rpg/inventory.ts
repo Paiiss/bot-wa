@@ -1,44 +1,45 @@
 import { ICommand } from '@constants/command.constant'
 import { findUserRpg } from '@utils/rpg.utils'
 import adventure from './adventure'
+import fishing from './fishing'
 
 export default {
     description: 'RPG games for adventure',
     aliases: ['inv'],
     category: 'game/rpg',
 
-    callback: async ({ msg, client, User, args }) => {
+    callback: async ({ msg }) => {
         const { sender, pushName } = msg
-        let user = await findUserRpg(sender)
+        let { rpg } = await findUserRpg(sender)
         const tools = Object.keys(inventory.tools)
-            .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)}${v}: ${typeof inventory.tools[v] === 'object' ? inventory.tools[v][user[v]?.toString()] : `Level(s) ${user[v]}`}`)
+            .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)}${v}: ${typeof inventory.tools[v] === 'object' ? inventory.tools[v][rpg[v]?.toString()] : `-`}`)
             .filter((v) => v)
             .join('\n')
             .trim()
         const items = Object.keys(inventory.items)
-            .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`)
+            .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${rpg[v]}`)
             .filter((v) => v)
             .join('\n')
             .trim()
         const crates = Object.keys(inventory.crates)
-            .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`)
+            .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${rpg[v]}`)
             .filter((v) => v)
             .join('\n')
             .trim()
         const pets = Object.keys(inventory.pets)
-            .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v] >= inventory.pets[v] ? 'Max Levels' : `Level(s) ${user[v]}`}`)
+            .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${rpg[v] >= inventory.pets[v] ? 'Max Levels' : `Level(s) ${rpg[v]}`}`)
             .filter((v) => v)
             .join('\n')
             .trim()
         const cooldowns = Object.entries(inventory.cooldowns)
-            .map(([cd, { name, time }]) => cd in user && `⮕ ⌛ ${name}: ${Date.now() - user[cd] >= time ? `❎` : `✅`}`)
+            .map(([cd, { name, time }]) => cd in rpg && `⮕ ⌛ ${name}: ${Date.now() - rpg[cd] >= time ? `❎` : `✅`}`)
             .filter((v) => v)
             .join('\n')
             .trim()
         const caption = `
 🧑🏻‍🏫 ᴜsᴇʀ: *${pushName}*
 ${Object.keys(inventory.others)
-    .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`)
+    .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${rpg[v]}`)
     .filter((v) => v)
     .join('\n')}${
             tools
@@ -96,6 +97,7 @@ const inventory = {
         diamond: true,
         gold: true,
         iron: true,
+        food: true,
     },
     tools: {
         armor: {
@@ -167,6 +169,10 @@ const inventory = {
         lastmonthly: {
             name: 'monthly',
             time: 2592000000,
+        },
+        lastfishing: {
+            name: 'fishing',
+            time: fishing.cooldown,
         },
     },
 }

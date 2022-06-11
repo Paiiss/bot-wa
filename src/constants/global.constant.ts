@@ -47,6 +47,8 @@ global.rpg = {
             trash: '🗑',
             armor: '🥼',
             sword: '⚔️',
+            pickaxe: '⛏️',
+            fishingrod: '🎣',
             wood: '🪵',
             rock: '🪨',
             string: '🕸️',

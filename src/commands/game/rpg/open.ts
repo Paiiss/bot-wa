@@ -5,20 +5,20 @@ export default {
     description: 'RPG games for adventure',
     category: 'game/rpg',
 
-    callback: async ({ msg, client, User, args, prefix }) => {
+    callback: async ({ msg, client, args, prefix }) => {
         const { sender, pushName, from } = msg
-        let user = await findUserRpg(sender)
+        let { rpg } = await findUserRpg(sender)
         const tfcrates = Object.keys(tfinventory.tfcrates)
-            .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`)
+            .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${rpg[v]}`)
             .filter((v) => v)
             .join('\n')
             .trim()
-        let listCrate = Object.fromEntries(Object.entries(rewards).filter(([v]) => v && v in user))
+        let listCrate = Object.fromEntries(Object.entries(rewards).filter(([v]) => v && v in rpg))
         let info = `🧑🏻‍🏫 ᴜsᴇʀ: *${pushName}*
 
 🔖 ᴄʀᴀᴛᴇ ʟɪsᴛ :
 ${Object.keys(tfinventory.tfcrates)
-    .map((v) => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`)
+    .map((v) => rpg[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${rpg[v]}`)
     .filter((v) => v)
     .join('\n')}
 –––––––––––––––––––––––––
@@ -43,21 +43,20 @@ ${[prefix]}open mythic 3`
                 ],
             })
 
-        if (user[type] < count)
-            return msg.reply(`Your *${global.rpg.emoticon(type)}${type} crate* is not enough!, you only have ${user[type]} *${global.rpg.emoticon(type)}${type} crate*\ntype *${prefix}buy ${type} ${count - user[type]}* to buy`.trim())
+        if (rpg[type] < count) return msg.reply(`Your *${global.rpg.emoticon(type)}${type} crate* is not enough!, you only have ${rpg[type]} *${global.rpg.emoticon(type)}${type} crate*\ntype *${prefix}buy ${type} ${count - rpg[type]}* to buy`.trim())
 
         let crateReward = {}
         for (let i = 0; i < count; i++)
             for (let [reward, value] of Object.entries(listCrate[type]))
-                if (reward in user) {
+                if (reward in rpg) {
                     const total = value.getRandom()
                     if (total) {
-                        user[reward] += total * 1
+                        rpg[reward] += total * 1
                         crateReward[reward] = (crateReward[reward] || 0) + total * 1
                     }
                 }
 
-        user[type] -= count * 1
+        rpg[type] -= count * 1
         msg.reply(
             `You have opened *${count}* ${global.rpg.emoticon(type)}${type} crate and got:\n${Object.keys(crateReward)
                 .filter((v) => v && crateReward[v] && !/legendary|pet|mythic|diamond|emerald/i.test(v))
@@ -77,7 +76,7 @@ ${[prefix]}open mythic 3`
                     legendary ? `*${legendary}* ${global.rpg.emoticon('legendary')}legendary` : ''
                 }${pet && legendary && emerald ? 'and ' : ''}${emerald ? `*${emerald}* ${global.rpg.emoticon('emerald')}emerald` : ''}`.trim()
             )
-        // return editRpg(sender, user)
+        return editRpg(sender, rpg)
     },
 } as ICommand
 

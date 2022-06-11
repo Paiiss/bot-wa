@@ -74,7 +74,7 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
         }
     }
     m.messageTimestamp = msg.messageTimestamp
-    m.groupMetadata = m.isGroup ? (client.type === 'md' ? await client.groupMetadata(m.from) : await client.groupMetadata(m.from, false)) : null
+    m.groupMetadata = /* Avoid rate overlimit from spam sticker */ !m.typeCheck.isSticker && m.isGroup ? (client.type === 'md' ? await client.groupMetadata(m.from) : await client.groupMetadata(m.from, false)) : null
     m.reply = (text, q = null) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender] }, { quoted: q ? msg : null }) /* does anyone know why the message button can't tag someone? */
     m.button = (text, templateButtons = []) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender], templateButtons, footer: footer || null })
     m.error = (text, q = null) => {

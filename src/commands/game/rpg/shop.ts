@@ -9,9 +9,9 @@ export default {
 
     callback: async ({ msg, client, User, args, command, prefix }) => {
         const { sender, from } = msg
-        let user = await findUserRpg(sender)
+        let { rpg } = await findUserRpg(sender)
         if (command == 'shop') return msg.reply(`Use it by ${prefix}buy / ${prefix}sell`)
-        const listItems: any = Object.fromEntries(Object.entries(items[command.toLowerCase()]).filter(([v]) => v && v in user))
+        const listItems: any = Object.fromEntries(Object.entries(items[command.toLowerCase()]).filter(([v]) => v && v in rpg))
 
         let text = ''
         let footer = ''
@@ -30,7 +30,7 @@ export default {
 🔖 ɪᴛᴇᴍs ʟɪsᴛ :
 ${Object.keys(listItems)
     .map((v) => {
-        let paymentMethod = Object.keys(listItems[v]).find((v) => v in user)
+        let paymentMethod = Object.keys(listItems[v]).find((v) => v in rpg)
         return `⮕ 1 ${global.rpg.emoticon(v)}${v} ﹫ ${listItems[v][paymentMethod]} ${global.rpg.emoticon(paymentMethod)}${paymentMethod}`.trim()
     })
     .join('\n')}
@@ -45,7 +45,7 @@ ${prefix}${command} potion 10
 🔖 ɪᴛᴇᴍs ʟɪsᴛ :
 ${Object.keys(listItems)
     .map((v) => {
-        let paymentMethod = Object.keys(listItems[v]).find((v) => v in user)
+        let paymentMethod = Object.keys(listItems[v]).find((v) => v in rpg)
         return `⮕ 1 ${global.rpg.emoticon(v)}${v} ﹫ ${listItems[v][paymentMethod]} ${global.rpg.emoticon(paymentMethod)}${paymentMethod}`.trim()
     })
     .join('\n')}
@@ -71,11 +71,11 @@ ${prefix}${command} potion 10
         const total = Math.floor(isNumber(args[1]) ? Math.min(Math.max(parseInt(args[1]), 1), Number.MAX_SAFE_INTEGER) : 1) * 1
         if (!listItems[item]) return client.sendMessage(from, { text, footer, templateButtons: buttons })
         if (command.toLowerCase() == 'buy') {
-            let paymentMethod = Object.keys(listItems[item]).find((v) => v in user)
-            if (user[paymentMethod] < listItems[item][paymentMethod] * total)
+            let paymentMethod = Object.keys(listItems[item]).find((v) => v in rpg)
+            if (rpg[paymentMethod] < listItems[item][paymentMethod] * total)
                 return client.sendMessage(from, {
-                    text: `*–『 INSUFFICIENT CREDIT 』–*\n\nʏᴏᴜ ɴᴇᴇᴅ ᴇxᴛʀᴀ *${listItems[item][paymentMethod] * total - user[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ᴛᴏ ʙᴜʏ *${total}* ${global.rpg.emoticon(item)}${item}.
-                ʏᴏᴜ'ᴠᴇ *${user[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ɪɴ ʙᴀɢ.
+                    text: `*–『 INSUFFICIENT CREDIT 』–*\n\nʏᴏᴜ ɴᴇᴇᴅ ᴇxᴛʀᴀ *${listItems[item][paymentMethod] * total - rpg[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ᴛᴏ ʙᴜʏ *${total}* ${global.rpg.emoticon(item)}${item}.
+                ʏᴏᴜ'ᴠᴇ *${rpg[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ɪɴ ʙᴀɢ.
                 –––––––––––––––––––––––––
                 💁🏻‍♂ ᴛɪᴩ :
                 ᴏᴩᴇɴ ᴄʀᴀᴛᴇs & ᴄᴏʟʟᴇᴄᴛ ʀᴇᴡᴀʀᴅs.
@@ -85,19 +85,19 @@ ${prefix}${command} potion 10
                 .adventure | .daily | .monthly
                 `,
                 })
-            user[paymentMethod] -= listItems[item][paymentMethod] * total
-            user[item] += total
-            await editRpg(sender, user)
+            rpg[paymentMethod] -= listItems[item][paymentMethod] * total
+            rpg[item] += total
+            await editRpg(sender, { rpg: rpg })
 
             return client.sendMessage(from, {
                 text: `*––––––『 BOUGHT 』––––––*\n\nʏᴏᴜ *ʙᴏᴜɢʜᴛ ${total} ${global.rpg.emoticon(item)}${item}*.`,
                 templateButtons: [{ index: 1, quickReplyButton: { displayText: 'ɪɴᴠᴇɴᴛᴏʀʏ', id: prefix + `inventory` } }],
             })
         } else {
-            if (user[item] < total) return msg.reply(`You don't have enough *${global.rpg.emoticon(item)}${item}* to sell, you only have ${user[item]} items`)
-            user[item] -= total
-            user.money += listItems[item].money * total
-            await editRpg(sender, user)
+            if (rpg[item] < total) return msg.reply(`You don't have enough *${global.rpg.emoticon(item)}${item}* to sell, you only have ${rpg[item]} items`)
+            rpg[item] -= total
+            rpg.money += listItems[item].money * total
+            await editRpg(sender, { rpg: rpg })
             return client.sendMessage(from, { text: `*–––––––『 SOLD 』–––––––*\n\nʏᴏᴜ *sᴏʟᴅ ${total} ${global.rpg.emoticon(item)}${item}*.` })
         }
     },

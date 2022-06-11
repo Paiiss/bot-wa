@@ -18,7 +18,7 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
     const { version, isLatest } = await fetchLatestBaileysVersion()
     console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `using WA v${version.join('.')}, isLatest: ${isLatest}`)
     if (type == 'md') {
-        const { state, saveState } = useSingleFileAuthState('./session_md.json')
+        const { state, saveState } = useSingleFileAuthState('./session.json')
         client = makeWASocket({
             logger: P({ level: 'error' }),
             printQRInTerminal: true,
@@ -27,7 +27,7 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
         })
         client.ev.on('creds.update', saveState)
     } else {
-        const { state, saveState } = useSingleFileLegacyAuthState('./session_legacy.json')
+        const { state, saveState } = useSingleFileLegacyAuthState('./session.json')
         client = makeWALegacySocket({
             logger: P({ level: 'silent' }),
             version,
