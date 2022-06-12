@@ -1,5 +1,5 @@
 import { commands, ICommand } from '@constants/command.constant'
-import { botname, link_group } from 'config.json'
+import { botname, link_group, footer } from 'config.json'
 import { formatSize, timeFormat, toTime } from '@utils/helper.utils'
 import { getAll } from '@utils/user.utils'
 import os from 'os'
@@ -48,7 +48,7 @@ export default {
 
         await client.sendMessage(msg.from, {
             text: str,
-            footer: `AllenBOT - made by @mfa_daffa`,
+            footer,
             title: 'Allen bot information',
             templateButtons,
             mentions: [sender],

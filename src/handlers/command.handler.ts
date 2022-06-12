@@ -201,23 +201,23 @@ export class CommandHandler {
 
     registerCommand() {
         for (let { basename, file } of this.getAllFiles(path.join(__dirname, '../', 'commands'))) {
-            // if (commands.get(basename)) {
-            //     console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `File with filename ${basename} already register, try to change filename.`)
-            // } else if (typeof require(file).default !== 'object') {
-            //     console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `Type of file ${basename} is ${typeof require(file).default}, required object.`)
-            // } else {
-            commands.set(basename, require(file).default)
-            watch(file, (_event, filename) => {
-                const dir = path.resolve(file)
-                const base = path.basename(filename, '.ts').toLowerCase()
-                if (dir in require.cache && _event == 'change') {
-                    delete require.cache[dir]
-                    commands.set(base, require(file).default)
-                    console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `reloaded ${filename}`)
-                }
-            })
+            if (commands.get(basename)) {
+                console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `File with filename ${basename} already register, try to change filename.`)
+            } else if (typeof require(file).default !== 'object') {
+                console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `Type of file ${basename} is ${typeof require(file).default}, required object.`)
+            } else {
+                commands.set(basename, require(file).default)
+                watch(file, (_event, filename) => {
+                    const dir = path.resolve(file)
+                    const base = path.basename(filename, '.ts').toLowerCase()
+                    if (dir in require.cache && _event == 'change') {
+                        delete require.cache[dir]
+                        commands.set(base, require(file).default)
+                        console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `reloaded ${filename}`)
+                    }
+                })
+            }
         }
-        // }
     }
 }
 

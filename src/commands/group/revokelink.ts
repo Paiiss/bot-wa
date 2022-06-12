@@ -1,5 +1,4 @@
 import { ICommand } from '@constants/command.constant'
-import { sleep } from '@utils/helper.utils'
 
 export default {
     aliases: ['revoke', 'revokeinvite'],

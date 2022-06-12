@@ -1,6 +1,6 @@
 import { commands, ICommand } from '@constants/command.constant'
 import { getAll } from '@utils/user.utils'
-import { botname } from 'config.json'
+import { botname, footer } from 'config.json'
 
 export default {
     aliases: ['hlist', 'menulist', 'lmenu', 'info'],
@@ -69,7 +69,7 @@ export default {
         // await client.sendMessage(from, { text: t })
         return client.sendMessage(from, {
             text: str.join('\n'),
-            footer: `\`\`\`AllenBOT - made by @mfa_daffa\`\`\``,
+            footer,
             title: 'AllenBOT menu list',
             buttonText: 'LIST MENU',
             sections,
