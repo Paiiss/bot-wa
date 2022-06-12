@@ -1,4 +1,4 @@
-import { AnyWASocket, WAMessage } from '@adiwajshing/baileys'
+import { WAMessage, WASocket } from '@adiwajshing/baileys'
 import { IGroup } from '@schema/group.schema'
 import { IUser } from '@schema/user.schema'
 import { Collection } from './collection.constant'
@@ -126,7 +126,7 @@ export interface ICommand {
 }
 
 export interface CommandObject {
-    client: AnyWASocket
+    client: WASocket
     message: WAMessage
     command: string
     prefix: string

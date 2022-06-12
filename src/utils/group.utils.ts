@@ -1,4 +1,4 @@
-import { AnyWASocket } from '@adiwajshing/baileys'
+import { WASocket } from '@adiwajshing/baileys'
 import groupSchema from '@schema/group.schema'
 import fs from 'fs'
 import toMs from 'ms'
@@ -78,9 +78,8 @@ export const deleteRent = async (id: string) =>
         return data
     })
 
-export const leaveGroup = async (id: string, client: AnyWASocket) =>
+export const leaveGroup = async (id: string, client: WASocket) =>
     new Promise(async (resolve, reject) => {
-        if (client.type == 'legacy') return reject(`Only md`)
         if (!id) return reject(`Additional/sender ID`)
         let data = await findGroup(id)
         if (!data) return reject(`Group ID not found`)

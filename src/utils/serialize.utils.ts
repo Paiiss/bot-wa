@@ -1,4 +1,4 @@
-import { AnyWASocket, WAMessage } from '@adiwajshing/baileys'
+import { WAMessage, WASocket } from '@adiwajshing/baileys'
 import { MessageSerialize } from '@constants/message.constant'
 import { MessageCollector } from './events.utils'
 import { downloadMedia } from './helper.utils'
@@ -11,20 +11,17 @@ export class MessageError extends Error {
     }
 }
 
-export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<MessageSerialize> => {
+export const serialize = async (msg: WAMessage, client: WASocket): Promise<MessageSerialize> => {
     const m = {} as MessageSerialize
     if (msg.key) {
         m.id = msg.key.id
         m.isSelf = msg.key.fromMe
-        m.myId = client.type == 'md' ? client.user.id.split(':')[0] + '@s.whatsapp.net' : null
+        m.myId = client.user.id.split(':')[0] + '@s.whatsapp.net'
         m.from = msg.key.remoteJid
         m.isGroup = m.from.endsWith('@g.us')
         m.pushName = msg.pushName
-        m.sender = m.isSelf
-            ? client.type === 'legacy'
-                ? client.state.legacy.user.id
-                : client.user.id.split(':')[0] + '@s.whatsapp.net' || client.user.id
-            : (msg.key.participant?.includes(':') ? msg.key.participant?.split(':')[0] + '@s.whatsapp.net' : msg.key.participant) || (msg.key.remoteJid?.includes(':') ? msg.key.remoteJid?.split(':')[0] + '@s.whatsapp.net' : msg.key.remoteJid)
+        m.sender = m.isGroup ? msg.key.participant : msg.key.remoteJid
+        m.sender = m.sender.includes(':') ? m.sender.split(':')[0] + '@s.whatsapp.net' : m.sender
         m.senderNumber = m.sender.split('@')[0]
     }
     m.type = Object.keys(msg.message).filter((msgType) => msgType !== 'messageContextInfo')[0]
@@ -47,7 +44,7 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
         m.quoted.message = msg.message[m.type].contextInfo.quotedMessage
         m.quoted.key = {
             id: msg.message[m.type].contextInfo.stanzaId,
-            fromMe: msg.message[m.type].contextInfo.participant === (client.type === 'legacy' ? client.state.legacy.user.id : client.user.id && client.user.id.split(':')[0] + '@s.whatsapp.net'),
+            fromMe: msg.message[m.type].contextInfo.participant === client.user.id.split(':')[0] + '@s.whatsapp.net',
             remoteJid: m.from,
         }
         m.quoted.delete = () => client.sendMessage(m.from, { delete: m.quoted.key })
@@ -74,7 +71,7 @@ export const serialize = async (msg: WAMessage, client: AnyWASocket): Promise<Me
         }
     }
     m.messageTimestamp = msg.messageTimestamp
-    m.groupMetadata = /* Avoid rate overlimit from spam sticker */ !m.typeCheck.isSticker && m.isGroup ? (client.type === 'md' ? await client.groupMetadata(m.from) : await client.groupMetadata(m.from, false)) : null
+    m.groupMetadata = /* Avoid rate overlimit from spam sticker */ !m.typeCheck.isSticker && m.isGroup ? await client.groupMetadata(m.from) : null
     m.reply = (text, q = null) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender] }, { quoted: q ? msg : null }) /* does anyone know why the message button can't tag someone? */
     m.button = (text, templateButtons = []) => !m.isSelf && client.sendMessage(m.from, { text, mentions: [m.sender], templateButtons, footer: footer || null })
     m.error = (text, q = null) => {
