@@ -4,7 +4,7 @@ import { MessageError, serialize } from '@utils/serialize.utils'
 import * as dotenv from 'dotenv'
 import { GlobSync } from 'glob'
 import chalk from 'chalk'
-import { watch, watchFile } from 'fs'
+import { watch } from 'fs'
 import path from 'path'
 import fs from 'fs'
 import { IMess, MessageSerialize } from '@constants/message.constant'
@@ -13,11 +13,11 @@ import { addRentGroup, findGroup } from '@utils/group.utils'
 import toMS from 'ms'
 import { expUpdate, findUser } from '@utils/user.utils'
 import gSchema from '@schema/group.schema'
-import { postJson, sleep } from '@utils/helper.utils'
+import { getJson, postJson, sleep, uploaderAPI } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
 import color from 'chalk'
 import FormData from 'form-data'
-import { lolhuman, botname } from 'config.json'
+import { lolhuman, botname, link_group, footer } from 'config.json'
 dotenv.config()
 
 const gRent = require('../data/g.json')
@@ -44,19 +44,20 @@ async function checkRendem(body: string, client: AnyWASocket, msg: MessageSerial
 }
 
 async function antinsfw(msg: MessageSerialize, group: IGroup) {
-    // lolhuman api error, is requesting a fix
     if (msg.isGroup && group.antiNsfw && msg.typeCheck.isImage && !msg.isSelf) {
+        console.log(chalk.whiteBright('├'), chalk.red('[ NSFW ]'), msg.senderNumber, `send pictures in an active anti-nsfw group (${msg.groupMetadata.subject})`)
         let filebuffer = await msg.download()
-        let formdata = new FormData()
-        formdata.append('img', filebuffer, '.png')
-        await postJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}`, formdata)
+        const imageUrl = (await uploaderAPI(filebuffer, 'uguu')).data.url
+        await getJson(`https://api.lolhuman.xyz/api/nsfwcheck?apikey=${lolhuman}&img=${imageUrl}`)
             .then(async (res) => {
                 if (Number(res.result.replace('%', '')) >= 30) {
-                    console.log(color('[ANTI NSFW]', 'red'), 'detected', color(msg.sender.split('@')[0], 'lime'), 'in', color(msg.groupMetadata.subject, 'lime'))
-                    msg.reply(`Nswf detected, Score: ${res.result}`)
+                    console.log(chalk.whiteBright('├'), chalk.red('[ NSFW ]'), `Image contains nsfw ${res.result}`)
+                    msg.reply(`Nswf detected, Score: ${res.result}`, true)
+                } else {
+                    console.log(chalk.whiteBright('├'), chalk.red('[ NSFW ]'), `Image is safe, contains ${res.result} nsfw`)
                 }
             })
-            .catch((e) => console.log(`Anti nsfw api still error`))
+            .catch((e) => console.log(chalk.whiteBright('├'), chalk.red('[ NSFW ]'), `nsfw error!`))
     }
 }
 
@@ -70,7 +71,7 @@ export class CommandHandler {
         const msg = await serialize(message, client)
 
         const prefix = process.env.PREFIX
-        let { from, sender, isGroup, body, type } = msg
+        const { from, sender, isGroup, body, type } = msg
 
         // Auto ind or eng
         const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
@@ -91,7 +92,7 @@ export class CommandHandler {
             let s = []
             await gSchema.findOneAndUpdate({ id: from }, { $set: { new: true } })
             for (let i of msg.groupMetadata.participants) s.push(i.id)
-            await client.sendMessage(from, { text: t.join('\n\n'), mentions: s })
+            await client.sendMessage(from, { text: t.join('\n\n'), mentions: s, footer, templateButtons: [{ index: 1, urlButton: { displayText: 'Join the Allen bot group', url: link_group } }] })
             await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STAT  ]'), `New group : ${msg.groupMetadata.subject}`))
         } else if (isGroup && Group && Group.new && Group.trial && Group.expired === null) {
             sleep(60 * 1000).then(async () => {
@@ -206,23 +207,23 @@ export class CommandHandler {
 
     registerCommand() {
         for (let { basename, file } of this.getAllFiles(path.join(__dirname, '../', 'commands'))) {
-            if (commands.get(basename)) {
-                console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `File with filename ${basename} already register, try to change filename.`)
-            } else if (typeof require(file).default !== 'object') {
-                console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `Type of file ${basename} is ${typeof require(file).default}, required object.`)
-            } else {
-                commands.set(basename, require(file).default)
-                watch(file, (_event, filename) => {
-                    const dir = path.resolve(file)
-                    const base = path.basename(filename, '.ts').toLowerCase()
-                    if (dir in require.cache && _event == 'change') {
-                        delete require.cache[dir]
-                        commands.set(base, require(file).default)
-                        console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `reloaded ${filename}`)
-                    }
-                })
-            }
+            // if (commands.get(basename)) {
+            //     console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `File with filename ${basename} already register, try to change filename.`)
+            // } else if (typeof require(file).default !== 'object') {
+            //     console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), `Type of file ${basename} is ${typeof require(file).default}, required object.`)
+            // } else {
+            commands.set(basename, require(file).default)
+            watch(file, (_event, filename) => {
+                const dir = path.resolve(file)
+                const base = path.basename(filename, '.ts').toLowerCase()
+                if (dir in require.cache && _event == 'change') {
+                    delete require.cache[dir]
+                    commands.set(base, require(file).default)
+                    console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `reloaded ${filename}`)
+                }
+            })
         }
+        // }
     }
 }
 

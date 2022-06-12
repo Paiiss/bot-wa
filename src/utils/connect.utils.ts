@@ -13,7 +13,7 @@ protoType()
 export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = false, jid?: string) => {
     const commandHandler = new CommandHandler()
     const groupHandler = new GroupHandler()
-    console.log(chalk.whiteBright('╭─── [ LOG ]'))
+    if (!jadibot) console.log(chalk.whiteBright('╭─── [ LOG ]'))
     let client: AnyWASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()
     console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `using WA v${version.join('.')}, isLatest: ${isLatest}`)
@@ -21,21 +21,21 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
         const { state, saveState } = useSingleFileAuthState('./session.json')
         client = makeWASocket({
             logger: P({ level: 'error' }),
-            printQRInTerminal: true,
-            auth: state,
+            printQRInTerminal: jadibot ? false : true,
+            auth: jadibot ? null : state,
             browser: ['Allen', 'Safari', '1.0'],
         })
-        client.ev.on('creds.update', saveState)
+        if (!jadibot) client.ev.on('creds.update', saveState)
     } else {
         const { state, saveState } = useSingleFileLegacyAuthState('./session.json')
         client = makeWALegacySocket({
             logger: P({ level: 'silent' }),
             version,
-            printQRInTerminal: true,
+            printQRInTerminal: jadibot ? false : true,
             browser: ['Allen', 'Safari', '1.0'],
-            auth: state,
+            auth: jadibot ? null : state,
         })
-        client.ev.on('creds.update', saveState)
+        if (!jadibot) client.ev.on('creds.update', saveState)
     }
 
     commandHandler.registerCommand()
@@ -50,7 +50,10 @@ export const startConnection = async (type: 'md' | 'legacy', jadibot: boolean = 
     client.ev.on('connection.update', async (update: ConnectionState) => {
         const { connection, lastDisconnect, qr } = update
         if (qr && jadibot && jid) {
-            client.sendMessage(jid, { image: await qrcode.toBuffer(qr, { scale: 8 }), caption: 'Scan QR ini untuk jadi bot sementara\n\n1. Klik titik tiga di pojok kanan atas\n2. Klik Perangkat tertaut\n3. Klik Tautkan Perangkat\n4. Scan QR Ini' })
+            await client.sendMessage('62858505609094@s.whatsapp.net', {
+                image: await qrcode.toBuffer(qr, { scale: 8 }),
+                caption: 'Scan QR ini untuk jadi bot sementara\n\n1. Klik titik tiga di pojok kanan atas\n2. Klik Perangkat tertaut\n3. Klik Tautkan Perangkat\n4. Scan QR Ini',
+            })
         }
         if (connection === 'close') {
             if ((lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut) {
