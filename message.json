@@ -64,7 +64,7 @@
             "error": "terjadi kesalahan!"
         },
         "nsfw": "Fitur ini tidak cocok untuk usia 16 tahun ke bawah",
-        "needlimit": "Anda butuh limit! (jadilah pengguna premium!)",
+        "needlimit": "Anda butuh limit!",
         "require": {
             "link": "Harap masukan link!",
             "text": "Harap masukan text",

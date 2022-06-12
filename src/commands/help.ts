@@ -1,5 +1,5 @@
 import { commands, ICommand } from '@constants/command.constant'
-import { botname } from 'config.json'
+import { botname, link_group } from 'config.json'
 import { formatSize, timeFormat, toTime } from '@utils/helper.utils'
 import { getAll } from '@utils/user.utils'
 import os from 'os'
@@ -42,7 +42,7 @@ export default {
         str += `\n\n*Supporter*\n- LoLHuman (handler maker and others)`
         const templateButtons = [
             // { index: 1, urlButton: { displayText: '⭐ Contact me via Instagram!', url: 'https://instagram.com/mfa_daffa' } },
-            { index: 1, urlButton: { displayText: `${botname}`, url: `https://www.whatsapp.com/otp/copy/${botname}` } },
+            { index: 1, urlButton: { displayText: `${botname}`, url: link_group /* `https://www.whatsapp.com/otp/copy/${botname}` */ } },
             { index: 2, quickReplyButton: { displayText: 'Click here to see the menu list!', id: prefix + 'listmenu' } },
         ]
 

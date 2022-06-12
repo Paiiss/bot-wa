@@ -76,7 +76,7 @@ ${[prefix]}open mythic 3`
                     legendary ? `*${legendary}* ${global.rpg.emoticon('legendary')}legendary` : ''
                 }${pet && legendary && emerald ? 'and ' : ''}${emerald ? `*${emerald}* ${global.rpg.emoticon('emerald')}emerald` : ''}`.trim()
             )
-        return editRpg(sender, rpg)
+        return editRpg(sender, { rpg })
     },
 } as ICommand
 

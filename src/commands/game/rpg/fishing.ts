@@ -1,15 +1,20 @@
 import { ICommand } from '@constants/command.constant'
-import { findUserRpg, editRpg } from '@utils/rpg.utils'
+import { sleep } from '@utils/helper.utils'
+import { findUserRpg, editRpg, destroyedItem } from '@utils/rpg.utils'
 
 export default {
     description: 'Fishing to add food',
     category: 'game/rpg',
+    maintenance: true,
     callback: async ({ msg }) => {
         const { from, sender } = msg
         let { rpg } = await findUserRpg(sender),
             __date: any = new Date()
         let timers = cooldown - (__date - rpg.lastadventure)
+        if (rpg.fishingrod !== true) return msg.reply(`you must have a fishing rod, you can make it in blacksmith`)
+        if (rpg.fishingroddurability < 5) return msg.reply(`Your fishing rod is broken!`)
         if (__date - rpg.lastfishing <= cooldown) return msg.reply(`You feel tired!, just wait ⏱️ ${(timers / 1000).toFixed(1)} second(s)`, true)
+        await msg.reply(`You are fishing 🛶.🎣`), await sleep(5000)
         const rewards = reward(rpg)
         let text = "You've been adventure and decrease"
         for (const lost in rewards.lost)
@@ -27,7 +32,11 @@ export default {
             }
         rpg.lastfishing = Date.now() * 1
         await editRpg(sender, { rpg: rpg })
-        return msg.reply(text, true)
+        await msg.reply(text, true)
+        if (rpg.fishingroddurability < 4) {
+            await destroyedItem(sender, 'fishingrod')
+            return msg.reply(`Your fishing rod has been destroyed!`)
+        }
     },
 } as ICommand
 

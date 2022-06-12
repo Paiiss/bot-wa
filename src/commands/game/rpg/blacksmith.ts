@@ -17,7 +17,11 @@ export default {
                 let __list = Object.keys(list)
                 let a = []
                 for (let abc of __list) {
-                    a.push({ title: `${abc}`, rowId: prefix + v + ` ${abc}` })
+                    let material = 'material: '
+                    for (let __c in blacksmith[v][abc].material) {
+                        material += blacksmith[v][abc].material[__c] + __c + ' '
+                    }
+                    a.push({ title: `${abc}`, rowId: prefix + v + ` ${abc}`, description: material })
                 }
 
                 __Arr.push({

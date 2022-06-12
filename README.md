@@ -88,6 +88,7 @@ Node js and other npmjs installation required
     "botname": "Allen Bot", // Bot Name
     "timezone": "Asia/Jakarta", // Time for node-cron
     "footer": "AllenBot • Paiiss" // Footer for message button
+    "link_group": "https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd", // link group
 }
 ```
 
