@@ -10,7 +10,6 @@ export default {
 
     callback: async ({ msg, args, prefix, client }) => {
         let { from, isGroup } = msg
-        if (client.type === 'legacy') return
         if (args!.length < 1) return msg.reply(`Use  ${prefix}addr 3D|IDGUILD`)
         let arg = args.join(' ').split('|')
         if (!isGroup && arg[1].length < 1) return msg.reply(`Please enter the idgroup / use the command in the group`)

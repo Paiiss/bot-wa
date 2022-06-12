@@ -1,4 +1,4 @@
-import { AnyWASocket } from '@adiwajshing/baileys'
+import { WASocket } from '@adiwajshing/baileys'
 import { getBuffer } from '@utils/helper.utils'
 import { checkData, getData, deleteData } from '@utils/setting/group.setting'
 import { footer, link_group } from 'config.json'
@@ -9,9 +9,9 @@ import { footer, link_group } from 'config.json'
  */
 
 export class GroupHandler {
-    async joinhandler(data, client: AnyWASocket) {
-        const gM = data.action === 'add' && client.type == 'md' ? await client.groupMetadata(data.id) : null
-        const myID = client.type === 'legacy' ? client.state.legacy.user.id : client.user.id.split(':')[0] + '@s.whatsapp.net' || client.user.id
+    async joinhandler(data, client: WASocket) {
+        const gM = data.action === 'add' ? await client.groupMetadata(data.id) : null
+        const myID = client.user.id.split(':')[0] + '@s.whatsapp.net' || client.user.id
         if (data.action === 'add' && data.participants.includes(myID)) {
             if (gM.participants.length < 3) {
                 await client

@@ -1,16 +1,16 @@
-import { AnyWASocket, MessageUpdateType, WAMessage } from '@adiwajshing/baileys'
+import { MessageUpdateType, WAMessage, WASocket } from '@adiwajshing/baileys'
 import { MessageCollectorOptions, MessageSerialize } from '@constants/message.constant'
 import { serialize } from '@utils/serialize.utils'
 import { EventEmitter } from 'events'
 
 export class MessageCollector extends EventEmitter {
-    private client: AnyWASocket
+    private client: WASocket
     private options: MessageCollectorOptions
     private countMessage: number = 0
     private _timeout: any
     private msg: MessageSerialize
 
-    constructor(client: AnyWASocket, options: MessageCollectorOptions, msg: MessageSerialize) {
+    constructor(client: WASocket, options: MessageCollectorOptions, msg: MessageSerialize) {
         super()
 
         this.client = client

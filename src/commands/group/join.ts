@@ -7,7 +7,6 @@ export default {
     callback: async ({ client, msg, args, shortMessage, message }) => {
         let { from, sender, quoted } = msg
         const rex1 = /chat.whatsapp.com\/([\w\d]*)/g
-        if (client.type == 'legacy') return msg.reply(`!`)
         const code = args.join(' ').match(rex1)
         if (args.join(' ') != '') {
             if (code === null) return await msg.reply('No invite url detected.')

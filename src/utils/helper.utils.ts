@@ -1,13 +1,20 @@
+import makeWASocket, { ConnectionState, DisconnectReason, fetchLatestBaileysVersion, MessageUpdateType, useSingleFileAuthState, WAMessage, WASocket } from '@adiwajshing/baileys'
+import { CommandHandler } from '@handlers/command.handler'
+import qrcode from 'qrcode'
+import P from 'pino'
+import { Boom } from '@hapi/boom'
+import chalk from 'chalk'
 import { downloadContentFromMessage, proto } from '@adiwajshing/baileys'
 import fetch from 'node-fetch'
 import toMs from 'ms'
-import fs, { createReadStream } from 'fs'
+import fs, { createReadStream, unlinkSync } from 'fs'
 import axios from 'axios'
 import { sizeFormatter } from 'human-readable'
 import { join } from 'path'
 import BodyForm from 'form-data'
 import Bluebird from 'bluebird'
 import { randomBytes } from 'crypto'
+import { GlobSync } from 'glob'
 const moment = require('moment')
 
 export const downloadMedia = async (msg: proto.IMessage): Promise<Buffer> => {
@@ -196,4 +203,51 @@ export const timeFormat = (seconds) => {
     var mDisplay = m > 0 ? m + (m == 1 ? ' Minute, ' : ' Minute, ') : ''
     var sDisplay = s > 0 ? s + (s == 1 ? ' Secs, ' : ' Secs ') : ''
     return dDisplay + hDisplay + mDisplay + sDisplay
+}
+
+export const clearSession = () => {
+    new GlobSync('session/*-session.json').found.map((v) => {
+        unlinkSync(v)
+    })
+}
+
+export const menjadiBot = async (sock: WASocket, jid: string): Promise<WASocket> => {
+    const filename = `./session/${jid.split('@')[0]}-session.json`
+    const { state: auth, saveState } = useSingleFileAuthState(filename)
+    const commandHander = new CommandHandler()
+    const { version, isLatest } = await fetchLatestBaileysVersion()
+    const client = makeWASocket({
+        logger: P({ level: 'silent' }),
+        printQRInTerminal: false,
+        browser: ['Allen', 'Safari', '1.0'],
+        auth,
+        version,
+    })
+    client.ev.on('creds.update', saveState)
+    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpdateType }) => {
+        commandHander.messageHandler(m, client)
+    })
+    client.ev.on('connection.update', async (update: ConnectionState) => {
+        const { connection, lastDisconnect, qr } = update
+        if (qr) {
+            return sock.sendMessage(jid, {
+                image: await qrcode.toBuffer(qr, { scale: 8 }),
+                caption: 'Scan QR ini untuk jadi bot sementara\n\n1. Klik titik tiga di pojok kanan atas\n2. Klik Perangkat tertaut\n3. Klik Tautkan Perangkat\n4. Scan QR Ini',
+            })
+        }
+        if (connection === 'open') {
+            client.sendMessage(jid, { text: 'Client terhubung' })
+        }
+        if (connection === 'close') {
+            if ((lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut) {
+                menjadiBot(sock, jid)
+            } else {
+                try {
+                    unlinkSync(filename)
+                } catch {}
+            }
+        }
+        console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `Connection : ${update?.connection}`)
+    })
+    return client
 }

@@ -3,7 +3,7 @@ import { deletePremium } from '@utils/premium.utils'
 import { resetAllLimit } from './user.utils'
 import color from 'chalk'
 import fs from 'fs'
-import { AnyWASocket } from '@adiwajshing/baileys'
+import { WASocket } from '@adiwajshing/baileys'
 import { leaveGroup } from './group.utils'
 import groupSchema from '@schema/group.schema'
 
@@ -19,7 +19,7 @@ const { timezone } = require('../../config.json')
 
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 
-export const autonodecron = async (client: AnyWASocket) => {
+export const autonodecron = async (client: WASocket) => {
     console.log(color.whiteBright('├'), color.keyword('aqua')('[  STAT  ]'), `Getting started with cron`)
     const task1: CronJob = cron.schedule(
         '*/1 * * * *',
@@ -75,8 +75,7 @@ export const autonodecron = async (client: AnyWASocket) => {
     everyday.start()
 }
 
-export async function leaveGroupCron(data: Ig, client: AnyWASocket) {
-    if (client.type !== 'md') return
+export async function leaveGroupCron(data: Ig, client: WASocket) {
     await client
         .groupMetadata(data.id)
         .then(async (meta) => {

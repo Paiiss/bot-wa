@@ -1,4 +1,4 @@
-import { MessageUpdateType, WAMessage, AnyWASocket } from '@adiwajshing/baileys'
+import { MessageUpdateType, WAMessage, WASocket } from '@adiwajshing/baileys'
 import { commands, cooldown, startMessage } from '@constants/command.constant'
 import { MessageError, serialize } from '@utils/serialize.utils'
 import * as dotenv from 'dotenv'
@@ -23,7 +23,7 @@ dotenv.config()
 const gRent = require('../data/g.json')
 const rendemCode = require('../data/rendem.json')
 
-async function checkRendem(body: string, client: AnyWASocket, msg: MessageSerialize) {
+async function checkRendem(body: string, client: WASocket, msg: MessageSerialize) {
     let reg = new RegExp(Object.keys(rendemCode).join('|'))
     let mat = body.match(reg)
     if (reg.test(body) && rendemCode.hasOwnProperty(mat[0])) {
@@ -62,7 +62,7 @@ async function antinsfw(msg: MessageSerialize, group: IGroup) {
 }
 
 export class CommandHandler {
-    async messageHandler(m: { messages: WAMessage[]; type: MessageUpdateType }, client: AnyWASocket) {
+    async messageHandler(m: { messages: WAMessage[]; type: MessageUpdateType }, client: WASocket) {
         const message = m.messages[0]
         if (m.type !== 'notify') return
         if (message.key && message.key.remoteJid === 'status@broadcast') return
@@ -76,12 +76,6 @@ export class CommandHandler {
         // Auto ind or eng
         const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
         let shortMessage: IMess = sender.startsWith('62') ? textMessage.ind : textMessage.eng
-
-        if (client.type == 'md') {
-            client.readMessages([message.key])
-        } else if (client.type == 'legacy') {
-            client.chatRead(message.key, 1)
-        }
 
         const Group: IGroup = msg.isGroup ? await findGroup(msg.from) : null
         if (isGroup && Group?.isBan) return
