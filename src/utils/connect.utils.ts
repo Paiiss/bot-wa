@@ -10,10 +10,10 @@ import { protoType } from '@constants/global.constant'
 protoType()
 
 // start a connection
-export const startConnection = async (jadibot: boolean = false, jid?: string) => {
+export const startConnection = async () => {
     const commandHandler = new CommandHandler()
     const groupHandler = new GroupHandler()
-    if (!jadibot) console.log(chalk.whiteBright('╭─── [ LOG ]'))
+    console.log(chalk.whiteBright('╭─── [ LOG ]'))
     let client: WASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()
     console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `using WA v${version.join('.')}, isLatest: ${isLatest}`)
@@ -23,7 +23,7 @@ export const startConnection = async (jadibot: boolean = false, jid?: string) =>
         printQRInTerminal: true,
         auth: state,
         browser: ['Allen', 'Safari', '1.0'],
-        version: [2, 2220, 8],
+        version,
     })
     client.ev.on('creds.update', saveState)
 
