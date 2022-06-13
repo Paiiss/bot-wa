@@ -8,3 +8,4 @@ config.json
 *-session.json
 session.json
 .gitignore
+src/commands/test/*.ts

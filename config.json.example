@@ -1,8 +1,8 @@
 {
-    "groupId": "6285805609094-1635319627@​g.us", // Group id for error log
-    "lolhuman": "apikey [https://api.lolhuman.xyz/]", // This bot uses some API from lolhuman
-    "botname": "Allen Bot", // Bot Name
-    "timezone": "Asia/Jakarta", // Time for node-cron
-    "footer": "AllenBot • Paiiss"  // Footer for message button,
+    "groupId": "6285805609094-1635319627@​g.us", 
+    "lolhuman": "apikey [https://api.lolhuman.xyz/]",
+    "botname": "Allen Bot", 
+    "timezone": "Asia/Jakarta",
+    "footer": "AllenBot • Paiiss" 
     "link_group": "https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd",
 }
