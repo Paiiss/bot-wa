@@ -87,7 +87,7 @@ export class CommandHandler {
             await gSchema.findOneAndUpdate({ id: from }, { $set: { new: true } })
             for (let i of msg.groupMetadata.participants) s.push(i.id)
             await client.sendMessage(from, { text: t.join('\n\n'), mentions: s, footer, templateButtons: [{ index: 1, urlButton: { displayText: 'Join the Allen bot group', url: link_group } }] })
-            await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STAT  ]'), `New group : ${msg.groupMetadata.subject}`))
+            await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STATS  ]'), `New group : ${msg.groupMetadata.subject}`))
         } else if (isGroup && Group && Group.new && Group.trial && Group.expired === null) {
             sleep(60 * 1000).then(async () => {
                 let some = gRent.some((e) => e.id == from)

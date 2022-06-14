@@ -20,7 +20,7 @@ const { timezone } = require('../../config.json')
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 
 export const autonodecron = async (client: WASocket) => {
-    console.log(color.whiteBright('├'), color.keyword('aqua')('[  STAT  ]'), `Getting started with cron`)
+    console.log(color.whiteBright('├'), color.keyword('aqua')('[  STATS  ]'), `Getting started with cron`)
     const task1: CronJob = cron.schedule(
         '*/1 * * * *',
         async () => {
