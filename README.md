@@ -25,6 +25,7 @@ Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read c
 -   [FAQ](#faq)
 -   [Contributing](#contributing)
 -   [Contributors](#contributors)
+-   [Donation](#donation)
 
 ## Description
 
@@ -84,17 +85,6 @@ Node js and other npmjs installation required
 ### Config
 
 -   remove .example for [config.json.example](https://github.com/Paiiss/bot-wa/blob/master/config.json.example) and [.env.example](https://github.com/Paiiss/bot-wa/blob/master/.env.example) files
-
-```ts
-{
-    "groupId": "6285805609094-1635319627@​g.us", // Group id for error log
-    "lolhuman": "apikey [https://api.lolhuman.xyz/]", // This bot uses some API from lolhuman
-    "botname": "Allen Bot", // Bot Name
-    "timezone": "Asia/Jakarta", // Time for node-cron
-    "footer": "AllenBot • Paiiss" // Footer for message button
-    "link_group": "https://chat.whatsapp.com/CktCFlTbTiMLq5K4fgIidd", // link group
-}
-```
 
 ### Clone
 
@@ -178,3 +168,7 @@ If you want to contribute
 ## Contributors / Special Thanks
 
 [![LolHuman](https://github.com/LoL-Human.png?size=100)](https://github.com/LoL-Human)
+
+## Donation
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q13893Q)
