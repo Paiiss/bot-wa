@@ -17,4 +17,4 @@ RUN npm install ts-node --location=global
 
 EXPOSE 5000
 
-CMD ["npm", "run", "heroku"]
+CMD ["npm", "run", "server"]
