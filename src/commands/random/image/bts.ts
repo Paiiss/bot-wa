@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { getBuffer } from '@utils/helper.utils'
-import { lolhuman, footer } from 'config.json'
+import { lolhuman, footer } from '@config'
 
 export default {
     description: 'Random photo bts k-pop',

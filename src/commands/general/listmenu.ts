@@ -1,6 +1,6 @@
 import { commands, ICommand } from '@constants/command.constant'
 import { getAll } from '@utils/user.utils'
-import { botname, footer } from 'config.json'
+import { botname, footer } from '@config'
 
 export default {
     aliases: ['hlist', 'menulist', 'lmenu', 'info'],

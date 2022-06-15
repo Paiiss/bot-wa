@@ -17,7 +17,7 @@ import { getJson, postJson, sleep, uploaderAPI } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
 import color from 'chalk'
 import FormData from 'form-data'
-import { lolhuman, botname, link_group, footer } from 'config.json'
+import { lolhuman, botname, link_group, footer } from '@config'
 dotenv.config()
 
 const gRent = require('../data/g.json')

@@ -15,7 +15,7 @@ interface Ig {
 const p: Array<{ id: string; e: number; l: number; c: string }> = require('../data/p.json')
 const g: Array<Ig> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
-const { timezone } = require('../../config.json')
+import { timezone } from '@config'
 
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 

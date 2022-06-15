@@ -12,7 +12,8 @@
             "@utils*": ["src/utils", "src/utils*"],
             "@constants*": ["src/constants", "src/constants*"],
             "@handlers*": ["src/handlers", "src/handlers*"],
-            "@schema*": ["src/schema", "src/schema*"]
+            "@schema*": ["src/schema", "src/schema*"],
+            "@config": ["config/index.ts"]
         }
     }
 }

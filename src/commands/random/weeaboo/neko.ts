@@ -1,7 +1,7 @@
 import { ICommand } from '@constants/command.constant'
 import { getBuffer } from '@utils/helper.utils'
 import axios from 'axios'
-import { footer } from 'config.json'
+import { footer } from '@config'
 
 export default {
     aliases: ['nekoo', 'cat', 'kucing'],

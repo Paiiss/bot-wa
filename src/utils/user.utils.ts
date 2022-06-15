@@ -1,7 +1,7 @@
 import User from '@schema/user.schema'
 import chalk from 'chalk'
 import moment from 'moment-timezone'
-import { timezone } from 'config.json'
+import { timezone } from '@config'
 
 export const findUser = async (sender: string) => {
     if (!/@s.whatsapp.net/.test(sender)) throw 'Invalid id/sender'

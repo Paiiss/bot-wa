@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { getBuffer, getJson } from '@utils/helper.utils'
-import { lolhuman } from 'config.json'
+import { lolhuman } from '@config'
 
 export default {
     description: 'Download songs from spotify',

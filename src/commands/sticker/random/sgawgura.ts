@@ -1,5 +1,5 @@
 import { ICommand } from '@constants/command.constant'
-import { lolhuman } from 'config.json'
+import { lolhuman } from '@config'
 
 export default {
     description: 'Sticker gawgura',

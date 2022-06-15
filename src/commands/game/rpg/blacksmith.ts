@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { editRpg, findUserRpg } from '@utils/rpg.utils'
-import { footer } from 'config.json'
+import { footer } from '@config'
 
 export default {
     description: 'blacksmith where weapons are made',

@@ -7,7 +7,7 @@ RUN apt-get -y install ffmpeg imagemagick webp
 RUN rm -rf /var/lib/apt/lists/*
 
 COPY . /allen
-COPY .env.example /allen/.env
+# COPY .env.example /allen/.env
 COPY config.json.example /allen/config.json
 
 WORKDIR /allen

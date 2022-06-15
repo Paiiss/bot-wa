@@ -1,6 +1,5 @@
 import { ICommand } from '@constants/command.constant'
-
-const { groupId } = require(`../../../config.json`)
+import { groupId } from '@config'
 
 export default {
     aliases: ['rep', 'ask'],

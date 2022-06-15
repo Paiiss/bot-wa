@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { getBuffer, getJson } from '@utils/helper.utils'
-import { lolhuman, footer } from 'config.json'
+import { lolhuman, footer } from '@config'
 
 export default {
     description: 'Copel profile photo for again & girls',

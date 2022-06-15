@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { getJson } from '@utils/helper.utils'
-import * as config from 'config.json'
+import * as config from '@config'
 
 export default {
     description: 'Asupan coy',

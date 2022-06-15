@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { getBuffer } from '@utils/helper.utils'
-import { lolhuman } from 'config.json'
+import { lolhuman } from '@config'
 
 export default {
     description: 'Dice',

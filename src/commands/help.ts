@@ -1,5 +1,5 @@
 import { commands, ICommand } from '@constants/command.constant'
-import { botname, link_group, footer } from 'config.json'
+import { botname, link_group, footer } from '@config'
 import { formatSize, timeFormat, toTime } from '@utils/helper.utils'
 import { getAll } from '@utils/user.utils'
 import os from 'os'

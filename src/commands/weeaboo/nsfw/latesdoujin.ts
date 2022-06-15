@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { getJson } from '@utils/helper.utils'
-import { lolhuman, footer } from 'config.json'
+import { lolhuman, footer } from '@config'
 
 export default {
     aliases: ['latestdoujin'],

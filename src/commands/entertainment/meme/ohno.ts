@@ -1,5 +1,5 @@
 import { ICommand } from '@constants/command.constant'
-import * as config from 'config.json'
+import * as config from '@config'
 import { getBuffer } from '@utils/helper.utils'
 
 export default {
