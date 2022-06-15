@@ -24,11 +24,13 @@
         "whatsapp",
         "sticker"
     ],
-    "author": "Paiiss",
+    "author": {
+        "name": "Paiiss"
+    },
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "@adiwajshing/baileys": "^4.1.0",
+        "@adiwajshing/baileys": "github:adiwajshing/Baileys",
         "@bochilteam/scraper": "^2.0.0",
         "@hapi/boom": "^9.1.4",
         "@types/glob": "^7.2.0",

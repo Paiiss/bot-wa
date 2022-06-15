@@ -5,12 +5,12 @@ import { clearSession } from '@utils/helper.utils'
 import connect from './server'
 import yargs from 'yargs/yargs'
 
-global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+const opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
 
 clearSession()
 mongodb(process.env.MONGODB_URL)
 
 startConnection().then(async (client) => {
-    if (global.opts['server']) connect(client)
+    if (opts['server']) connect(client)
     await autonodecron(client)
 })
