@@ -12,6 +12,7 @@ export default async (client: WASocket) => {
         res.end(await qrcode.toBuffer(qr, { type: 'png' }))
     })
     client.ev.on('connection.update', (update: ConnectionState) => {
+        console.log(update.qr)
         qr = update?.qr || 'invalid'
     })
 

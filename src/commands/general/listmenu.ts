@@ -68,9 +68,9 @@ export default {
 
         // await client.sendMessage(from, { text: t })
         return client.sendMessage(from, {
-            text: str.join('\n'),
+            text: str.join('\n') + `\n\n\`\`\`how to use: ${prefix}<command> | ex: .sticker\`\`\``,
             footer,
-            title: 'AllenBOT menu list',
+            title: `AllenBOT menu list`,
             buttonText: 'LIST MENU',
             sections,
         })

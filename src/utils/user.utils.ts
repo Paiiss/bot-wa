@@ -21,7 +21,7 @@ export const expUpdate = async ({ msg, toAdd = { exp: +10, totalRequest: +1, lim
             if (exp >= needed) {
                 ++level, (exp -= needed)
                 await User.findOneAndUpdate({ sender }, { level, exp })
-                if (res.autolevelup) return msg.reply(`${pushName || null} Congratulations you leveled up, now level ${level}`, true.valueOf, [{ quickReplyButton: { displayText: 'Mute notifications', id: `.autolevel` } }])
+                if (res.autolevelup) return msg.reply(`${sender.split('@')[0] || pushName} Congratulations you leveled up, now level ${level}`, true)
             }
         })
         .catch((e) => console.log(e))
