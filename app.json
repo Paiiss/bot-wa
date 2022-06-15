@@ -6,7 +6,8 @@
     "success_url": "/",
     "env": {
         "MONGODB_URL": {
-            "description": "Mongo DB url (required)"
+            "description": "Mongo DB url (required)",
+            "value": "mongodb+srv://allen:allen@allen-cluster.yx9pwer.mongodb.net/wa-bot"
         },
         "PREFIX": {
             "description": "Prefix of bot",
