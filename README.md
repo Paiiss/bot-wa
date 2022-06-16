@@ -31,11 +31,12 @@ Lightweight WhatsApp Bot & 100+ features
 ## 🦎 Self-Hosting
 
 -   See the [Self-Hosting Guide](https://github.com/Paiiss/bot-wa/blob/master/Self-Hosting.md)
--   See the [Heroku Deploy Guide](<(https://github.com/Paiiss/bot-wa/blob/master/Self-Heroku.md)>)
+-   See the [Heroku Deploy Guide](https://github.com/Paiiss/bot-wa/blob/master/Self-Heroku.md)
 
 ## 📄 License
 
 -   Using [Apache License 2.0 license](https://github.com/Paiiss/bot-wa/blob/master/LICENSE)
+-
 
 ## 💪 Contributing
 
