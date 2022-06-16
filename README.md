@@ -36,7 +36,6 @@ Lightweight WhatsApp Bot & 100+ features
 ## 📄 License
 
 -   Using [Apache License 2.0 license](https://github.com/Paiiss/bot-wa/blob/master/LICENSE)
--
 
 ## 💪 Contributing
 
