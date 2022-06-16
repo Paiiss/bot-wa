@@ -74,4 +74,4 @@ Running the above command will run the bot process, the Qr code will come out in
 
 ## 🤡 Don't want the hassle?
 
-Set up on Heroku
+Set up on [Heroku](https://github.com/Paiiss/bot-wa/blob/master/Self-Heroku.md)
