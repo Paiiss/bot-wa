@@ -10,6 +10,7 @@
 Keep copyright, Created by [lolhuman](https://api.lolhuman.xyz/) | Please read carefully | 100+ features
 
 ## [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FPaiiss%2Fbot-wa.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FPaiiss%2Fbot-wa?ref=badge_shield)
 
 </div>
 
@@ -172,3 +173,7 @@ If you want to contribute
 ## Donation
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q13893Q)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FPaiiss%2Fbot-wa.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FPaiiss%2Fbot-wa?ref=badge_large)
