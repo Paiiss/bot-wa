@@ -6,15 +6,15 @@ import chalk from 'chalk'
 export default async (client: WASocket) => {
     const app = express()
 
-    let qr = 'invalid'
+    // let qr = 'invalid'
     app.use(async (req: Request, res: Response) => {
         res.setHeader('content-type', 'image/png')
-        res.end(await qrcode.toBuffer(qr))
+        res.end(await qrcode.toBuffer(global.qr_code))
     })
-    client.ev.on('connection.update', (update: ConnectionState) => {
-        console.log(update.qr)
-        qr = update?.qr || 'invalid'
-    })
+    // await client.ev.on('connection.update', (update: ConnectionState) => {
+    //     console.log(update.qr)
+    //     qr = update?.qr || 'invalid'
+    // })
 
     app.listen(process.env.PORT || 4000, () => {
         console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), 'App listened on port', process.env.PORT || 4000)

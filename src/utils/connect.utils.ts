@@ -38,6 +38,7 @@ export const startConnection = async () => {
 
     client.ev.on('connection.update', async (update: ConnectionState) => {
         const { connection, lastDisconnect } = update
+        global.qr_code = update.qr
         if (connection === 'close') {
             if ((lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut) {
                 startConnection()
