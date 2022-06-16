@@ -3,7 +3,7 @@ FROM node:lts-buster
 USER root
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get -y install ffmpeg imagemagick webp
+# RUN apt-get -y install ffmpeg imagemagick webp
 RUN rm -rf /var/lib/apt/lists/*
 
 COPY . /allen
