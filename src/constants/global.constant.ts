@@ -1,3 +1,6 @@
+import yargs from 'yargs/yargs'
+global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+
 // export {}
 declare global {
     interface Number {

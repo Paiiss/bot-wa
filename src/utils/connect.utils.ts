@@ -38,7 +38,7 @@ export const startConnection = async () => {
 
     client.ev.on('connection.update', async (update: ConnectionState) => {
         const { connection, lastDisconnect } = update
-        global.qr_code = update.qr
+        if (global.opts['server']) global.qr_code = update.qr || 'invalid'
         if (connection === 'close') {
             if ((lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut) {
                 startConnection()
