@@ -1,5 +1,5 @@
 import { MessageUpdateType, WAMessage, WASocket } from '@adiwajshing/baileys'
-import { commands, cooldown, startMessage } from '@constants/command.constant'
+import { commands, cooldown, startMessage, IMessage, MessageSerialize, IGroupModel } from '@constants'
 import { MessageError, serialize } from '@utils/serialize.utils'
 import * as dotenv from 'dotenv'
 import { GlobSync } from 'glob'
@@ -7,17 +7,14 @@ import chalk from 'chalk'
 import { watch } from 'fs'
 import path from 'path'
 import fs from 'fs'
-import { IMess, MessageSerialize } from '@constants/message.constant'
-import { IGroup } from 'src/schema/group.schema'
 import { addRentGroup, findGroup } from '@utils/group.utils'
 import toMS from 'ms'
 import { expUpdate, findUser } from '@utils/user.utils'
-import gSchema from '@schema/group.schema'
-import { getJson, postJson, sleep, uploaderAPI } from '@utils/helper.utils'
+import { getJson, sleep, uploaderAPI } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
 import color from 'chalk'
-import FormData from 'form-data'
 import { lolhuman, botname, link_group, footer } from '@config'
+import { groupModel } from '@schema'
 dotenv.config()
 
 const gRent = require('../data/g.json')
@@ -43,8 +40,8 @@ async function checkRendem(body: string, client: WASocket, msg: MessageSerialize
     }
 }
 
-async function antinsfw(msg: MessageSerialize, group: IGroup) {
-    if (msg.isGroup && group.antiNsfw && msg.typeCheck.isImage && !msg.isSelf) {
+async function antinsfw(msg: MessageSerialize, group: IGroupModel) {
+    if (msg.isGroup && group.safe && msg.typeCheck.isImage && !msg.isSelf) {
         console.log(chalk.whiteBright('├'), chalk.red('[ NSFW ]'), msg.senderNumber, `send pictures in an active anti-nsfw group (${msg.groupMetadata.subject})`)
         let filebuffer = await msg.download()
         const imageUrl = (await uploaderAPI(filebuffer, 'uguu')).data.url
@@ -75,16 +72,16 @@ export class CommandHandler {
 
         // Auto ind or eng
         const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
-        let shortMessage: IMess = sender.startsWith('62') ? textMessage.ind : textMessage.eng
+        let shortMessage: IMessage = sender.startsWith('62') ? textMessage.ind : textMessage.eng
 
-        const Group: IGroup = msg.isGroup ? await findGroup(msg.from) : null
-        if (isGroup && Group?.isBan) return
+        const Group: IGroupModel = msg.isGroup ? await findGroup(msg.from) : null
+        if (isGroup && Group?.ban) return
         if (Group && isGroup) await checkRendem(body, client, msg)
         await antinsfw(msg, Group)
 
         if (isGroup && Group && !Group?.new && !Group?.trial) {
             let s = []
-            await gSchema.findOneAndUpdate({ id: from }, { $set: { new: true } })
+            await groupModel.findOneAndUpdate({ id: from }, { $set: { new: true } })
             for (let i of msg.groupMetadata.participants) s.push(i.id)
             await client.sendMessage(from, { text: t.join('\n\n'), mentions: s, footer, templateButtons: [{ index: 1, urlButton: { displayText: 'Join the Allen bot group', url: link_group } }] })
             await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STATS  ]'), `New group : ${msg.groupMetadata.subject}`))
@@ -116,7 +113,7 @@ export class CommandHandler {
             let isBotAdmin = msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.myId)[0]?.admin : null
             let isSenderAdmin = msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.sender)[0]?.admin : null
 
-            if (msg.isGroup && Group?.isMute) {
+            if (msg.isGroup && Group?.mute) {
                 let cekA = msg.groupMetadata.participants.filter((v) => v.id === msg.sender)
                 if (!cekA[0].admin) return
             }
@@ -132,7 +129,7 @@ export class CommandHandler {
             if (getCommand?.adminGroup && !isSenderAdmin && !User.owner && !User.admin) return msg.reply(shortMessage.group.noPerms)
             if (getCommand?.isBotAdmin && !isBotAdmin) return msg.reply(shortMessage.group.botNoAdmin)
             if (getCommand?.nsfw) {
-                if (isGroup && Group.antiNsfw) return msg.reply(shortMessage.group.antinsfw)
+                if (isGroup && Group.safe) return msg.reply(shortMessage.group.antinsfw)
                 if (!User.age) {
                     return msg.reply(shortMessage.register.setAge)
                 } else if (User.age < 16) {

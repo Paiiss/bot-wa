@@ -1,6 +1,6 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { findGroup } from '@utils/group.utils'
-import gSchema from '@schema/group.schema'
+import { groupModel } from '@schema'
 
 export default {
     aliases: ['alink'],
@@ -10,8 +10,8 @@ export default {
     callback: async ({ msg, client }) => {
         const { from } = msg
         let fGroup = await findGroup(from)
-        let sAnti = !fGroup.antiLinkGroup
-        await gSchema.findOneAndUpdate({ id: fGroup.id }, { $set: { antiNsfw: sAnti } })
+        let sAnti = !fGroup.safelinkgroup
+        await groupModel.findOneAndUpdate({ id: fGroup.id }, { $set: { safelinkgroup: sAnti } })
         return msg.reply(`The anti link group state becomes: ${sAnti ? 'Active' : 'not active'}`)
     },
 } as ICommand

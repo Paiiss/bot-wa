@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { tiktok } from '@utils/downloader/tiktok.utils'
 import { ttparse } from '@utils/helper.utils'
 

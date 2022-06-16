@@ -1,5 +1,5 @@
 import { MessageUpdateType, WAMessage, WASocket } from '@adiwajshing/baileys'
-import { MessageCollectorOptions, MessageSerialize } from '@constants/message.constant'
+import { MessageCollectorOptions, MessageSerialize } from '@constants'
 import { serialize } from '@utils/serialize.utils'
 import { EventEmitter } from 'events'
 

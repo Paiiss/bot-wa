@@ -1,64 +1,11 @@
+import { IUserRpgModel } from '@constants'
 import mongoose, { Schema, model } from 'mongoose'
-
-export interface IUser {
-    id: string
-    rpg: {
-        health: number
-        money: number
-        potion: number
-        trash: number
-        wood: number
-        rock: number
-        string: number
-        emerald: number
-        diamond: number
-        gold: number
-        iron: number
-        common: number
-        uncommon: number
-        mythic: number
-        lastclaim: number
-        legendary: number
-        pet: number
-        horse: number
-        horseexp: number
-        cat: number
-        catngexp: number
-        fox: number
-        foxexp: number
-        dog: number
-        dogexp: number
-        horselastfeed: number
-        catlastfeed: number
-        foxlastfeed: number
-        doglastfeed: number
-        armor: number
-        armordurability: number
-        sword: number
-        sworddurability: number
-        pickaxe: number
-        pickaxedurability: number
-        fishingrod: boolean
-        fishingroddurability: number
-        lastadventure: number
-        lastlimit: number
-        lastfishing: number
-        lastdungeon: number
-        lastduel: number
-        lastmining: number
-        lasthunt: number
-        lastweekly: number
-        lastmonthly: number
-        food: number
-        catexp: number
-    }
-}
 
 const reqString = { type: String, require: true }
 const noll = { type: Number, default: 0 }
 
-var userSchema = new Schema<IUser>({
-    id: reqString,
+var userSchema = new Schema<IUserRpgModel>({
+    user_id: reqString,
 
     rpg: {
         health: {
@@ -122,4 +69,4 @@ var userSchema = new Schema<IUser>({
 })
 
 const name = 'allen-rpg-game'
-export default model<IUser>(name, userSchema)
+export const rpgModel = model<IUserRpgModel>(name, userSchema)

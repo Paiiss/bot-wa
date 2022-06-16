@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express'
 import qrcode from 'qrcode'
 import chalk from 'chalk'
 
-export default async (client: WASocket) => {
+export default async () => {
     const app = express()
 
     app.use(async (req: Request, res: Response) => {

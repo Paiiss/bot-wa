@@ -1,5 +1,5 @@
 import { WASocket } from '@adiwajshing/baileys'
-import groupSchema from '@schema/group.schema'
+import { groupModel } from '@schema'
 import fs from 'fs'
 import toMs from 'ms'
 import { makeid } from './helper.utils'
@@ -8,17 +8,17 @@ const g: Array<{ id: string; expired: number }> = require('../data/g.json')
 const rendem: Object = require('../data/rendem.json')
 
 export const findGroup = async (id: string) => {
-    let data = await groupSchema.findOne({ id })
-    if (!data) data = await groupSchema.create({ id })
+    let data = await groupModel.findOne({ id })
+    if (!data) data = await groupModel.create({ id })
     return data
 }
 
 export const updateGroup = async (id: string, a = {}) =>
     new Promise(async (resolve, reject) => {
-        let data = await groupSchema.findOne({ id })
+        let data = await groupModel.findOne({ id })
         if (!data) return reject(`Group ID not found`)
         if (!a) reject(`Please enter the updated one`)
-        data = await groupSchema.findOneAndUpdate({ id: data.id }, { $set: a })
+        data = await groupModel.findOneAndUpdate({ id: data.id }, { $set: a })
         return resolve(data)
     })
 
@@ -33,7 +33,7 @@ export const deleteGroup = async (id: string) => {
     }
     fs.writeFileSync('./src/data/g.json', JSON.stringify(g))
 
-    return await groupSchema.findOneAndDelete({ id: data.id })
+    return await groupModel.findOneAndDelete({ id: data.id })
 }
 
 export const addRentGroup = async (id: string, time: string = '3d') =>
@@ -42,7 +42,7 @@ export const addRentGroup = async (id: string, time: string = '3d') =>
         let data = await findGroup(id)
 
         let ex = data.expired ? data.expired + toMs(time) : Date.now() + toMs(time)
-        data = await groupSchema.findOneAndUpdate({ id: data.id }, { $set: { new: true, trial: true, expired: ex, leave: false } })
+        data = await groupModel.findOneAndUpdate({ id: data.id }, { $set: { new: true, trial: true, expired: ex, leave: false } })
         let some = g.some((e) => e.id == id)
         if (some) {
             g.splice(
@@ -66,7 +66,7 @@ export const deleteRent = async (id: string) =>
         let data = await findGroup(id)
         if (!data) return reject(`Group ID not found`)
 
-        data = await groupSchema.findOneAndUpdate({ id: data.id }, { $set: { expired: null } })
+        data = await groupModel.findOneAndUpdate({ id: data.id }, { $set: { expired: null } })
         let some = g.some((e) => e.id == id)
         if (some) {
             g.splice(
@@ -88,7 +88,7 @@ export const leaveGroup = async (id: string, client: WASocket) =>
 
         if (d !== null) await client.groupLeave(id)
         await deleteRent(id)
-        await groupSchema.findOneAndUpdate({ id: id }, { $set: { leave: true } })
+        await groupModel.findOneAndUpdate({ id: id }, { $set: { leave: true } })
     })
 
 export const createRendemRent = async (buyer: string, duration: string) => {

@@ -8,6 +8,6 @@ clearSession()
 mongodb(process.env.MONGODB_URL)
 
 startConnection().then(async (client) => {
-    if (global.opts['server']) connect(client)
+    if (global.opts['server']) connect()
     await autonodecron(client)
 })

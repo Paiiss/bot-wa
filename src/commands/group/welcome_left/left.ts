@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { modifyData, checkData } from '@utils/setting/group.setting'
 
 export default {
