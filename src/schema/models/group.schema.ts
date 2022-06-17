@@ -8,7 +8,7 @@ const defaultBoolean = {
 
 var groupSchema = new Schema<IGroupModel>(
     {
-        group_id: {
+        id: {
             type: String,
             required: true,
         },

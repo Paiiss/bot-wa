@@ -1,5 +1,5 @@
 import { WAMessage, WASocket } from '@adiwajshing/baileys'
-import { IGroupModel, IUserModel, Collection, IMess, MessageSerialize } from '@constants'
+import { IGroupModel, IUserModel, Collection, IMessage, MessageSerialize } from '@constants'
 
 export const commands = new Collection<String, ICommand>() // new Map<String, ICommand>()
 export const cooldown = new Collection<string, number>() // new Map<String, number>
@@ -131,6 +131,5 @@ export interface CommandObject {
     msg: MessageSerialize
     User: IUserModel
     Group: IGroupModel
-    shortMessage: IMess
-
+    shortMessage: IMessage
 }

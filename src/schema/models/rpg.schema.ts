@@ -5,7 +5,7 @@ const reqString = { type: String, require: true }
 const noll = { type: Number, default: 0 }
 
 var userSchema = new Schema<IUserRpgModel>({
-    user_id: reqString,
+    id: reqString,
     rpg: {
         health: {
             type: Number,

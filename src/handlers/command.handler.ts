@@ -7,14 +7,13 @@ import chalk from 'chalk'
 import { watch } from 'fs'
 import path from 'path'
 import fs from 'fs'
-import { IMess, MessageSerialize, IGroupModel } from '@constants'
+import { IMessage, MessageSerialize, IGroupModel } from '@constants'
 import { addRentGroup, findGroup } from '@utils/group.utils'
 import toMS from 'ms'
 import { expUpdate, findUser } from '@utils/user.utils'
 import { groupMongo } from '@schema'
 import { getJson, postJson, sleep, uploaderAPI } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
-import color from 'chalk'
 import { lolhuman, botname, link_group, footer } from '@config'
 dotenv.config()
 
@@ -73,7 +72,7 @@ export class CommandHandler {
 
         // Auto ind or eng
         const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
-        let shortMessage: IMess = sender.startsWith('62') ? textMessage.ind : textMessage.eng
+        let shortMessage: IMessage = sender.startsWith('62') ? textMessage.ind : textMessage.eng
 
         const Group: IGroupModel = msg.isGroup ? await findGroup(msg.from) : null
         if (isGroup && Group?.ban) return
@@ -82,10 +81,10 @@ export class CommandHandler {
 
         if (isGroup && Group && !Group?.new && !Group?.trial) {
             let s = []
-            await groupMongo.findOneAndUpdate({ group_id: from }, { $set: { new: true } })
+            await groupMongo.findOneAndUpdate({ id: from }, { $set: { new: true } })
             for (let i of msg.groupMetadata.participants) s.push(i.id)
             await client.sendMessage(from, { text: t.join('\n\n'), mentions: s, footer, templateButtons: [{ index: 1, urlButton: { displayText: 'Join the Allen bot group', url: link_group } }] })
-            await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STATS  ]'), `New group : ${msg.groupMetadata.subject}`))
+            await addRentGroup(from, '7d').then(() => console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `New group : ${msg.groupMetadata.subject}`))
         } else if (isGroup && Group && Group.new && Group.trial && Group.expired === null) {
             sleep(60 * 1000).then(async () => {
                 let some = gRent.some((e) => e.id == from)

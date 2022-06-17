@@ -1,7 +1,5 @@
-import { Document } from 'mongoose'
-
 interface IGroup {
-    group_id: string
+    id: string
     safe: boolean
     safelink: boolean
     safelinkgroup: boolean
@@ -15,7 +13,7 @@ interface IGroup {
 }
 
 interface IUserRpg {
-    user_id: string
+    id: string
     rpg: {
         health: number
         money: number

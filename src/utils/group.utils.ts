@@ -8,8 +8,8 @@ const g: Array<{ id: string; expired: number }> = require('../data/g.json')
 const rendem: Object = require('../data/rendem.json')
 
 export const findGroup = async (id: string) => {
-    let data = await groupMongo.findOne({ group_id: id })
-    if (!data) data = await groupMongo.create({ group_id: id })
+    let data = await groupMongo.findOne({ id: id })
+    if (!data) data = await groupMongo.create({ id: id })
     return data
 }
 
@@ -18,7 +18,7 @@ export const updateGroup = async (id: string, a = {}) =>
         let data = await groupMongo.findOne({ id })
         if (!data) return reject(`Group ID not found`)
         if (!a) reject(`Please enter the updated one`)
-        data = await groupMongo.findOneAndUpdate({ group_id: data.id }, { $set: a })
+        data = await groupMongo.findOneAndUpdate({ id: data.id }, { $set: a })
         return resolve(data)
     })
 
@@ -33,7 +33,7 @@ export const deleteGroup = async (id: string) => {
     }
     fs.writeFileSync('./src/data/g.json', JSON.stringify(g))
 
-    return await groupMongo.findOneAndDelete({ group_id: data.id })
+    return await groupMongo.findOneAndDelete({ id: data.id })
 }
 
 export const addRentGroup = async (id: string, time: string = '3d') =>
@@ -42,7 +42,7 @@ export const addRentGroup = async (id: string, time: string = '3d') =>
         let data = await findGroup(id)
 
         let ex = data.expired ? data.expired + toMs(time) : Date.now() + toMs(time)
-        data = await groupMongo.findOneAndUpdate({ group_id: data.id }, { $set: { new: true, trial: true, expired: ex, leave: false } })
+        data = await groupMongo.findOneAndUpdate({ id: data.id }, { $set: { new: true, trial: true, expired: ex, leave: false } })
         let some = g.some((e) => e.id == id)
         if (some) {
             g.splice(
@@ -66,7 +66,7 @@ export const deleteRent = async (id: string) =>
         let data = await findGroup(id)
         if (!data) return reject(`Group ID not found`)
 
-        data = await groupMongo.findOneAndUpdate({ group_id: data.id }, { $set: { expired: null } })
+        data = await groupMongo.findOneAndUpdate({ id: data.id }, { $set: { expired: null } })
         let some = g.some((e) => e.id == id)
         if (some) {
             g.splice(
@@ -88,7 +88,7 @@ export const leaveGroup = async (id: string, client: WASocket) =>
 
         if (d !== null) await client.groupLeave(id)
         await deleteRent(id)
-        await groupMongo.findOneAndUpdate({ group_id: id }, { $set: { leave: true } })
+        await groupMongo.findOneAndUpdate({ id: id }, { $set: { leave: true } })
     })
 
 export const createRendemRent = async (buyer: string, duration: string) => {
