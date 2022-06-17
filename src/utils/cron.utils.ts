@@ -75,7 +75,7 @@ export const autonodecron = async (client: WASocket) => {
 
 export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
     await client
-        .groupMetadata(data.id)
+        .groupMetadata(data.group_id)
         .then(async (meta) => {
             let s = []
             for (let i of meta.participants) {
@@ -83,8 +83,8 @@ export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
             }
             if (Date.now() >= data.expired || data.expired === null) {
                 try {
-                    await client.sendMessage(data.id, { text: rText, mentions: s })
-                    await leaveGroup(data.id, client)
+                    await client.sendMessage(data.group_id, { text: rText, mentions: s })
+                    await leaveGroup(data.group_id, client)
                 } catch (error) {
                     console.log(error)
                 }

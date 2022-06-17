@@ -95,6 +95,6 @@ interface IUser {
     autolevelup: boolean
 }
 
-export interface IUserModel extends IUser, Document {}
-export interface IGroupModel extends IGroup, Document {}
-export interface IUserRpgModel extends IUserRpg, Document {}
+export interface IUserModel extends IUser {}
+export interface IGroupModel extends IGroup {}
+export interface IUserRpgModel extends IUserRpg {}
