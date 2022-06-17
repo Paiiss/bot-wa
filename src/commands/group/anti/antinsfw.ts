@@ -1,6 +1,6 @@
 import { ICommand } from '@constants/command.constant'
 import { findGroup } from '@utils/group.utils'
-import gSchema from '@schema/group.schema'
+import { groupMongo } from '@schema'
 
 export default {
     aliases: ['ansfw'],
@@ -10,8 +10,8 @@ export default {
     callback: async ({ msg, client }) => {
         const { from } = msg
         let fGroup = await findGroup(from)
-        let sAnti = !fGroup.antiNsfw
-        await gSchema.findOneAndUpdate({ id: fGroup.id }, { $set: { antiNsfw: sAnti } })
+        let sAnti = !fGroup.safe
+        await groupMongo.findOneAndUpdate({ group_id: fGroup.id }, { $set: { safe: sAnti } })
         return msg.reply(`The anti nsfw state becomes: ${sAnti ? 'Active' : 'not active'}`)
     },
 } as ICommand

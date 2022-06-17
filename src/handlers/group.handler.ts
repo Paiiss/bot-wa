@@ -1,5 +1,4 @@
 import { WASocket } from '@adiwajshing/baileys'
-import { getBuffer } from '@utils/helper.utils'
 import { checkData, getData, deleteData } from '@utils/setting/group.setting'
 import { footer, link_group } from '@config'
 

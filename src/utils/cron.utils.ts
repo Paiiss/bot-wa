@@ -5,17 +5,15 @@ import color from 'chalk'
 import fs from 'fs'
 import { WASocket } from '@adiwajshing/baileys'
 import { leaveGroup } from './group.utils'
-import groupSchema from '@schema/group.schema'
+import { groupMongo } from '@schema'
 
-interface Ig {
-    id: string
-    expired: number
-}
 // json
 const p: Array<{ id: string; e: number; l: number; c: string }> = require('../data/p.json')
-const g: Array<Ig> = require('../data/g.json')
+const g: Array<IGroupModel> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
+
 import { timezone } from '@config'
+import { IGroupModel } from '@constants/mongo.constant'
 
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 
@@ -64,7 +62,7 @@ export const autonodecron = async (client: WASocket) => {
                 await client.sendMessage(process.env.gcid, { text: `Error reset limit!\n${error}` })
             }
 
-            let allData: any = groupSchema.find()
+            let allData: any = groupMongo.find()
 
             allData.forEach(async (data) => {
                 await leaveGroupCron(data, client)
@@ -75,7 +73,7 @@ export const autonodecron = async (client: WASocket) => {
     everyday.start()
 }
 
-export async function leaveGroupCron(data: Ig, client: WASocket) {
+export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
     await client
         .groupMetadata(data.id)
         .then(async (meta) => {

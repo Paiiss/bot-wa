@@ -1,6 +1,5 @@
 import { WAMessage, WASocket } from '@adiwajshing/baileys'
-import { IGroup } from '@schema/group.schema'
-import { IUser } from '@schema/user.schema'
+import { IGroupModel, IUserModel } from '@constants/mongo.constant'
 import { Collection } from './collection.constant'
 import { IMess, MessageSerialize } from './message.constant'
 
@@ -132,7 +131,7 @@ export interface CommandObject {
     prefix: string
     args: string[]
     msg: MessageSerialize
-    User: IUser
-    Group: IGroup
+    User: IUserModel
+    Group: IGroupModel
     shortMessage: IMess
 }
