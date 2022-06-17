@@ -33,9 +33,9 @@ export const autonodecron = async (client: WASocket) => {
                 }
             })
 
-            g.forEach(async (data) => {
-                await leaveGroupCron(data, client)
-            })
+            // g.forEach(async (data) => {
+            //     await leaveGroupCron(data, client).catch((e) => console.log(`Can't leave the group ${data.id}`, e))
+            // })
 
             let obj = Object.keys(rendem)
             let ev
@@ -90,5 +90,5 @@ export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
                 }
             }
         })
-        .catch((e) => {})
+        .catch((e) => console.log(e))
 }

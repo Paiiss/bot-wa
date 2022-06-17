@@ -1,7 +1,9 @@
 <div align="center">
-<img src="https://i.ibb.co/DwZzvGK/allenss.jpg" width="150" height="150" border="0" alt="PFP">
+<img src="https://i.ibb.co/mzcSXdy/koboo.png" width="150" height="150" border="0" alt="PFP">
 
 # Allen Bot Whatsapp Multi Device
+
+### Allen x Kobo
 
 <p align="center">
   <a href="https://github.com/Paiiss"><img title="Author" src="https://img.shields.io/badge/Author-Paiiss-yellow.svg?style=for-the-badge&logo=github" /></a>
