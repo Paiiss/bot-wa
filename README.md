@@ -29,6 +29,7 @@ Lightweight WhatsApp Bot & 100+ features
 -   Made with Baileys - MD (Best Library right now)
 -   Has anti nsfw and NSFW detection features
 -   Using mongodb atlas (cluster example is in [app.json](https://github.com/Paiiss/bot-wa/blob/master/app.json))
+-   Suitable for those who want to learn Typescript programming
 
 ## 🦎 Self-Hosting
 

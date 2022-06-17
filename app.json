@@ -2,7 +2,7 @@
     "name": "bot-wa",
     "description": "This app does one little thing, and does it well.",
     "repository": "https://github.com/jane-doe/small-sharp-tool",
-    "logo": "https://camo.githubusercontent.com/3ec69ad8e92758ab352b457159237a544b7bb43e77b33dee720e8d5015520e76/68747470733a2f2f692e6962622e636f2f44775a7a76474b2f616c6c656e73732e6a7067",
+    "logo": "https://i.ibb.co/mzcSXdy/koboo.png",
     "success_url": "/",
     "env": {
         "MONGODB_URL": {
