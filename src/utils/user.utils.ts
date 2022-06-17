@@ -45,7 +45,7 @@ export const getAll = async () => {
 
 export const resetAllLimit = async () => {
     await userMongo
-        .updateMany({ limit: 0 })
+        .updateMany({ limit: 0, dayRequest: 0 })
         .then((res) => {
             return res
         })

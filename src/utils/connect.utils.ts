@@ -1,8 +1,7 @@
-import makeWASocket, { ConnectionState, DisconnectReason, makeWALegacySocket, MessageUpdateType, useSingleFileAuthState, useSingleFileLegacyAuthState, WAMessage, fetchLatestBaileysVersion, WASocket } from '@adiwajshing/baileys'
+import makeWASocket, { ConnectionState, DisconnectReason, MessageUpdateType, useSingleFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket } from '@adiwajshing/baileys'
 import { writeFileSync, readFileSync, existsSync } from 'fs'
 import { CommandHandler } from '@handlers/command.handler'
 import { Boom } from '@hapi/boom'
-import qrcode from 'qrcode'
 import chalk from 'chalk'
 import P from 'pino'
 import { GroupHandler } from '@handlers/group.handler'
@@ -38,8 +37,8 @@ export const startConnection = async () => {
     })
 
     client.ev.on('connection.update', async (update: ConnectionState) => {
-        const { connection, lastDisconnect } = update
-        if (global.opts['server']) global.qr_code = update.qr || 'invalid'
+        const { connection, lastDisconnect, qr } = update
+        if (global.opts['server']) global.qr_code = qr || 'invalid'
         if (connection === 'close') {
             if ((lastDisconnect.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut) {
                 startConnection()

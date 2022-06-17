@@ -9,11 +9,10 @@ import { groupMongo } from '@schema'
 
 // json
 const p: Array<{ id: string; e: number; l: number; c: string }> = require('../data/p.json')
-const g: Array<IGroupModel> = require('../data/g.json')
+const g: Array<{ id: string; expired: number }> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
 
 import { timezone } from '@config'
-import { IGroupModel } from '@constants'
 
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 
@@ -33,9 +32,9 @@ export const autonodecron = async (client: WASocket) => {
                 }
             })
 
-            // g.forEach(async (data) => {
-            //     await leaveGroupCron(data, client).catch((e) => console.log(`Can't leave the group ${data.id}`, e))
-            // })
+            g.forEach(async (data) => {
+                await leaveGroupCron(data.id, data.expired, client).catch((e) => console.log(`Can't leave the group ${data.id}`, e))
+            })
 
             let obj = Object.keys(rendem)
             let ev
@@ -65,7 +64,7 @@ export const autonodecron = async (client: WASocket) => {
             let allData: any = groupMongo.find()
 
             allData.forEach(async (data) => {
-                await leaveGroupCron(data, client)
+                await leaveGroupCron(data.id, data.expired, client)
             })
         },
         { scheduled: true, timezone: timezone }
@@ -73,22 +72,24 @@ export const autonodecron = async (client: WASocket) => {
     everyday.start()
 }
 
-export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
-    await client
-        .groupMetadata(data.id)
-        .then(async (meta) => {
-            let s = []
-            for (let i of meta.participants) {
-                s.push(i.id)
-            }
-            if (Date.now() >= data.expired || data.expired === null) {
-                try {
-                    await client.sendMessage(data.id, { text: rText, mentions: s })
-                    await leaveGroup(data.id, client)
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-        })
-        .catch((e) => console.log(e))
+export async function leaveGroupCron(id: string, expired: number, client: WASocket) {
+    if (Date.now() >= expired || expired === null) {
+        await client
+            .groupMetadata(id)
+            .then(async (meta) => {
+                let mentions = []
+                for (let i of meta.participants) mentions.push(i.id)
+                await client
+                    .sendMessage(id, { text: rText, mentions })
+                    .then(async () => {
+                        await leaveGroup(id, client)
+                    })
+                    .catch(() => {
+                        console.log(`Failed to send chat when you want to leave the group`)
+                    })
+            })
+            .catch((e) => {
+                console.log(`Failed to get group meta data when trying to leave the group`)
+            })
+    }
 }

@@ -1,7 +1,7 @@
 {
     "name": "bot-wa",
     "description": "This app does one little thing, and does it well.",
-    "repository": "https://github.com/jane-doe/small-sharp-tool",
+    "repository": "https://github.com/Paiiss/bot-wa",
     "logo": "https://i.ibb.co/mzcSXdy/koboo.png",
     "success_url": "/",
     "env": {
