@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import * as config from '@config'
 import { getBuffer } from '@utils/helper.utils'
 

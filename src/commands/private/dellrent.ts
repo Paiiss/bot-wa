@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { deleteRent } from '@utils/group.utils'
 
 export default {

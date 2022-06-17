@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { IUserModel } from '@constants/mongo.constant'
+import { IUserModel } from '@constants'
 
 const reqString = { type: String, require: true }
 const nullString = { type: String, require: false, default: null }

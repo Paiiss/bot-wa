@@ -13,7 +13,7 @@ const g: Array<IGroupModel> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
 
 import { timezone } from '@config'
-import { IGroupModel } from '@constants/mongo.constant'
+import { IGroupModel } from '@constants'
 
 const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
 

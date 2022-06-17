@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { findUserRpg } from '@utils/rpg.utils'
 import adventure from './adventure'
 import fishing from './fishing'

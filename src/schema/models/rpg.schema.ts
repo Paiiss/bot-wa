@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { IUserRpgModel } from '@constants/mongo.constant'
+import { IUserRpgModel } from '@constants'
 
 const reqString = { type: String, require: true }
 const noll = { type: Number, default: 0 }

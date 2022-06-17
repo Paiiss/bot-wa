@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { addRentGroup } from '@utils/group.utils'
 import { toTime } from '@utils/helper.utils'
 

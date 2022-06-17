@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { toTime } from '@utils/helper.utils'
 import toMs from 'ms'
 

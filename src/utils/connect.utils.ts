@@ -6,7 +6,7 @@ import qrcode from 'qrcode'
 import chalk from 'chalk'
 import P from 'pino'
 import { GroupHandler } from '@handlers/group.handler'
-import { protoType } from '@constants/global.constant'
+import { protoType } from '@constants'
 protoType()
 
 // start a connection

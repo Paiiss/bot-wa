@@ -1,5 +1,5 @@
 import { WAMessage, WASocket } from '@adiwajshing/baileys'
-import { IGroupModel, IUserModel } from '@constants/mongo.constant'
+import { IGroupModel, IUserModel } from '@constants'
 import { Collection } from './collection.constant'
 import { IMess, MessageSerialize } from './message.constant'
 

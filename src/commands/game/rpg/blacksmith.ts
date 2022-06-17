@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { editRpg, findUserRpg } from '@utils/rpg.utils'
 import { footer } from '@config'
 
