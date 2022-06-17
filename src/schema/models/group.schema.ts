@@ -1,4 +1,4 @@
-import { IGroupModel } from '@constants/mongo.constant'
+import { IGroupModel } from '@constants'
 import { Schema, model } from 'mongoose'
 
 const defaultBoolean = {

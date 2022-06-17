@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { getBuffer } from '@utils/helper.utils'
 import { lolhuman, footer } from '@config'
 

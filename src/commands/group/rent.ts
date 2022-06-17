@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { createRendemRent } from '@utils/group.utils'
 import { makeid } from '@utils/helper.utils'
 import { reducemoney } from '@utils/user.utils'

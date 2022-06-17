@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { findGroup } from '@utils/group.utils'
 import { groupMongo } from '@schema'
 
@@ -11,7 +11,9 @@ export default {
         const { from } = msg
         let fGroup = await findGroup(from)
         let sAnti = !fGroup.safelinkgroup
+
         await groupMongo.findOneAndUpdate({ group_id: fGroup.id }, { $set: { safelinkgroup: sAnti } })
+
         return msg.reply(`The anti link group state becomes: ${sAnti ? 'Active' : 'not active'}`)
     },
 } as ICommand

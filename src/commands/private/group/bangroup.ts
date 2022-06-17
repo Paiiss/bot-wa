@@ -1,6 +1,7 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { findGroup } from '@utils/group.utils'
 import { groupMongo } from '@schema'
+
 
 export default {
     description: 'To ban groups that can crash bots',

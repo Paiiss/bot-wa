@@ -1,6 +1,6 @@
 import { family100 } from '@bochilteam/scraper'
-import { Collection } from '@constants/collection.constant'
-import { ICommand } from '@constants/command.constant'
+import { Collection } from '@constants'
+import { ICommand } from '@constants'
 const __collection = new Collection<string, null>()
 
 export default {

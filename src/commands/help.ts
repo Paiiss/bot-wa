@@ -1,4 +1,4 @@
-import { commands, ICommand } from '@constants/command.constant'
+import { commands, ICommand } from '@constants'
 import { botname, link_group, footer } from '@config'
 import { formatSize, timeFormat, toTime } from '@utils/helper.utils'
 import { getAll } from '@utils/user.utils'

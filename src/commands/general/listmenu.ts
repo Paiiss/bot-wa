@@ -1,4 +1,4 @@
-import { commands, ICommand } from '@constants/command.constant'
+import { commands, ICommand } from '@constants'
 import { getAll } from '@utils/user.utils'
 import { botname, footer } from '@config'
 

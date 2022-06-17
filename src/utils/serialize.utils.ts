@@ -1,5 +1,5 @@
 import { WAMessage, WASocket } from '@adiwajshing/baileys'
-import { MessageSerialize } from '@constants/message.constant'
+import { MessageSerialize } from '@constants'
 import { MessageCollector } from './events.utils'
 import { downloadMedia } from './helper.utils'
 import { footer } from '@config'

@@ -1,4 +1,4 @@
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 import { menjadiBot } from '@utils/helper.utils'
 
 export default {

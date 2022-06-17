@@ -1,6 +1,6 @@
 import { tebakgambar, tebakgambarjson } from '@bochilteam/scraper'
-import { Collection } from '@constants/collection.constant'
-import { ICommand } from '@constants/command.constant'
+import { Collection } from '@constants'
+import { ICommand } from '@constants'
 import { getBuffer } from '@utils/helper.utils'
 const __collection = new Collection<string, null>()
 

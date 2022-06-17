@@ -10,7 +10,7 @@
         "experimentalDecorators": true,
         "paths": {
             "@utils*": ["src/utils", "src/utils*"],
-            "@constants*": ["src/constants", "src/constants*"],
+            "@constants": ["src/constants/index.ts"],
             "@handlers*": ["src/handlers", "src/handlers*"],
             "@schema": ["src/schema/index.ts"],
             "@config": ["config/index.ts"]

@@ -1,5 +1,5 @@
 import { WA_DEFAULT_EPHEMERAL } from '@adiwajshing/baileys'
-import { ICommand } from '@constants/command.constant'
+import { ICommand } from '@constants'
 
 export default {
     description: 'will send as a disappearing message',
