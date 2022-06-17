@@ -1,5 +1,5 @@
 import { MessageUpdateType, WAMessage, WASocket } from '@adiwajshing/baileys'
-import { commands, cooldown, startMessage, IMessage, MessageSerialize, IGroupModel } from '@constants'
+import { commands, cooldown, startMessage } from '@constants'
 import { MessageError, serialize } from '@utils/serialize.utils'
 import * as dotenv from 'dotenv'
 import { GlobSync } from 'glob'
@@ -7,14 +7,15 @@ import chalk from 'chalk'
 import { watch } from 'fs'
 import path from 'path'
 import fs from 'fs'
+import { IMess, MessageSerialize, IGroupModel } from '@constants'
 import { addRentGroup, findGroup } from '@utils/group.utils'
 import toMS from 'ms'
 import { expUpdate, findUser } from '@utils/user.utils'
-import { getJson, sleep, uploaderAPI } from '@utils/helper.utils'
+import { groupMongo } from '@schema'
+import { getJson, postJson, sleep, uploaderAPI } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
 import color from 'chalk'
 import { lolhuman, botname, link_group, footer } from '@config'
-import { groupModel } from '@schema'
 dotenv.config()
 
 const gRent = require('../data/g.json')
@@ -72,7 +73,7 @@ export class CommandHandler {
 
         // Auto ind or eng
         const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
-        let shortMessage: IMessage = sender.startsWith('62') ? textMessage.ind : textMessage.eng
+        let shortMessage: IMess = sender.startsWith('62') ? textMessage.ind : textMessage.eng
 
         const Group: IGroupModel = msg.isGroup ? await findGroup(msg.from) : null
         if (isGroup && Group?.ban) return
@@ -81,7 +82,7 @@ export class CommandHandler {
 
         if (isGroup && Group && !Group?.new && !Group?.trial) {
             let s = []
-            await groupModel.findOneAndUpdate({ id: from }, { $set: { new: true } })
+            await groupMongo.findOneAndUpdate({ group_id: from }, { $set: { new: true } })
             for (let i of msg.groupMetadata.participants) s.push(i.id)
             await client.sendMessage(from, { text: t.join('\n\n'), mentions: s, footer, templateButtons: [{ index: 1, urlButton: { displayText: 'Join the Allen bot group', url: link_group } }] })
             await addRentGroup(from, '7d').then(() => console.log(color.whiteBright('├'), color.keyword('aqua')('[  STATS  ]'), `New group : ${msg.groupMetadata.subject}`))
@@ -113,11 +114,7 @@ export class CommandHandler {
             let isBotAdmin = msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.myId)[0]?.admin : null
             let isSenderAdmin = msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.sender)[0]?.admin : null
 
-            if (msg.isGroup && Group?.mute) {
-                let cekA = msg.groupMetadata.participants.filter((v) => v.id === msg.sender)
-                if (!cekA[0].admin) return
-            }
-
+            if (msg.isGroup && Group?.mute && !isSenderAdmin) return
             if (User?.banned) return msg.reply(shortMessage.isBan)
             if (getCommand?.premiumOnly && !User.premium) return msg.reply(shortMessage.isPrem)
             // if (getCommand?.groupOnly && !msg.isGroup) return msg.reply(shortMessage.group.onlyGroup);

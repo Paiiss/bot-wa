@@ -1,12 +1,11 @@
+import { Schema, model } from 'mongoose'
 import { IUserRpgModel } from '@constants'
-import mongoose, { Schema, model } from 'mongoose'
 
 const reqString = { type: String, require: true }
 const noll = { type: Number, default: 0 }
 
 var userSchema = new Schema<IUserRpgModel>({
     user_id: reqString,
-
     rpg: {
         health: {
             type: Number,
@@ -69,4 +68,4 @@ var userSchema = new Schema<IUserRpgModel>({
 })
 
 const name = 'allen-rpg-game'
-export const rpgModel = model<IUserRpgModel>(name, userSchema)
+export const rpgMongo = model<IUserRpgModel>(name, userSchema)

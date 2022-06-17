@@ -1,32 +1,5 @@
 import { Document } from 'mongoose'
 
-interface IUser {
-    sender: string
-    nickname: string
-    age: number
-    activated: boolean
-    limit: number
-    regTime: number
-    totalRequest: number
-    limitRequest: number
-    dayRequest: number
-    cash: number
-    level: number
-    exp: number
-    warn: number
-    banned: boolean
-    admin: boolean
-    owner: boolean
-    isBc: boolean
-    premium: boolean
-    expire: number
-    casta: string
-    role: string
-    afk: number
-    afkReason: string
-    autolevelup: boolean
-}
-
 interface IGroup {
     group_id: string
     safe: boolean
@@ -34,7 +7,7 @@ interface IGroup {
     safelinkgroup: boolean
     ban: boolean
     mute: boolean
-    act: boolean
+    actived: boolean
     expired: number
     trial: boolean
     new: boolean
@@ -95,6 +68,33 @@ interface IUserRpg {
     }
 }
 
-export interface IUserModel extends IUser, Document {}
-export interface IGroupModel extends IGroup, Document {}
-export interface IUserRpgModel extends IUserRpg, Document {}
+interface IUser {
+    sender: string
+    nickname: string
+    age: number
+    activated: boolean
+    limit: number
+    regTime: number
+    totalRequest: number
+    limitRequest: number
+    dayRequest: number
+    cash: number
+    level: number
+    exp: number
+    warn: number
+    banned: boolean
+    admin: boolean
+    owner: boolean
+    isBc: boolean
+    premium: boolean
+    expire: number
+    casta: string
+    role: string
+    afk: number
+    afkReason: string
+    autolevelup: boolean
+}
+
+export interface IUserModel extends IUser {}
+export interface IGroupModel extends IGroup {}
+export interface IUserRpgModel extends IUserRpg {}

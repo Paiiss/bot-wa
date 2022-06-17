@@ -5,12 +5,13 @@ import color from 'chalk'
 import fs from 'fs'
 import { WASocket } from '@adiwajshing/baileys'
 import { leaveGroup } from './group.utils'
-import { groupModel } from '@schema'
+import { groupMongo } from '@schema'
 
 // json
 const p: Array<{ id: string; e: number; l: number; c: string }> = require('../data/p.json')
 const g: Array<IGroupModel> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
+
 import { timezone } from '@config'
 import { IGroupModel } from '@constants'
 
@@ -54,10 +55,14 @@ export const autonodecron = async (client: WASocket) => {
     const everyday = cron.schedule(
         '0 0 * * *',
         async () => {
-            resetAllLimit().catch(async (error) => {
+            try {
+                resetAllLimit()
+            } catch (error) {
+                console.log(error)
                 await client.sendMessage(process.env.gcid, { text: `Error reset limit!\n${error}` })
-            })
-            let allData: any = groupModel.find()
+            }
+
+            let allData: any = groupMongo.find()
 
             allData.forEach(async (data) => {
                 await leaveGroupCron(data, client)
@@ -70,7 +75,7 @@ export const autonodecron = async (client: WASocket) => {
 
 export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
     await client
-        .groupMetadata(data.id)
+        .groupMetadata(data.group_id)
         .then(async (meta) => {
             let s = []
             for (let i of meta.participants) {
@@ -78,8 +83,8 @@ export async function leaveGroupCron(data: IGroupModel, client: WASocket) {
             }
             if (Date.now() >= data.expired || data.expired === null) {
                 try {
-                    await client.sendMessage(data.id, { text: rText, mentions: s })
-                    await leaveGroup(data.id, client)
+                    await client.sendMessage(data.group_id, { text: rText, mentions: s })
+                    await leaveGroup(data.group_id, client)
                 } catch (error) {
                     console.log(error)
                 }

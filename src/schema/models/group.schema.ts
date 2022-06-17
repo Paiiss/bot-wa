@@ -1,5 +1,10 @@
-import { Schema, model } from 'mongoose'
 import { IGroupModel } from '@constants'
+import { Schema, model } from 'mongoose'
+
+const defaultBoolean = {
+    type: Boolean,
+    default: false,
+}
 
 var groupSchema = new Schema<IGroupModel>(
     {
@@ -7,49 +12,22 @@ var groupSchema = new Schema<IGroupModel>(
             type: String,
             required: true,
         },
-        safelink: {
-            type: Boolean,
-            default: false,
-        },
-        safe: {
-            type: Boolean,
-            default: false,
-        },
-        safelinkgroup: {
-            type: Boolean,
-            default: false,
-        },
-        ban: {
-            type: Boolean,
-            default: false,
-        },
-        mute: {
-            type: Boolean,
-            default: false,
-        },
-        act: {
-            type: Boolean,
-            default: false,
-        },
+        safe: defaultBoolean,
+        safelinkgroup: defaultBoolean,
+        safelink: defaultBoolean,
+        ban: defaultBoolean,
+        mute: defaultBoolean,
+        actived: defaultBoolean,
         expired: {
             type: Number,
             default: null,
         },
-        trial: {
-            type: Boolean,
-            default: false,
-        },
-        new: {
-            type: Boolean,
-            default: false,
-        },
-        leave: {
-            type: Boolean,
-            default: false,
-        },
+        trial: defaultBoolean,
+        new: defaultBoolean,
+        leave: defaultBoolean,
     },
     { timestamps: true }
 )
 
 const name = 'allen-group'
-export const groupModel = model<IGroupModel>(name, groupSchema)
+export const groupMongo = model<IGroupModel>(name, groupSchema)

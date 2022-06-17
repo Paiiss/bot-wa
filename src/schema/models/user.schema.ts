@@ -68,4 +68,4 @@ var userSchema = new Schema<IUserModel>(
 )
 
 const name = 'allen-user'
-export const userModel = model<IUserModel>(name, userSchema)
+export const userMongo = model<IUserModel>(name, userSchema)
