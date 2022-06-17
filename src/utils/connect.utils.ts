@@ -9,11 +9,12 @@ import { GroupHandler } from '@handlers/group.handler'
 import { protoType } from '@constants'
 protoType()
 
+console.log(chalk.whiteBright('╭─── [ LOG ]'))
+
 // start a connection
 export const startConnection = async () => {
     const commandHandler = new CommandHandler()
     const groupHandler = new GroupHandler()
-    console.log(chalk.whiteBright('╭─── [ LOG ]'))
     let client: WASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()
     console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `using WA v${version.join('.')}, isLatest: ${isLatest}`)

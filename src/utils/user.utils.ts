@@ -22,7 +22,7 @@ export const expUpdate = async ({ msg, toAdd = { exp: +10, totalRequest: +1, lim
             if (exp >= needed) {
                 ++level, (exp -= needed)
                 await userMongo.findOneAndUpdate({ sender }, { level, exp })
-                if (res.autolevelup) return msg.reply(`${sender.split('@')[0] || pushName} Congratulations you leveled up, now level ${level}`, true)
+                if (res.autolevelup) return msg.reply(`@${sender.split('@')[0]} Congratulations you leveled up, now level ${level}`, true)
             }
         })
         .catch((e) => console.log(e))
