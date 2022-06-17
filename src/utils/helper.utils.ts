@@ -151,14 +151,20 @@ export const calculatePing = function (timestamp, now) {
     return moment.duration(now - moment(timestamp * 1000)).asSeconds()
 }
 
-export const ttparse = (text) => {
+export const ttparse = (text: string) => {
     const rex = /(?:https:?\/{2})?(?:w{3}|vm|vt|t)?\.?tiktok.com\/([^\s&]+)/gi
     const url = text.match(rex)
     return { url: url == null ? '' : url[0] }
 }
 
-export const ytparse = (text) => {
+export const ytparse = (text: string) => {
     const rex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/gi
+    const url = text.match(rex)
+    return { url: url == null ? '' : url[0] }
+}
+
+export const waparse = (text: string) => {
+    const rex = /(https?:\/\/)?chat\.whatsapp\.com\/(?:invite\/)?([a-zA-Z0-9_-]{22})/g
     const url = text.match(rex)
     return { url: url == null ? '' : url[0] }
 }
