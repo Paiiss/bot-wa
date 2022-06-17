@@ -12,7 +12,7 @@ export default {
         let fGroup = await findGroup(from)
         let sAnti = !fGroup.safelinkgroup
 
-        await groupMongo.findOneAndUpdate({ group_id: fGroup.id }, { $set: { safelinkgroup: sAnti } })
+        await groupMongo.findOneAndUpdate({ id: fGroup.id }, { $set: { safelinkgroup: sAnti } })
 
         return msg.reply(`The anti link group state becomes: ${sAnti ? 'Active' : 'not active'}`)
     },

@@ -2,7 +2,6 @@ import { ICommand } from '@constants'
 import { findGroup } from '@utils/group.utils'
 import { groupMongo } from '@schema'
 
-
 export default {
     description: 'To ban groups that can crash bots',
     isAdminBot: true,
@@ -12,7 +11,7 @@ export default {
         const { from } = msg
         let __data = await findGroup(from),
             __status = !__data.ban
-        await groupMongo.findOneAndUpdate({ group_id: from }, { $set: { ban: __status } })
+        await groupMongo.findOneAndUpdate({ id: from }, { $set: { ban: __status } })
         return msg.reply(`Group status: ${__status ? 'banned' : 'not banned'}`, true)
     },
 } as ICommand
