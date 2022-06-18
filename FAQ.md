@@ -46,3 +46,7 @@
 -   Error: Cannot find module 'tsconfig-paths/register'
 
     Solution: https://stackoverflow.com/questions/68245546/cannot-find-module-tsconfig-paths-register
+
+*   Heroku memory limit
+
+    I don't know about this, if anyone knows how to solve this problem, don't hesitate to do PRs ^-^

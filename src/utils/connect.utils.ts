@@ -1,11 +1,11 @@
-import makeWASocket, { ConnectionState, DisconnectReason, MessageUpdateType, useSingleFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket } from '@adiwajshing/baileys'
-import { writeFileSync, readFileSync, existsSync } from 'fs'
+import makeWASocket, { ConnectionState, DisconnectReason, MessageUpdateType, useSingleFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket, PresenceData } from '@adiwajshing/baileys'
 import { CommandHandler } from '@handlers/command.handler'
 import { Boom } from '@hapi/boom'
 import chalk from 'chalk'
 import P from 'pino'
 import { GroupHandler } from '@handlers/group.handler'
-import { protoType } from '@constants'
+import { Ipresence, protoType } from '@constants'
+import { PresenceHandler } from '@handlers/presence.handler'
 protoType()
 
 console.log(chalk.whiteBright('╭─── [ LOG ]'))
@@ -14,6 +14,8 @@ console.log(chalk.whiteBright('╭─── [ LOG ]'))
 export const startConnection = async () => {
     const commandHandler = new CommandHandler()
     const groupHandler = new GroupHandler()
+    const presenceHandler = new PresenceHandler()
+
     let client: WASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()
     console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `using WA v${version.join('.')}, isLatest: ${isLatest}`)
@@ -48,7 +50,9 @@ export const startConnection = async () => {
         }
         console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `Connection : ${update?.connection}`)
     })
-    /* client.ev.on('presence.update', (json) => console.log(json)) Will continue when the afk feature is ready!  */
+    client.ev.on('presence.update', (json: Ipresence) => {
+        presenceHandler.afkHandler(json, client)
+    })
 
     return client
 }

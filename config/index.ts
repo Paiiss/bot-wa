@@ -8,3 +8,4 @@ export const botname = process.env.BOT_NAME || config.botname
 export const timezone = process.env.TIME_ZONE || config.timezone
 export const footer = process.env.FOOTER || config.footer
 export const link_group = process.env.LINK_GROUP || config.link_group
+export const PREFIX = process.env.PREFIX || '!'

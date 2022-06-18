@@ -1,7 +1,6 @@
-import { caklontong } from '@bochilteam/scraper'
 import { Collection } from '@constants'
 import { ICommand } from '@constants'
-import { getBuffer } from '@utils/helper.utils'
+import { getJson } from '@utils/helper.utils'
 const __collection = new Collection<string, null>()
 
 export default {
@@ -12,13 +11,10 @@ export default {
     callback: async ({ msg, client, shortMessage }) => {
         const { from, sender } = msg
         if (__collection.get(from)) return msg.error(shortMessage.quiz.already, true)
-        let __quiz: any = await caklontong()
-        console.log(__quiz)
-
+        let __getJson: { jawaban: string; soal: string; deskripsi: string }[] = await getJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/caklontong.json')
+        let __quiz = __getJson[Math.floor(Math.random() * __getJson.length)]
         __collection.set(from, null)
-
         await client.sendMessage(from, { text: "*Quiz*\n{soal}\n\nTime 60's".format({ soal: __quiz.soal }) })
-
         const collector = await msg.createMessageCollector({
             filter: new RegExp(__quiz.jawaban, 'i'),
             max: 1,

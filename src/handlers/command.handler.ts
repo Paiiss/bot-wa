@@ -10,11 +10,12 @@ import fs from 'fs'
 import { IMessage, MessageSerialize, IGroupModel } from '@constants'
 import { addRentGroup, findGroup } from '@utils/group.utils'
 import toMS from 'ms'
-import { expUpdate, findUser } from '@utils/user.utils'
+import { expUpdate, findUser, setAfk } from '@utils/user.utils'
 import { groupMongo } from '@schema'
 import { getJson, postJson, sleep, uploaderAPI, waparse } from '@utils/helper.utils'
 import { leaveGroupCron } from '@utils/cron.utils'
 import { lolhuman, botname, link_group, footer } from '@config'
+import afk from '../data/afk.json'
 dotenv.config()
 
 const gRent = require('../data/g.json')
@@ -44,6 +45,7 @@ export class CommandHandler {
 
         await antilinkgroup(client, msg, Group, isBotAdmin, isSenderAdmin)
         await antinsfw(msg, Group)
+        await afkHandler(msg)
 
         if (isGroup && Group && !Group?.new && !Group?.trial) {
             let s = []
@@ -232,6 +234,21 @@ const antilinkgroup = async (client: WASocket, msg: MessageSerialize, group: IGr
                 console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[ LINK DETECT ]'), `Someone sent the link in the ${msg.groupMetadata.subject} group and it will be kicked`)
                 await msg.reply(`You will be removed from the group for sending another group link`)
                 return client.groupParticipantsUpdate(msg.from, [msg.sender], 'remove')
+            }
+        }
+    }
+}
+
+const afkHandler = async (msg: MessageSerialize) => {
+    if (afk.hasOwnProperty(msg.sender)) {
+        setAfk(msg.sender, false).then(() => {
+            msg.reply(`you have sent a message, afk mode is turned off`, true)
+        })
+    }
+    if (msg.mentions.length > 0) {
+        for (let __afk of msg.mentions) {
+            if (afk.hasOwnProperty(__afk)) {
+                await msg.reply(`User with number ${__afk.split('@')[0]} is afk, reason: ${afk[__afk].reason}`)
             }
         }
     }

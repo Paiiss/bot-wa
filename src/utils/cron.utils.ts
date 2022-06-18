@@ -1,10 +1,10 @@
 import cron, { CronJob } from 'node-cron'
 import { deletePremium } from '@utils/premium.utils'
-import { resetAllLimit } from './user.utils'
+import { resetAllLimit } from '@utils/user.utils'
 import color from 'chalk'
 import fs from 'fs'
 import { WASocket } from '@adiwajshing/baileys'
-import { leaveGroup } from './group.utils'
+import { leaveGroup } from '@utils/group.utils'
 import { groupMongo } from '@schema'
 
 // json

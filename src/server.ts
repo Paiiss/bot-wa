@@ -1,4 +1,3 @@
-import { ConnectionState, WASocket } from '@adiwajshing/baileys'
 import express, { Request, Response } from 'express'
 import qrcode from 'qrcode'
 import chalk from 'chalk'

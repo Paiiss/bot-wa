@@ -1,4 +1,4 @@
-import { tebakgambar, tebakgambarjson } from '@bochilteam/scraper'
+import { getJson } from '@utils/helper.utils'
 import { Collection } from '@constants'
 import { ICommand } from '@constants'
 import { getBuffer } from '@utils/helper.utils'
@@ -12,28 +12,28 @@ export default {
     callback: async ({ msg, client, shortMessage }) => {
         const { from, sender } = msg
         if (__collection.get(from)) return msg.error(shortMessage.quiz.already, true)
-        let __tebakgambar: any = await tebakgambar()
-        console.log(__tebakgambar)
+        let __getJson: { jawaban: string; deskripsi: string; img: string }[] = await getJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakgambar.json')
+        let __quiz = __getJson[Math.floor(Math.random() * __getJson.length)]
 
-        let __buffer = await getBuffer(__tebakgambar.img)
+        let __buffer = await getBuffer(__quiz.img)
         __collection.set(from, null)
 
         await client.sendMessage(from, { image: __buffer, jpegThumbnail: __buffer, caption: `Time 60 seconds!` })
 
         const collector = await msg.createMessageCollector({
-            filter: new RegExp(__tebakgambar.jawaban, 'i'),
+            filter: new RegExp(__quiz.jawaban, 'i'),
             max: 1,
             time: 60 * 1000,
         })
 
         collector.on('collect', (m) => {
-            return client.sendMessage(from, { text: `${shortMessage.quiz.winner}\n\nDesc: {desc}`.format({ winner: '@' + m.sender.split('@')[0], desc: __tebakgambar.deskripsi }), mentions: [m.sender] })
+            return client.sendMessage(from, { text: `${shortMessage.quiz.winner}\n\nDesc: {desc}`.format({ winner: '@' + m.sender.split('@')[0], desc: __quiz.deskripsi }), mentions: [m.sender] })
         })
 
         collector.on('end', (res) => {
             __collection.delete(from)
             if (res === 'limit') return
-            else if (res === 'timeout') return msg.reply(shortMessage.quiz.timeout + `\n\n- Ans: ${__tebakgambar.jawaban}\n${__tebakgambar.deskripsi}`)
+            else if (res === 'timeout') return msg.reply(shortMessage.quiz.timeout + `\n\n- Ans: ${__quiz.jawaban}\n${__quiz.deskripsi}`)
         })
     },
 } as ICommand

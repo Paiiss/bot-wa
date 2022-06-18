@@ -1,6 +1,6 @@
-import { asahotak } from '@bochilteam/scraper'
 import { Collection } from '@constants'
 import { ICommand } from '@constants'
+import { getJson } from '@utils/helper.utils'
 const __collection = new Collection<string, null>()
 
 export default {
@@ -11,11 +11,9 @@ export default {
     callback: async ({ msg, client, shortMessage }) => {
         const { from, sender } = msg
         if (__collection.get(from)) return msg.error(shortMessage.quiz.already, true)
-        let __quiz: any = await asahotak()
-        console.log(__quiz)
-
+        let __getJson: { jawaban: string; soal: string }[] = await getJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/asahotak.json')
+        let __quiz = __getJson[Math.floor(Math.random() * __getJson.length)]
         __collection.set(from, null)
-
         await client.sendMessage(from, { text: "*Quiz*\n{soal}\n\nTime 60's".format({ soal: __quiz.soal }) })
 
         const collector = await msg.createMessageCollector({

@@ -2,6 +2,8 @@ import { userMongo } from '@schema'
 import chalk from 'chalk'
 import moment from 'moment-timezone'
 import { timezone } from '@config'
+import fs from 'fs'
+import afk from '../data/afk.json'
 
 export const findUser = async (sender: string) => {
     if (!/@s.whatsapp.net/.test(sender)) throw 'Invalid id/sender'
@@ -68,4 +70,17 @@ export const editUser = async (id: string, edit: Object = null) => {
     await userMongo.findOneAndUpdate({ sender: id }, { $set: edit }).catch((e) => {
         throw e
     })
+}
+
+export const setAfk = async (sender: string, status: boolean, reason: string = null) => {
+    if (!/@s.whatsapp.net/.test(sender)) throw 'Invalid id/sender'
+    if (status) {
+        afk[sender] = { afkReason: reason }
+        fs.writeFileSync('./src/data/afk.json', JSON.stringify(afk))
+        await userMongo.findOneAndUpdate({ sender }, { $set: { afk: 1, afkReason: reason } })
+    } else {
+        delete afk[sender]
+        fs.writeFileSync('./src/data/afk.json', JSON.stringify(afk))
+        await userMongo.findOneAndUpdate({ sender }, { $set: { afk: -1, afkReason: reason } })
+    }
 }

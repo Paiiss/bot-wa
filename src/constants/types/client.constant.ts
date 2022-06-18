@@ -1,3 +1,5 @@
+import { PresenceData } from '@adiwajshing/baileys'
+
 export interface IMessage {
     sticker: string
     stickerMeme: string
@@ -84,5 +86,12 @@ export interface IMessage {
         already: string
         winner: string
         timeout: string
+    }
+}
+
+export interface Ipresence {
+    id: string
+    presences: {
+        [participant: string]: PresenceData
     }
 }
