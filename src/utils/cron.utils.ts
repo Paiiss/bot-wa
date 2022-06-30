@@ -11,10 +11,9 @@ import { groupMongo } from '@schema'
 const p: Array<{ id: string; e: number; l: number; c: string }> = require('../data/p.json')
 const g: Array<{ id: string; expired: number }> = require('../data/g.json')
 const rendem = require('../data/rendem.json')
-
 import { timezone } from '@config'
 
-const rText = "The rental/trial period has expired, if you want to extend please contact the owner (rent) \n\n_Waiting for the owner's approval to leave the group_"
+const rText = 'The rental/trial period has expired, if you want to extend please contact the owner (rent)'
 
 export const autonodecron = async (client: WASocket) => {
     console.log(color.whiteBright('├'), color.keyword('aqua')('[  STATS  ]'), `Getting started with cron`)
@@ -54,15 +53,11 @@ export const autonodecron = async (client: WASocket) => {
     const everyday = cron.schedule(
         '0 0 * * *',
         async () => {
-            try {
-                resetAllLimit()
-            } catch (error) {
+            let allData: any = groupMongo.find() // Sorry I don't know what to do, any suggestions?
+            resetAllLimit().catch(async (error) => {
                 console.log(error)
                 await client.sendMessage(process.env.gcid, { text: `Error reset limit!\n${error}` })
-            }
-
-            let allData: any = groupMongo.find()
-
+            })
             allData.forEach(async (data) => {
                 await leaveGroupCron(data.id, data.expired, client)
             })
@@ -88,8 +83,9 @@ export async function leaveGroupCron(id: string, expired: number, client: WASock
                         console.log(`Failed to send chat when you want to leave the group`)
                     })
             })
-            .catch((e) => {
+            .catch(async (e) => {
                 console.log(`Failed to get group meta data when trying to leave the group`)
+                return leaveGroup(id)
             })
     }
 }

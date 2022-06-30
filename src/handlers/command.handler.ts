@@ -1,5 +1,5 @@
 import { MessageUpdateType, WAMessage, WASocket } from '@adiwajshing/baileys'
-import { commands, cooldown, startMessage } from '@constants'
+import { commands, cooldown, groupRent, startMessage } from '@constants'
 import { MessageError, serialize } from '@utils/serialize.utils'
 import * as dotenv from 'dotenv'
 import { GlobSync } from 'glob'
@@ -18,8 +18,9 @@ import { lolhuman, botname, link_group, footer } from '@config'
 import afk from '../data/afk.json'
 dotenv.config()
 
-const gRent = require('../data/g.json')
+const gRent: groupRent = require('../data/g.json')
 const rendemCode = require('../data/rendem.json')
+const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
 
 export class CommandHandler {
     async messageHandler(m: { messages: WAMessage[]; type: MessageUpdateType }, client: WASocket) {
@@ -34,14 +35,13 @@ export class CommandHandler {
         const { from, sender, isGroup, body, type } = msg
 
         // Auto ind or eng
-        const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
         let shortMessage: IMessage = sender.startsWith('62') ? textMessage.ind : textMessage.eng
 
         const Group: IGroupModel = msg.isGroup ? await findGroup(msg.from) : null
         let isBotAdmin = msg.typeCheck.isSticker ? null : msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.myId)[0]?.admin : null
         let isSenderAdmin = msg.typeCheck.isSticker ? null : msg.isGroup ? msg.groupMetadata.participants.filter((ids) => ids.id === msg.sender)[0]?.admin : null
         if (isGroup && Group?.ban) return
-        if (Group && isGroup) await checkRendem(body, client, msg)
+        if (Group && isGroup) await checkRendem(client, msg)
 
         await antilinkgroup(client, msg, Group, isBotAdmin, isSenderAdmin)
         await antinsfw(msg, Group)
@@ -187,10 +187,10 @@ const t = [
     `*Advantages of rent*\n• Make stickers with friends without limits\n• Play games from bots with friends (in progress)\n• More features will be made soon`,
 ]
 
-async function checkRendem(body: string, client: WASocket, msg: MessageSerialize) {
+async function checkRendem(client: WASocket, msg: MessageSerialize) {
     let reg = new RegExp(Object.keys(rendemCode).join('|'))
-    let mat = body.match(reg)
-    if (reg.test(body) && rendemCode.hasOwnProperty(mat[0])) {
+    let mat = msg.body.match(reg)
+    if (reg.test(msg.body) && rendemCode.hasOwnProperty(mat[0])) {
         if (!msg.isGroup && rendemCode[mat[0]].type === 'rent') await msg.reply(`Code can only be used in groups`)
         addRentGroup(msg.from, rendemCode[mat[0]].duration)
             .then(async (res: number) => {

@@ -78,15 +78,18 @@ export const deleteRent = async (id: string) =>
         return data
     })
 
-export const leaveGroup = async (id: string, client: WASocket) =>
+export const leaveGroup = async (id: string, client: WASocket = null) =>
     new Promise(async (resolve, reject) => {
         if (!id) return reject(`Additional/sender ID`)
         let data = await findGroup(id)
         if (!data) return reject(`Group ID not found`)
-
-        let d = (await client.groupMetadata(id)) ? await client.groupMetadata(id) : null
-
-        if (d !== null) await client.groupLeave(id)
+        if (
+            client &&
+            (await client.groupMetadata(id).catch(() => {
+                return null
+            }))
+        )
+            await client.groupLeave(id)
         await deleteRent(id)
         await groupMongo.findOneAndUpdate({ id: id }, { $set: { leave: true } })
     })

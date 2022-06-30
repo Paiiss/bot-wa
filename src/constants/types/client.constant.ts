@@ -95,3 +95,5 @@ export interface Ipresence {
         [participant: string]: PresenceData
     }
 }
+
+export interface groupRent extends Array<{ id: string; expired: number }> {}
