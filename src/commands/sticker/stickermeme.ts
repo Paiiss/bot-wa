@@ -20,8 +20,8 @@ export default {
             const data = {
                 image: `data:image/jpeg;base64,${memeImg.toString('base64')}`,
                 stickerMetadata: {
-                    pack: 'AllenBOT',
-                    author: 'create by @mfa_daffa',
+                    pack: 'Bot',
+                    author: 'create by @TioXd',
                     keepScale: true,
                     circle: false,
                     removebg: false,
