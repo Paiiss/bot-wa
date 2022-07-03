@@ -29,8 +29,8 @@ export default {
             const data = {
                 file: `data:video/mp4;base64,${file.toString('base64')}`,
                 stickerMetadata: {
-                    pack: 'AllenBOT',
-                    author: 'created by @mfa_daffa',
+                    pack: 'Bot',
+                    author: 'created by @TioXd',
                     keepScale: true,
                     removebg: true,
                 },
