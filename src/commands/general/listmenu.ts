@@ -70,7 +70,7 @@ export default {
         return client.sendMessage(from, {
             text: str.join('\n') + `\n\n\`\`\`how to use: ${prefix}<command> | ex: .sticker\`\`\``,
             footer,
-            title: `AllenBOT menu list`,
+            title: `menu list`,
             buttonText: 'LIST MENU',
             sections,
         })
