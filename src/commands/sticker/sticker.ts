@@ -15,8 +15,8 @@ export default {
             const data = {
                 image: `data:image/jpeg;base64,${file.toString('base64')}`,
                 stickerMetadata: {
-                    pack: 'AllenBOT',
-                    author: 'created by @mfa_daffa',
+                    pack: 'Bot',
+                    author: 'created by @TioXd',
                     keepScale: true,
                     circle: false,
                     removebg: false,
