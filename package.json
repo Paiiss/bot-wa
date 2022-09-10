@@ -29,7 +29,7 @@
     "license": "Apache License 2.0",
     "description": "",
     "dependencies": {
-        "@adiwajshing/baileys": "github:adiwajshing/Baileys",
+        "@adiwajshing/baileys": "github:FatihArridho/Baileys",
         "@hapi/boom": "^9.1.4",
         "@types/glob": "^7.2.0",
         "@types/qrcode": "^1.4.2",

@@ -1,4 +1,4 @@
-import makeWASocket, { ConnectionState, DisconnectReason, MessageUpdateType, useSingleFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket, PresenceData } from '@adiwajshing/baileys'
+import makeWASocket, { ConnectionState, DisconnectReason, /* MessageUpdateType, */ useSingleFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket, PresenceData } from '@adiwajshing/baileys'
 import { CommandHandler } from '@handlers/command.handler'
 import { Boom } from '@hapi/boom'
 import chalk from 'chalk'
@@ -30,7 +30,7 @@ export const startConnection = async () => {
     client.ev.on('creds.update', saveState)
 
     commandHandler.registerCommand()
-    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpdateType }) => {
+    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type /* : MessageUpdateType */ }) => {
         commandHandler.messageHandler(m, client)
     })
 

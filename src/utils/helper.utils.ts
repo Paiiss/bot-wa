@@ -1,4 +1,4 @@
-import makeWASocket, { ConnectionState, DisconnectReason, fetchLatestBaileysVersion, MessageUpdateType, useSingleFileAuthState, WAMessage, WASocket } from '@adiwajshing/baileys'
+import makeWASocket, { ConnectionState, DisconnectReason, fetchLatestBaileysVersion, /* MessageUpdateType, */ useSingleFileAuthState, WAMessage, WASocket } from '@adiwajshing/baileys'
 import { CommandHandler } from '@handlers/command.handler'
 import qrcode from 'qrcode'
 import P from 'pino'
@@ -230,7 +230,7 @@ export const menjadiBot = async (sock: WASocket, jid: string): Promise<WASocket>
         version,
     })
     client.ev.on('creds.update', saveState)
-    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpdateType }) => {
+    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type /* : MessageUpdateType */ }) => {
         commandHander.messageHandler(m, client)
     })
     client.ev.on('connection.update', async (update: ConnectionState) => {
