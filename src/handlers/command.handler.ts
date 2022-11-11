@@ -1,4 +1,4 @@
-import { /* MessageUpdateType, */ WAMessage, WASocket } from '@adiwajshing/baileys'
+import { MessageUpsertType, WAMessage, WASocket } from '@adiwajshing/baileys'
 import { commands, cooldown, groupRent, startMessage } from '@constants'
 import { MessageError, serialize } from '@utils/serialize.utils'
 import * as dotenv from 'dotenv'
@@ -23,7 +23,7 @@ const rendemCode = require('../data/rendem.json')
 const textMessage = JSON.parse(fs.readFileSync('./message.json', 'utf-8'))
 
 export class CommandHandler {
-    async messageHandler(m: { messages: WAMessage[]; type /* : MessageUpdateType */ }, client: WASocket) {
+    async messageHandler(m: { messages: WAMessage[]; type: MessageUpsertType }, client: WASocket) {
         const message = m.messages[0]
         if (m.type !== 'notify') return
         if (message.key && message.key.remoteJid === 'status@broadcast') return

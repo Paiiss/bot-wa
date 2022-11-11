@@ -49,6 +49,7 @@ export default {
         await client.sendMessage(msg.from, {
             text: str,
             footer,
+            viewOnce: true,
             title: 'Allen bot information',
             templateButtons,
             mentions: [sender],

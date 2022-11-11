@@ -10,3 +10,4 @@ session.json
 .gitignore
 src/commands/tes.ts
 index.js
+mysession

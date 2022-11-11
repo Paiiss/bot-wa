@@ -1,4 +1,4 @@
-import makeWASocket, { ConnectionState, DisconnectReason, fetchLatestBaileysVersion, /* MessageUpdateType, */ useSingleFileAuthState, WAMessage, WASocket } from '@adiwajshing/baileys'
+import makeWASocket, { ConnectionState, DisconnectReason, fetchLatestBaileysVersion, MessageUpsertType, useMultiFileAuthState, WAMessage, WASocket } from '@adiwajshing/baileys'
 import { CommandHandler } from '@handlers/command.handler'
 import qrcode from 'qrcode'
 import P from 'pino'
@@ -219,18 +219,18 @@ export const clearSession = () => {
 
 export const menjadiBot = async (sock: WASocket, jid: string): Promise<WASocket> => {
     const filename = `./session/${jid.split('@')[0]}-session.json`
-    const { state: auth, saveState } = useSingleFileAuthState(filename)
+    const { state, saveCreds } = await useMultiFileAuthState(filename)
     const commandHander = new CommandHandler()
     const { version, isLatest } = await fetchLatestBaileysVersion()
     const client = makeWASocket({
         logger: P({ level: 'silent' }),
         printQRInTerminal: false,
         browser: ['Allen', 'Safari', '1.0'],
-        auth,
+        auth: state,
         version,
     })
-    client.ev.on('creds.update', saveState)
-    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type /* : MessageUpdateType */ }) => {
+    client.ev.on('creds.update', saveCreds)
+    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpsertType }) => {
         commandHander.messageHandler(m, client)
     })
     client.ev.on('connection.update', async (update: ConnectionState) => {

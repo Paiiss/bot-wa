@@ -1,4 +1,4 @@
-import makeWASocket, { ConnectionState, DisconnectReason, /* MessageUpdateType, */ useSingleFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket, PresenceData } from '@adiwajshing/baileys'
+import makeWASocket, { ConnectionState, DisconnectReason, useMultiFileAuthState, WAMessage, fetchLatestBaileysVersion, WASocket, PresenceData, MessageUpsertType } from '@adiwajshing/baileys'
 import { CommandHandler } from '@handlers/command.handler'
 import { Boom } from '@hapi/boom'
 import chalk from 'chalk'
@@ -19,7 +19,7 @@ export const startConnection = async () => {
     let client: WASocket
     const { version, isLatest } = await fetchLatestBaileysVersion()
     console.log(chalk.whiteBright('├'), chalk.keyword('aqua')('[  STATS  ]'), `using WA v${version.join('.')}, isLatest: ${isLatest}`)
-    const { state, saveState } = useSingleFileAuthState('./session.json')
+    const { state, saveCreds } = await useMultiFileAuthState('./mysession')
     client = makeWASocket({
         logger: P({ level: 'error' }),
         printQRInTerminal: true,
@@ -27,10 +27,10 @@ export const startConnection = async () => {
         browser: ['Allen', 'Safari', '1.0'],
         version,
     })
-    client.ev.on('creds.update', saveState)
+    client.ev.on('creds.update', saveCreds)
 
     commandHandler.registerCommand()
-    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type /* : MessageUpdateType */ }) => {
+    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpsertType }) /* ({ messages }) */ => {
         commandHandler.messageHandler(m, client)
     })
 

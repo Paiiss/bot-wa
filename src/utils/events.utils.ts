@@ -1,4 +1,4 @@
-import { /* MessageUpdateType, */ WAMessage, WASocket } from '@adiwajshing/baileys'
+import { MessageUpsertType, WAMessage, WASocket } from '@adiwajshing/baileys'
 import { MessageCollectorOptions, MessageSerialize } from '@constants'
 import { serialize } from '@utils/serialize.utils'
 import { EventEmitter } from 'events'
@@ -29,7 +29,7 @@ export class MessageCollector extends EventEmitter {
         })
     }
 
-    async messageHandler(m: { messages: WAMessage[]; type /* : MessageUpdateType */ }) {
+    async messageHandler(m: { messages: WAMessage[]; type: MessageUpsertType }) {
         const message = m.messages[0]
         if (m.type !== 'notify') return
         if (message.key && message.key.remoteJid === 'status@broadcast') return
