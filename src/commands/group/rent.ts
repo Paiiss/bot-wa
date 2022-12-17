@@ -100,7 +100,7 @@ export default {
                         description: `Buy redeem code for bot rental for 1 month, use 10k allen cash`,
                     },
                     {
-                        title: '3 Month / IDR: 25',
+                        title: '3 Month / IDR: 25K',
                         rowId: prefix + `rent 3month_group`,
                         description: `Buy redeem code for bot rental for 3 month, use 25k allen cash`,
                     },

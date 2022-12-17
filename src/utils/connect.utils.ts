@@ -30,7 +30,7 @@ export const startConnection = async () => {
     client.ev.on('creds.update', saveCreds)
 
     commandHandler.registerCommand()
-    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpsertType }) /* ({ messages }) */ => {
+    client.ev.on('messages.upsert', (m: { messages: WAMessage[]; type: MessageUpsertType }) => {
         commandHandler.messageHandler(m, client)
     })
 
